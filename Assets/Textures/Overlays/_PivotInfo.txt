@@ -1,0 +1,11 @@
+Mask - 0.5, 0.3
+Body - Default (Centre) - 0.5, 0.5
+Shoulder - 0.5, 0.65
+Arm - 0.5, 0.65
+UpperLeg - 0.5, 0.65
+LowerLeg - 0.5, 0.65
+Foot (Boot) - 0.45, 0.55
+
+Weapon (Sword) - 0.482, 0.275
+
+

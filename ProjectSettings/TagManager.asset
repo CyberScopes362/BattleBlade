@@ -1,0 +1,84 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - SpawnPoint
+  - StartBorder
+  - EndBorder
+  - Floor
+  - Grounds
+  - BGSP
+  - MGSP
+  - FGSP
+  - Initializer
+  - Fire
+  - Hero
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - 
+  - 
+  - Floor
+  - Shadows
+  - Attackable
+  - Effects
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Background
+    uniqueID: 1552474367
+    locked: 0
+  - name: Midground
+    uniqueID: 1152093959
+    locked: 0
+  - name: Foreground
+    uniqueID: 1072097321
+    locked: 0
+  - name: Default
+    uniqueID: 0
+    locked: 0
+  - name: Floor
+    uniqueID: 4039558053
+    locked: 0
+  - name: Enemies
+    uniqueID: 4118299621
+    locked: 0
+  - name: Hero
+    uniqueID: 661350963
+    locked: 0
+  - name: Items
+    uniqueID: 242169641
+    locked: 0
+  - name: Effects
+    uniqueID: 2773046123
+    locked: 0
+  - name: Fog
+    uniqueID: 2139711599
+    locked: 0
+  - name: Canvas
+    uniqueID: 2340899127
+    locked: 0
