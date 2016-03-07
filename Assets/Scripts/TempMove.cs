@@ -8,6 +8,8 @@ public class TempMove : MonoBehaviour
 {
     //Gameobjects
     public GameObject weapon;
+    public GameObject heroHitParticles;
+    public GameObject critHitObject;
     GameObject floor;
 
     //Get Components
@@ -81,6 +83,7 @@ public class TempMove : MonoBehaviour
     int currentAttackType;
     float currentDamage;
     float currentKnockback;
+    float currentCriticalChance;
 
     //These vars should be set by weapon
     //Knockback divider amount
@@ -89,6 +92,7 @@ public class TempMove : MonoBehaviour
     public float lightAttackStrength;
     public float heavyAttackStrength;
     public float slamAttackStrength;
+    public float criticalChance;
 
 
     void Start()
@@ -349,23 +353,21 @@ public class TempMove : MonoBehaviour
         //## Damage modifiers go here
         // eg currentDamage = currentDamage * boost/ability/whatever
         //
-
-        //FIX: Allow multiple damage using one hit.
-
-
+        
         currentKnockback = currentDamage / knockbackRatio;
 
         var hit = Physics2D.BoxCastAll(boxOrigination.transform.position, new Vector2(2f, 2.3f), 0f, Vector2.zero, attackRange, attackableMask);
 
         for (var i = 0; i < hit.Length; i++)
-          hit[i].transform.gameObject.GetComponentInParent<DamageModifier>().Hit(currentDamage, currentKnockback * flipRatio);
+            hit[i].transform.gameObject.GetComponentInParent<DamageModifier>().Hit(currentDamage, currentKnockback * flipRatio, critHitObject, criticalChance);
     }
 
-    public void TakeDamage(float takeDamage, float takeKnockback)
+    public void TakeDamage(float takeDamage, float takeKnockback, int takeKnockbackDirection)
     {
         thisAnimator.SetTrigger("TakeHit");
+        Instantiate(heroHitParticles, transform.position, transform.rotation);
         currentHealth -= takeDamage;
-        thisRigidbody.velocity = new Vector2(-takeKnockback * flipRatio, thisRigidbody.velocity.y);
+        thisRigidbody.velocity = new Vector2(-takeKnockback * takeKnockbackDirection, thisRigidbody.velocity.y);
     }
 
 

@@ -5,6 +5,9 @@ using System.Collections;
 public class ObjectFinder : MonoBehaviour
 {
     public GameObject floor;
+    public GameObject gradientTop;
+    public GameObject gradientBottom;
+
     public GameObject hero;
 
     public GameObject backgroundSceneryParent;

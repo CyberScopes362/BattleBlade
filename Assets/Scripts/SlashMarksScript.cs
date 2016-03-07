@@ -3,7 +3,6 @@ using System.Collections;
 
 public class SlashMarksScript : MonoBehaviour
 {
-    ParticleSystem thisSystem;
     SpriteRenderer thisRenderer;
     ItemSelector itemSelector;
 
@@ -16,10 +15,8 @@ public class SlashMarksScript : MonoBehaviour
     void Start()
     {
         thisRenderer = GetComponent<SpriteRenderer>();
-        thisSystem = GetComponent<ParticleSystem>();
-        thisSystem.GetComponent<Renderer>().sortingLayerName = "Effects";
         thisRenderer.color = new Color(thisRenderer.color.r, thisRenderer.color.g, thisRenderer.color.b, 1f);
-        gameObject.transform.localScale = new Vector2(transform.localScale.x + Mathf.Abs((Mathf.Pow(takenDamage, 2)) / 2000f), transform.localScale.x + Mathf.Abs((Mathf.Pow(takenDamage, 2)) / 2000f));
+        gameObject.transform.localScale = new Vector3(transform.localScale.x + Mathf.Abs((Mathf.Pow(takenDamage, 2)) / 2000f), transform.localScale.y + Mathf.Abs((Mathf.Pow(takenDamage, 2)) / 2000f), transform.localScale.z);
     }
 
     void Update()

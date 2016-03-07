@@ -8,6 +8,8 @@ public class LevelBuilder : MonoBehaviour
     Material mainSkybox;
 
     GameObject floor;
+    GameObject gradientTop;
+    GameObject gradientBottom;
     GameObject startPoint;
     GameObject endPoint;
     GameObject backgroundScenery;
@@ -18,9 +20,16 @@ public class LevelBuilder : MonoBehaviour
     GameObject foregroundSceneryParent;
 
     public List<Texture> skyboxTextures = new List<Texture>();
+
     public List<Sprite> backgroundSprites = new List<Sprite>();
     public List<Sprite> midgroundSprites = new List<Sprite>();
     public List<Sprite> foregroundSprites = new List<Sprite>();
+
+    public List<Color> backgroundSpritesColors = new List<Color>();
+    public List<Color> midgroundSpritesColors = new List<Color>();
+    public List<Color> foregroundSpritesColors = new List<Color>();
+    public List<Color> gradientColors = new List<Color>();
+
 
     public float floorSizeX;
     public float pointGapWidth;
@@ -42,6 +51,8 @@ public class LevelBuilder : MonoBehaviour
         ObjectFinder objectFinder = GameObject.FindGameObjectWithTag("Initializer").GetComponent<ObjectFinder>();
 
         floor = objectFinder.floor;
+        gradientTop = objectFinder.gradientTop;
+        gradientBottom = objectFinder.gradientBottom;
         startPoint = objectFinder.startPoint;
         endPoint = objectFinder.endPoint;
         backgroundScenery = objectFinder.backgroundScenery;
@@ -58,10 +69,33 @@ public class LevelBuilder : MonoBehaviour
         {
             case "Mountains":
                 RenderSettings.skybox.SetTexture("_FrontTex", skyboxTextures[0]);
+
                 backgroundScenery.GetComponent<SpriteRenderer>().sprite = backgroundSprites[0];
                 midgroundScenery.GetComponent<SpriteRenderer>().sprite = midgroundSprites[0];
                 foregroundScenery.GetComponent<SpriteRenderer>().sprite = foregroundSprites[0];
-                break;           
+
+                backgroundScenery.GetComponent<SpriteRenderer>().color = backgroundSpritesColors[0];
+                midgroundScenery.GetComponent<SpriteRenderer>().color = midgroundSpritesColors[0];
+                foregroundScenery.GetComponent<SpriteRenderer>().color = foregroundSpritesColors[0];
+
+                gradientTop.GetComponent<SpriteRenderer>().color = gradientColors[0];
+                gradientBottom.GetComponent<SpriteRenderer>().color = gradientColors[0];
+                break;
+
+            //Just a weird test, remove when this section gets fully updated.
+            case "MountainsX":
+                RenderSettings.skybox.SetTexture("_FrontTex", skyboxTextures[1]);
+                backgroundScenery.GetComponent<SpriteRenderer>().sprite = backgroundSprites[0];
+                midgroundScenery.GetComponent<SpriteRenderer>().sprite = midgroundSprites[0];
+                foregroundScenery.GetComponent<SpriteRenderer>().sprite = foregroundSprites[0];
+
+                backgroundScenery.GetComponent<SpriteRenderer>().color = backgroundSpritesColors[1];
+                midgroundScenery.GetComponent<SpriteRenderer>().color = midgroundSpritesColors[1];
+                foregroundScenery.GetComponent<SpriteRenderer>().color = foregroundSpritesColors[1];
+
+                gradientTop.GetComponent<SpriteRenderer>().color = gradientColors[1];
+                gradientBottom.GetComponent<SpriteRenderer>().color = gradientColors[1];
+                break;
         }
 
         Vector3 vectorFloorSize = new Vector3(floorSizeX, floor.transform.localScale.y, floor.transform.localScale.z);

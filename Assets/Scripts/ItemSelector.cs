@@ -18,19 +18,29 @@ public class ItemSelector : MonoBehaviour
 
     public SpriteRenderer weaponRenderer;
     public SpriteRenderer maskRenderer;
-    public SpriteRenderer[] armorRenderer;
+    public SpriteRenderer[] chestplateRenderer;
+    public SpriteRenderer[] armsRenderer;
+    public SpriteRenderer[] legsRenderer;
+
 
     public List<Weapons> allWeapons = new List<Weapons>();
     public List<Masks> allMasks = new List<Masks>();
-    public List<Armor> allArmor = new List<Armor>();
+    public List<Chestplate> allChestplates = new List<Chestplate>();
+    public List<Arms> allArms = new List<Arms>();
+    public List<Legs> allLegs = new List<Legs>();
+
 
     public string currentWeapon;
     public string currentMask;
-    public string currentArmor;
+    public string currentChestplate;
+    public string currentArms;
+    public string currentLegs;
+
     public bool invokeChanges;
 
     XWeaponTrail weaponTrail;
     GameObject slashMarks;
+    TempMove tempMove;
 
 
     void Start()
@@ -39,16 +49,15 @@ public class ItemSelector : MonoBehaviour
 
         slashMarks = objectFinder.slashMarks;
         weaponTrail = weaponRenderer.gameObject.GetComponentInChildren<XWeaponTrail>();
+        tempMove = GetComponent<TempMove>();
 
-#if UNITY_EDITOR
-        //
-        //Create system to save and load allweapons from an asset file.
-        //
-#endif
 
-        SetWeapon("Requiem Slicer");
+        //Placeholder: Default stuff
+        SetWeapon("Infused Blazer");
         SetMask("Hellrider");
-        //SetArmor("Advanced Flame");
+        SetChestplate("Roars of Hell");
+        SetArms("Combustion");
+        SetLegs("Flame");
     }
 
 
@@ -63,8 +72,14 @@ public class ItemSelector : MonoBehaviour
             if (currentMask != "")
                 SetMask(currentMask);
 
-            // if (currentArmor != "")
-            //     SetArmor(currentArmor);
+            if (currentChestplate != "")
+                SetChestplate(currentChestplate);
+
+            if (currentArms != "")
+                SetArms(currentArms);
+
+            if (currentLegs != "")
+                SetLegs(currentLegs);
 
             invokeChanges = false;
         }
@@ -84,11 +99,19 @@ public class ItemSelector : MonoBehaviour
         else
             print("Weapon Changed To: " + setWeapon.name);
 
+        //Visuals
         weaponRenderer.sprite = setWeapon.weaponSprite;
         weaponTrail.MyColor = setWeapon.trailColor;
         slashMarks.GetComponent<SpriteRenderer>().sprite = setWeapon.slashSprite;
         slashMarks.GetComponent<SpriteRenderer>().color = setWeapon.slashColor;
         slashMarks.GetComponent<ParticleSystem>().startColor = setWeapon.slashColor;
+        slashMarks.GetComponent<ParticleSystemRenderer>().sharedMaterial.mainTexture = setWeapon.slashParticlesTexture;
+
+        //Values
+        tempMove.lightAttackStrength = setWeapon.lightAttackDamage;
+        tempMove.heavyAttackStrength = setWeapon.heavyAttackDamage;
+        tempMove.slamAttackStrength = setWeapon.slamAttackDamage;
+        tempMove.criticalChance = setWeapon.criticalChance;
     }
 
     public void SetMask(string name)
@@ -106,24 +129,61 @@ public class ItemSelector : MonoBehaviour
         maskRenderer.sprite = setMask.maskSprite;
     }
 
-    /*  public void SetArmor(string name)
-      {
-          Armor setArmor = allArmor.Find(x => x.name == name);
+    public void SetChestplate(string name)
+    {
+        Chestplate setChestplate = allChestplates.Find(x => x.name == name);
 
-          armorRenderer[0].sprite = setArmor.mask;
-          armorRenderer[1].sprite = setArmor.body;
-          armorRenderer[2].sprite = setArmor.body;
-          armorRenderer[3].sprite = setArmor.shoulder;
-          armorRenderer[4].sprite = setArmor.arm;
-          armorRenderer[5].sprite = setArmor.shoulder;
-          armorRenderer[6].sprite = setArmor.arm;
-          armorRenderer[7].sprite = setArmor.upperLeg;
-          armorRenderer[8].sprite = setArmor.lowerLeg;
-          armorRenderer[9].sprite = setArmor.boot;
-          armorRenderer[10].sprite = setArmor.upperLeg;
-          armorRenderer[11].sprite = setArmor.lowerLeg;
-          armorRenderer[12].sprite = setArmor.boot;
-      }*/
+        if (setChestplate == null)
+        {
+            print("Invalid Chestplate Choice.");
+            return;
+        }
+        else
+            print("Chestplate Changed To: " + setChestplate.name);
+
+        chestplateRenderer[0].sprite = setChestplate.body;
+        chestplateRenderer[1].sprite = setChestplate.body;
+    }
+
+    public void SetArms(string name)
+    {
+        Arms setArms = allArms.Find(x => x.name == name);
+
+        if (setArms == null)
+        {
+            print("Invalid Arms Choice.");
+            return;
+        }
+        else
+            print("Arms Changed To: " + setArms.name);
+
+        armsRenderer[0].sprite = setArms.shoulder;
+        armsRenderer[1].sprite = setArms.arm;
+        armsRenderer[2].sprite = setArms.shoulder;
+        armsRenderer[3].sprite = setArms.arm;
+    }
+
+    public void SetLegs(string name)
+    {
+        Legs setLegs = allLegs.Find(x => x.name == name);
+
+        if (setLegs == null)
+        {
+            print("Invalid Legs Choice.");
+            return;
+        }
+        else
+            print("Legs Changed To: " + setLegs.name);
+
+        legsRenderer[0].sprite = setLegs.upperLeg;
+        legsRenderer[1].sprite = setLegs.lowerLeg;
+        legsRenderer[2].sprite = setLegs.boot;
+        legsRenderer[3].sprite = setLegs.upperLeg;
+        legsRenderer[4].sprite = setLegs.lowerLeg;
+        legsRenderer[5].sprite = setLegs.boot;
+    }
+
+
 
 
     [System.Serializable]
@@ -137,10 +197,12 @@ public class ItemSelector : MonoBehaviour
         public Color trailColor;
         public Sprite slashSprite;
         public Color slashColor;
+        public Texture slashParticlesTexture;
         public float lightAttackDamage;
         public float heavyAttackDamage;
         public float slamAttackDamage;
         public float knockbackRatio;
+        public float criticalChance;
     }
 
     [System.Serializable]
@@ -149,23 +211,39 @@ public class ItemSelector : MonoBehaviour
         public string name;
         public int rarity;
         public string description;
-        public string effects;
 
         public Sprite maskSprite;
     }
 
     [System.Serializable]
-    public class Armor
+    public class Chestplate
     {
         public string name;
         public int rarity;
         public string description;
-        public string effects;
 
-        public Sprite mask;
         public Sprite body;
+    }
+
+    [System.Serializable]
+    public class Arms
+    {
+        public string name;
+        public int rarity;
+        public string description;
+
         public Sprite shoulder;
         public Sprite arm;
+
+    }
+
+    [System.Serializable]
+    public class Legs
+    {
+        public string name;
+        public int rarity;
+        public string description;
+
         public Sprite upperLeg;
         public Sprite lowerLeg;
         public Sprite boot;

@@ -539,7 +539,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   speed: 1.9
   speedDifferentiation: 0.4
-  attackRange: 1.75
+  attackRange: 1.4
   attacking: 0
   initiateAttack: 0
   attacked: 0

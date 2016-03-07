@@ -30,6 +30,7 @@ public class DamageModifier : MonoBehaviour
     float showHealthTimer;
     float givenDamage;
     float givenKnockback;
+    int givenKnockbackDirection;
     float defXScale;
 
     Color healthBarParentColor;
@@ -56,18 +57,37 @@ public class DamageModifier : MonoBehaviour
 	{
         givenDamage = UnityEngine.Random.Range(damageMin, damageMax);
         givenKnockback = UnityEngine.Random.Range(knockbackMin, knockbackMax);
-        tempMove.TakeDamage(givenDamage, givenKnockback);
+
+        if (enemyObject.transform.localScale.x < 0)
+            givenKnockbackDirection = -1;
+        else
+            givenKnockbackDirection = 1;
+
+        
+        tempMove.TakeDamage(givenDamage, givenKnockback, givenKnockbackDirection);
 	}
 
-    public void Hit(float takenDamage, float currentKnockback)
+    public void Hit(float takenDamage, float currentKnockback, GameObject critHitObject, float criticalChance)
     {
         if(!isHit)
         {
-            knockback = currentKnockback;
             isHit = true;
+            knockback = currentKnockback;
+
+            //Crit Generator
+            float critRandom = UnityEngine.Random.Range(0.0f, 1.0f);
+
+            if (criticalChance > critRandom)
+            {
+                takenDamage *= UnityEngine.Random.Range(1.5f, 3.0f);
+                Instantiate(critHitObject, new Vector3(enemyObject.transform.position.x, enemyObject.transform.position.y + 0.5f + UnityEngine.Random.Range(-0.5f, 0.75f), enemyObject.transform.position.z), Quaternion.Euler(enemyObject.transform.rotation.x, enemyObject.transform.rotation.y, UnityEngine.Random.Range(-30f, 30f)));
+            }
+
             currentHealth -= takenDamage;
+
             var createSlash = Instantiate(slashMarks, enemyObject.transform.position, Quaternion.Euler(0, 0, UnityEngine.Random.Range(0, 360))) as GameObject;
             createSlash.GetComponent<SlashMarksScript>().takenDamage = takenDamage;
+
             showHealthTimer = 5f;
         }
     }
