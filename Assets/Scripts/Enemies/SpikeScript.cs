@@ -10,13 +10,14 @@ public class SpikeScript : MonoBehaviour
     Rigidbody2D thisRigidbody;
 
     Vector2 heroPosition;
+    RaycastHit2D checkRay;
 
     public float speed;
+    public float attackSpeedMultiplier;
     public float speedDifferentiation;
+    public float hitRange;
 
     float setSpeed;
-
-    public float attackRange;
 
     public bool attacking = false;
     public bool initiateAttack = false;
@@ -24,21 +25,25 @@ public class SpikeScript : MonoBehaviour
 
     public bool goToPlayer;
     bool isDead;
-    public bool freezeCheck;
+
+    bool nextLoopTrigger;
+    bool checkGoTo = true;
 
     float health;
-    public float range;
 
     public bool isGrounded;
 
     LayerMask floorMask;
+    LayerMask playerLayer;
 
     public Transform pointA;
     public Transform pointB;
+    public Transform infiniteChase;
 
     float knockback;
 
     bool deathTriggered = false;
+    int stuckFix = 0;
 
 
     void Start()
@@ -47,6 +52,7 @@ public class SpikeScript : MonoBehaviour
 
         hero = objectFinder.hero;
         floorMask = objectFinder.floorMask;
+        playerLayer = objectFinder.playerLayer;
 
         tempMove = hero.GetComponent<TempMove>();
         thisAnimator = GetComponentInParent<Animator>();
@@ -54,6 +60,7 @@ public class SpikeScript : MonoBehaviour
         damageModifier = GetComponentInParent<DamageModifier>();
 
         setSpeed = Random.Range(speed - speedDifferentiation, speed + speedDifferentiation);
+        thisAnimator.SetFloat("AttackSpeedMultiplier", attackSpeedMultiplier);
 
         thisAnimator.SetFloat("SpeedMultiplier", (setSpeed / 12) + 1);
     }
@@ -63,68 +70,78 @@ public class SpikeScript : MonoBehaviour
         if (deathTriggered)
             return;
 
+        if (nextLoopTrigger)
+        {
+            stuckFix = 0;
+            checkGoTo = true;
+            nextLoopTrigger = false;
+        }
+
+
         isDead = damageModifier.isDead;
         heroPosition = new Vector2(tempMove.realheroPosition.transform.position.x, transform.position.y);
-        range = Vector2.Distance(transform.position, tempMove.realheroPosition.transform.position);
         knockback = damageModifier.knockback;
 
         //Grounded Check
         isGrounded = Physics2D.OverlapArea(pointA.position, pointB.position, floorMask);
 
-        if (!isGrounded && goToPlayer)
-            goToPlayer = false; 
+        //Hero Check
+        checkRay = Physics2D.Raycast(transform.position, Vector2.left * transform.localScale.x * 4, hitRange, playerLayer);
 
-        //FIX: Spike stays hit after attacking it when its attacking parameter is set to false.
-        //**Completed**
-        //**Res: Through freezeCheck variable.
+        if (!isGrounded && goToPlayer)
+            goToPlayer = false;
 
         if (!attacking && isGrounded)
         {
-            //FIX: Spikes layers are set to 0, parts overlap unorderly
-            //**Completed**
-            //**Res: Use Vector3 instead of Vector2 for transform.localScale editing.
+            if(tempMove.isGrounded < 2)
+            {
+                if (transform.position.x >= tempMove.realheroPosition.transform.position.x)
+                    transform.localScale = new Vector3(0.5f, transform.localScale.y, transform.localScale.z);
+                else
+                    transform.localScale = new Vector3(-0.5f, transform.localScale.y, transform.localScale.z);
+            }
 
-            //FIX: Overlapping between different enemies
-            //**Completed**
-            //**Red: Check 'AutoLayer' Script.
-
-            if (transform.position.x >= tempMove.realheroPosition.transform.position.x)
-                transform.localScale = new Vector3(0.5f, transform.localScale.y, transform.localScale.z);
+            if(checkRay)
+            {
+                //Look if it aint broke dont fix it.
+                if (goToPlayer)
+                {
+                    thisAnimator.SetTrigger("Attack");
+                    goToPlayer = false;
+                    stuckFix = 1;
+                }
+                else
+                {
+                    if(!goToPlayer && stuckFix == 0)
+                        goToPlayer = true;
+                }
+            }
             else
-                transform.localScale = new Vector3(-0.5f, transform.localScale.y, transform.localScale.z);
-
-            if (range > attackRange)
             {
                 if (!goToPlayer)
                 {
                     thisAnimator.SetTrigger("Move");
                     goToPlayer = true;
                 }
-            }
-            else
-            {
-                if (!goToPlayer && !freezeCheck)
-                {
-                    goToPlayer = true;
-                    freezeCheck = true;
-                }
 
-                if (goToPlayer)
+                if(goToPlayer && checkGoTo)
                 {
-                    thisAnimator.SetTrigger("Attack");
-                    goToPlayer = false;
-                    freezeCheck = true;
+                    thisAnimator.SetTrigger("Move");
+                    goToPlayer = true;
+                    checkGoTo = false;
                 }
             }
         }
 
         if (damageModifier.isHit == true)
         {
+            thisRigidbody.velocity = new Vector2(knockback, Mathf.Abs(knockback / 1.75f));
             thisAnimator.SetTrigger("Hit");
-            thisRigidbody.velocity = new Vector2(knockback, Mathf.Abs(knockback / 2f));
             isGrounded = false;
             isDead = false;
             damageModifier.isHit = false;
+
+            nextLoopTrigger = true;
         }
 
         if (isDead)
@@ -144,12 +161,84 @@ public class SpikeScript : MonoBehaviour
     void FixedUpdate()
     {
         if (goToPlayer && isGrounded && deathTriggered == false)
-            gameObject.transform.position = Vector2.MoveTowards(gameObject.transform.position, heroPosition, setSpeed * Time.deltaTime);
+        {
+            if (tempMove.isGrounded < 2)
+                thisRigidbody.position = Vector2.MoveTowards(transform.position, heroPosition, setSpeed * Time.deltaTime);
+            else
+                thisRigidbody.position = Vector2.MoveTowards(transform.position, infiniteChase.position, Random.Range(setSpeed - 0.6f, setSpeed) * Time.deltaTime);
+        }
     }
 
     public void InitiateAttack()
     {
-        if (range < attackRange && !isDead)
+        if (!isDead && Physics2D.Raycast(transform.position, Vector2.left * transform.localScale.x, hitRange + 0.265f, playerLayer))
             damageModifier.Attack();
     }
+
+    void OnTriggerEnter(Collider heroCollider)
+    {
+        print("Collided");
+        if(heroCollider.gameObject.GetComponent<TempMove>().isGrounded > 0)
+        {
+            damageModifier.Attack();
+        }
+    }
 }
+
+
+
+
+
+
+//
+//
+//Older version. Replaced with raycast method.
+//
+//
+
+/*
+if (!attacking && isGrounded)
+        {
+            //FIX: Spikes layers are set to 0, parts overlap unorderly
+            //**Completed**
+            //**Res: Use Vector3 instead of Vector2 for transform.localScale editing.
+
+            //FIX: Overlapping between different enemies
+            //**Completed**
+            //**Res: Check 'AutoLayer' Script.
+
+            if (transform.position.x >= tempMove.realheroPosition.transform.position.x)
+                transform.localScale = new Vector3(0.5f, transform.localScale.y, transform.localScale.z);
+            else
+                transform.localScale = new Vector3(-0.5f, transform.localScale.y, transform.localScale.z);
+
+            if (range > attackRange)
+            {
+                if (!goToPlayer)
+                {
+                    thisAnimator.SetTrigger("Move");
+                    goToPlayer = true;
+                }
+            }
+            else
+            {
+             //   if (!goToPlayer && !freezeCheck)
+               // {
+               //     goToPlayer = true;
+              //      freezeCheck = true;
+              //  }
+
+                if (goToPlayer)
+                {
+                    var checkRay = Physics2D.Raycast(transform.position, Vector2.left * transform.localScale.x * 4, hitRange, playerLayer);
+
+                    if(checkRay)
+                    {
+                        thisAnimator.SetTrigger("Attack");
+                        goToPlayer = false;
+                    }
+                  
+                  //  freezeCheck = true;
+                }
+            }
+        }*/

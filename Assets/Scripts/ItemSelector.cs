@@ -41,6 +41,7 @@ public class ItemSelector : MonoBehaviour
     XWeaponTrail weaponTrail;
     GameObject slashMarks;
     TempMove tempMove;
+    GameObject absoluteShield;
 
 
     void Start()
@@ -48,16 +49,17 @@ public class ItemSelector : MonoBehaviour
         objectFinder = GameObject.FindGameObjectWithTag("Initializer").GetComponent<ObjectFinder>();
 
         slashMarks = objectFinder.slashMarks;
+        absoluteShield = objectFinder.absoluteShield;
         weaponTrail = weaponRenderer.gameObject.GetComponentInChildren<XWeaponTrail>();
         tempMove = GetComponent<TempMove>();
 
 
         //Placeholder: Default stuff
-        SetWeapon("Infused Blazer");
+        SetWeapon("Crystalized Frostsbite");
         SetMask("Hellrider");
         SetChestplate("Roars of Hell");
-        SetArms("Combustion");
-        SetLegs("Flame");
+        SetArms("Exo Arms");
+        SetLegs("Purging Rage");
     }
 
 
@@ -85,10 +87,10 @@ public class ItemSelector : MonoBehaviour
         }
     }
 
-
-    //Lambda operation to find equipment names.
+    
     public void SetWeapon(string name)
     {
+        //Lambda operation to find equipment names.
         Weapons setWeapon = allWeapons.Find(x => x.name == name);
 
         if(setWeapon == null)
@@ -106,6 +108,7 @@ public class ItemSelector : MonoBehaviour
         slashMarks.GetComponent<SpriteRenderer>().color = setWeapon.slashColor;
         slashMarks.GetComponent<ParticleSystem>().startColor = setWeapon.slashColor;
         slashMarks.GetComponent<ParticleSystemRenderer>().sharedMaterial.mainTexture = setWeapon.slashParticlesTexture;
+        absoluteShield.GetComponent<AbsoluteShieldEffector>().setColor = setWeapon.slashColor;
 
         //Values
         tempMove.lightAttackStrength = setWeapon.lightAttackDamage;

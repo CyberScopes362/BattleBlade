@@ -23,6 +23,9 @@ public class ObjectFinder : MonoBehaviour
     public GameObject spawnPoint;
 
     public LayerMask floorMask;
+    public LayerMask playerLayer;
     public int layerOrder = 0;
+
     public GameObject slashMarks;
+    public GameObject absoluteShield;
 }

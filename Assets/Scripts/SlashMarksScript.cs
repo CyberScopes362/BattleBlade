@@ -4,7 +4,6 @@ using System.Collections;
 public class SlashMarksScript : MonoBehaviour
 {
     SpriteRenderer thisRenderer;
-    ItemSelector itemSelector;
 
     public float maxTime;
 

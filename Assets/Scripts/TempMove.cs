@@ -10,12 +10,14 @@ public class TempMove : MonoBehaviour
     public GameObject weapon;
     public GameObject heroHitParticles;
     public GameObject critHitObject;
+    public GameObject slamAttackParticles;
+    GameObject absoluteShield;
     GameObject floor;
 
     //Get Components
     Animator thisAnimator;
     Rigidbody2D thisRigidbody;
-    BoxCollider2D weaponCollider;
+    EdgeCollider2D weaponCollider;
     public XWeaponTrail trail;
 
     //General Speeds and number values
@@ -38,6 +40,13 @@ public class TempMove : MonoBehaviour
 
     float growingSpeed = 0.1f;
     float airFloatCounter = 0.4f;
+    float airBoostCounter = 0.6f;
+
+    public float airBoostSpeed;
+    public float jumpAttackCheckDistance;
+
+    public float airGravScale;
+    float defaultGravScale;
 
     //Initiators between Update and FixedUpdate
     bool jumpInitiated = false;
@@ -48,6 +57,9 @@ public class TempMove : MonoBehaviour
     bool block = false;
     bool isFlipped = false;
     bool lerpToGround = false;
+    bool airBoost = false;
+    bool inAirHeightCheck;
+    bool midNoTimeAttack;
 
     //Timers and Set Times
     float activeTimer;
@@ -55,18 +67,22 @@ public class TempMove : MonoBehaviour
     public float lightAttackTime = 0.5f;
     public float heavyAttackTime = 1f;
     public float jumpAttackTime;
+    public float airAttackTime;
     public float jumpInterval = 0.3f;
 
     //Dash Speeds
     float currentDashSpeed;
     public float lightAttackDashSpeed = 1.4f;
     public float heavyAttackDashSpeed = 0.9f;
+    public float airBoostDistance;
 
     //Vectors
     public Transform pointA;
     public Transform pointB;
-    public Transform boxOrigination;
     public Transform realheroPosition;
+
+    //Colliders
+    public Transform[] externalColliders;
 
     //Class Related
     enum HeroClass {Fire, Ice, Wind, Energy, Neon, Cyber, Nuclear}
@@ -80,18 +96,16 @@ public class TempMove : MonoBehaviour
     public float maxHealth;
     public float currentHealth;
 
-    int currentAttackType;
     float currentDamage;
     float currentKnockback;
     float currentCriticalChance;
 
     //These vars should be set by weapon
-    //Knockback divider amount
     public float knockbackRatio;
-    //Strength of attacks
     public float lightAttackStrength;
     public float heavyAttackStrength;
     public float slamAttackStrength;
+    public float blockReducer;
     public float criticalChance;
 
 
@@ -102,16 +116,19 @@ public class TempMove : MonoBehaviour
         transform.position = objectFinder.spawnPoint.transform.position;
         floor = objectFinder.floor;
         floorMask = objectFinder.floorMask;
+        absoluteShield = objectFinder.absoluteShield;
 
         thisAnimator = GetComponent<Animator>();
         thisRigidbody = GetComponent<Rigidbody2D>();
-        weaponCollider = weapon.GetComponent<BoxCollider2D>();
+        weaponCollider = weapon.GetComponent<EdgeCollider2D>();
 
         blockingMovementSpeed = defaultMovementSpeed / 3f;
         activeTimer = 0f;
 
+        defaultGravScale = thisRigidbody.gravityScale;
+
         currentHealth = maxHealth;
-        SetAnimationType(0);
+        thisAnimator.SetInteger("AttackType", 0);
         SetHeroClass(HeroClass.Fire);
     }
 
@@ -146,11 +163,15 @@ public class TempMove : MonoBehaviour
                 }
                 else
                 {
-                    if(isGrounded == 2)
+                    if (isGrounded == 2 )
                     {
                         //Jump Slam Attack
                         if (Input.GetButtonDown("Fire2"))
                             Attack(2);
+
+                        //Air Attack
+                        if (Input.GetButtonDown("Fire1"))
+                            Attack(3);
                     }
                 }
             } 
@@ -163,9 +184,6 @@ public class TempMove : MonoBehaviour
         {
             thisAnimator.SetBool("Block", true);
             movementSpeed = blockingMovementSpeed;
-
-            if (weaponCollider.isTrigger != false)
-              weaponCollider.isTrigger = false;
 
             if(!block)
                 block = true;
@@ -198,6 +216,7 @@ public class TempMove : MonoBehaviour
         {
             isGrounded = 0;
             thisAnimator.SetInteger("Jump", isGrounded);
+            midNoTimeAttack = false;
         }
 
        
@@ -205,6 +224,10 @@ public class TempMove : MonoBehaviour
 
     void FixedUpdate()
     {
+        //Raycast Check
+        //Checks if distance between hero and floor is too low
+        inAirHeightCheck = Physics2D.Raycast(transform.position, Vector2.down, jumpAttackCheckDistance, floorMask);
+
         Vector3 moveForward = new Vector3(movementSpeed * flipRatio, 0f, 0f);
         Vector3 dashForward = new Vector3(currentDashSpeed * flipRatio, 0f, 0f);
 
@@ -249,11 +272,15 @@ public class TempMove : MonoBehaviour
         if(dash)
             transform.position += dashForward * currentDashSpeed * Time.deltaTime;
 
+        //For Jump Slam Attack
         if(lerpToGround)
         {
             if(isGrounded == 0)
             {
                 thisAnimator.SetTrigger("JumpAttackSlamExecute");
+                //Use pointB as point to create slam particles
+                Instantiate(slamAttackParticles, pointB.transform.position, transform.rotation);
+
                 lerpToGround = false;
                 growingSpeed = 0.1f;
                 thisRigidbody.isKinematic = false;
@@ -280,6 +307,23 @@ public class TempMove : MonoBehaviour
             }
         }
 
+        //For Air Attack
+        if(airBoost)
+        {
+            if (airBoostCounter > 0f)
+            {
+                airBoostCounter -= 1f * Time.deltaTime;
+                transform.position = Vector2.Lerp(transform.position, new Vector2(transform.position.x + (flipRatio * airBoostDistance), transform.position.y), airBoostSpeed * Time.deltaTime);
+                thisRigidbody.gravityScale = airGravScale;
+            }
+            else
+            {
+                airBoostCounter = 0.6f;
+                thisRigidbody.gravityScale = defaultGravScale;
+                airBoost = false;
+            }
+        }
+
         //Reset jump
         jumpInitiated = false;
     }
@@ -294,11 +338,17 @@ public class TempMove : MonoBehaviour
 
     void Attack(int attackType)
     {
-        //attackType: 0 = Light, 1 = Heavy, 2 = Jump Attack
+        //attackType: 
+        //0 = Light, 
+        //1 = Heavy, 
+        //2 = Jump Attack, 
+        //3 = Air Attack
+
+        if (midNoTimeAttack)
+            return;
 
         randomAttack = Random.Range(1, 4);
         thisAnimator.SetInteger("SetRandomAttack", randomAttack);
-        currentAttackType = attackType;
 
         if (activeTimer > 0f)
             thisAnimator.SetTrigger("AttackConsecutive");
@@ -310,6 +360,7 @@ public class TempMove : MonoBehaviour
                 currentDashSpeed = lightAttackDashSpeed;
                 thisAnimator.SetTrigger("LightAttack");
                 activeTimer = lightAttackTime;
+                currentDamage = lightAttackStrength;
                 break;
             
             //Heavy
@@ -317,46 +368,47 @@ public class TempMove : MonoBehaviour
                 currentDashSpeed = heavyAttackDashSpeed;
                 thisAnimator.SetTrigger("HeavyAttack");
                 activeTimer = heavyAttackTime;
-                break;
-
-            //Jump Attack
-            case 2:
-                currentDashSpeed = 0f;
-                thisAnimator.SetTrigger("JumpAttackSlam");
-                activeTimer = jumpAttackTime;
-                lerpToGround = true;
-                break;
-        }
-    }
-
-    public void DealDamage()
-    {
-        switch (currentAttackType)
-        {
-            //Light
-            case 0:
-                currentDamage = lightAttackStrength;
-                break;
-
-            //Heavy
-            case 1:
                 currentDamage = heavyAttackStrength;
                 break;
 
             //Jump Attack
             case 2:
-                currentDamage = slamAttackStrength;
+                if(!inAirHeightCheck)
+                {
+                    currentDashSpeed = 0f;
+                    thisAnimator.SetTrigger("JumpAttackSlam");
+                    activeTimer = jumpAttackTime;
+                    currentDamage = slamAttackStrength;
+                    lerpToGround = true;
+                }
+                break;
+
+            //Air Attack
+            case 3:
+                if (!inAirHeightCheck)
+                {
+                    currentDashSpeed = 0f;
+                    thisAnimator.SetTrigger("AirAttack");
+                    activeTimer = airAttackTime;
+                    var airAttackStrength = lightAttackStrength / 1.4f;
+                    currentDamage = airAttackStrength;
+                    midNoTimeAttack = true;
+                    airBoost = true;
+                }
                 break;
         }
+    }
 
+    public void DealDamage(int selectCollider)
+    {
         //
         //## Damage modifiers go here
         // eg currentDamage = currentDamage * boost/ability/whatever
         //
-        
+
         currentKnockback = currentDamage / knockbackRatio;
 
-        var hit = Physics2D.BoxCastAll(boxOrigination.transform.position, new Vector2(2f, 2.3f), 0f, Vector2.zero, attackRange, attackableMask);
+        var hit = Physics2D.BoxCastAll(externalColliders[selectCollider].transform.position, new Vector2(externalColliders[selectCollider].GetComponent<BoxCollider2D>().bounds.size.x, externalColliders[selectCollider].GetComponent<BoxCollider2D>().bounds.size.y), 0f, Vector2.zero, attackRange, attackableMask);
 
         for (var i = 0; i < hit.Length; i++)
             hit[i].transform.gameObject.GetComponentInParent<DamageModifier>().Hit(currentDamage, currentKnockback * flipRatio, critHitObject, criticalChance);
@@ -364,18 +416,41 @@ public class TempMove : MonoBehaviour
 
     public void TakeDamage(float takeDamage, float takeKnockback, int takeKnockbackDirection)
     {
-        thisAnimator.SetTrigger("TakeHit");
-        Instantiate(heroHitParticles, transform.position, transform.rotation);
+        //TODO: Activate block only when facing enemies
+        if (block)
+        {
+            if((takeKnockbackDirection * transform.localScale.x) > 0)
+            {
+                takeDamage /= blockReducer;
+                Instantiate(absoluteShield, transform.position, transform.rotation);
+            }
+            else
+            {
+                //Dont want to play hit animation while jumping.
+                if (isGrounded == 0)
+                    thisAnimator.SetTrigger("TakeHit");
+
+                Instantiate(heroHitParticles, transform.position, transform.rotation);
+                thisRigidbody.velocity = new Vector2((-takeKnockback * takeKnockbackDirection) / 1.25f, thisRigidbody.velocity.y);
+            }
+        }
+        else
+        {
+            //Dont want to play hit animation while jumping.
+            if (isGrounded == 0)
+                thisAnimator.SetTrigger("TakeHit");
+
+            Instantiate(heroHitParticles, transform.position, transform.rotation);
+            thisRigidbody.velocity = new Vector2((-takeKnockback * takeKnockbackDirection) / 1.25f, thisRigidbody.velocity.y);
+        }
+
         currentHealth -= takeDamage;
-        thisRigidbody.velocity = new Vector2(-takeKnockback * takeKnockbackDirection, thisRigidbody.velocity.y);
     }
 
 
-    //If just swords, this system should be removed.
-    void SetAnimationType(int setType)
-    {
-        thisAnimator.SetInteger("AttackType", setType);
-    }
+
+
+
 
     //Set Perks
     //Keep at 1dp for complete synchronization and simpler settings
@@ -475,6 +550,12 @@ public class TempMove : MonoBehaviour
                 movementSpeed = defaultMovementSpeed * 0.85f;
                 break;
         }
+    }
+
+    public void SetBlockCollider()
+    {
+        if (weaponCollider.isTrigger != false)
+            weaponCollider.isTrigger = false;
     }
 
     public void ActivateTrail()

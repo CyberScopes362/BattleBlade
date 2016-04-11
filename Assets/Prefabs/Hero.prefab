@@ -8,7 +8,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 437348}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: TrailPointStart
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24,7 +24,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 488274}
   - 114: {fileID: 11412134}
-  m_Layer: 11
+  m_Layer: 12
   m_Name: Trail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -45,7 +45,7 @@ GameObject:
   - 50: {fileID: 5085654}
   - 61: {fileID: 6109264}
   - 58: {fileID: 5847352}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Hero
   m_TagString: Player
   m_Icon: {fileID: 0}
@@ -61,7 +61,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 497114}
   - 212: {fileID: 21255950}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: RightArm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -77,7 +77,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 438740}
   - 212: {fileID: 21298096}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: RightUpperLeg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -93,7 +93,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 458658}
   - 212: {fileID: 21236220}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: LeftLowerLeg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -109,7 +109,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 418116}
   - 212: {fileID: 21250408}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: LeftUpperLeg
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -124,7 +124,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 441642}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Legs
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -140,7 +140,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 409340}
   - 212: {fileID: 21207032}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Mask
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -156,7 +156,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 481222}
   - 212: {fileID: 21296684}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: RightFoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -172,8 +172,23 @@ GameObject:
   m_Component:
   - 4: {fileID: 493980}
   - 212: {fileID: 21282824}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: RightLowerLeg
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &143420
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 459230}
+  m_Layer: 0
+  m_Name: ExternalColliders
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -188,7 +203,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 421840}
   - 212: {fileID: 21224892}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: LeftShoulder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -225,9 +240,25 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &158318
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 472864}
+  - 61: {fileID: 6196974}
+  m_Layer: 0
+  m_Name: BoxAirSpinRight
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &158696
 GameObject:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 4
@@ -235,7 +266,7 @@ GameObject:
   - 4: {fileID: 459810}
   - 61: {fileID: 6188886}
   m_Layer: 0
-  m_Name: BoxOrigination
+  m_Name: BoxAirSpinLeft
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -250,7 +281,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 426916}
   - 212: {fileID: 21233388}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: RightShoulder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -266,7 +297,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 415742}
   - 212: {fileID: 21237640}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Front
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -281,7 +312,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 458080}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: TrailPointEnd
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -298,7 +329,7 @@ GameObject:
   - 4: {fileID: 444920}
   - 212: {fileID: 21296620}
   - 61: {fileID: 6177040}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Weapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -314,7 +345,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 415862}
   - 212: {fileID: 21271890}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Neck
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -330,7 +361,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 468340}
   - 212: {fileID: 21204990}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: LeftFoot
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -360,7 +391,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 485832}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Arms
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -376,8 +407,24 @@ GameObject:
   m_Component:
   - 4: {fileID: 466356}
   - 212: {fileID: 21266952}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: LeftArm
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &185256
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 426342}
+  - 61: {fileID: 6189352}
+  m_Layer: 0
+  m_Name: BoxOrigination
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -392,7 +439,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 412572}
   - 212: {fileID: 21226768}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Back
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -422,7 +469,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 469024}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Body
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -436,7 +483,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 175736}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.101, y: 0, z: 0}
+  m_LocalPosition: {x: 0.25, y: -0.026000023, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 416822}
@@ -516,7 +563,7 @@ Transform:
   - {fileID: 441642}
   - {fileID: 475612}
   - {fileID: 401892}
-  - {fileID: 459810}
+  - {fileID: 459230}
   m_Father: {fileID: 0}
   m_RootOrder: 0
 --- !u!4 &418116
@@ -545,6 +592,18 @@ Transform:
   - {fileID: 466356}
   m_Father: {fileID: 485832}
   m_RootOrder: 1
+--- !u!4 &426342
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 185256}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.9300003, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 459230}
+  m_RootOrder: 0
 --- !u!4 &426916
 Transform:
   m_ObjectHideFlags: 1
@@ -635,6 +694,21 @@ Transform:
   - {fileID: 468340}
   m_Father: {fileID: 418116}
   m_RootOrder: 0
+--- !u!4 &459230
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 143420}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 426342}
+  - {fileID: 472864}
+  - {fileID: 459810}
+  m_Father: {fileID: 416822}
+  m_RootOrder: 4
 --- !u!4 &459810
 Transform:
   m_ObjectHideFlags: 1
@@ -642,11 +716,11 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 158696}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.93, y: 0, z: 0}
+  m_LocalPosition: {x: -1.33, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 416822}
-  m_RootOrder: 4
+  m_Father: {fileID: 459230}
+  m_RootOrder: 2
 --- !u!4 &466356
 Transform:
   m_ObjectHideFlags: 1
@@ -688,6 +762,18 @@ Transform:
   - {fileID: 485832}
   m_Father: {fileID: 416822}
   m_RootOrder: 0
+--- !u!4 &472864
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 158318}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.45, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 459230}
+  m_RootOrder: 1
 --- !u!4 &472964
 Transform:
   m_ObjectHideFlags: 1
@@ -835,9 +921,9 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_UsedByEffector: 0
-  m_Offset: {x: 0.036000017, y: 0.6750019}
+  m_Offset: {x: -0.0016790032, y: 0.7331538}
   serializedVersion: 2
-  m_Size: {x: 0.3, y: 1.65}
+  m_Size: {x: 0.18321453, y: 1.2891}
 --- !u!61 &6188886
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -849,9 +935,37 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_UsedByEffector: 0
-  m_Offset: {x: 0, y: 0}
+  m_Offset: {x: 0.6, y: 0.31}
   serializedVersion: 2
-  m_Size: {x: 2, y: 2.3}
+  m_Size: {x: 1.72, y: 2.03}
+--- !u!61 &6189352
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 185256}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_Offset: {x: 0.48, y: 0.0947392}
+  serializedVersion: 2
+  m_Size: {x: 1.86, y: 2.5051007}
+--- !u!61 &6196974
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 158318}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_Offset: {x: 0.6, y: 0.31}
+  serializedVersion: 2
+  m_Size: {x: 1.72, y: 2.03}
 --- !u!95 &9568848
 Animator:
   serializedVersion: 3
@@ -928,7 +1042,7 @@ MonoBehaviour:
     lightAttackDamage: 6
     heavyAttackDamage: 10
     slamAttackDamage: 14
-    knockbackRatio: 5.5
+    knockbackRatio: 5
     criticalChance: 0.05
   - name: Slicer
     rarity: 0
@@ -988,7 +1102,7 @@ MonoBehaviour:
     lightAttackDamage: 8
     heavyAttackDamage: 14
     slamAttackDamage: 16
-    knockbackRatio: 3.5
+    knockbackRatio: 3.75
     criticalChance: 0.2
   - name: Frostsbite
     rarity: 0
@@ -1108,12 +1222,12 @@ MonoBehaviour:
     description: Oooooo upgrades...
     shoulder: {fileID: 21300000, guid: cebfdc10be48cf74faa83a4053c6b4a2, type: 3}
     arm: {fileID: 21300000, guid: 99a75d59614efd342b561745526878cc, type: 3}
-  - name: Exo Arm
+  - name: Exo Arms
     rarity: 2
     description: Be careful with this, it's quite expensive.
     shoulder: {fileID: 21300000, guid: e83eed58c05b73f409ba47d27f12b9ee, type: 3}
     arm: {fileID: 21300000, guid: d378c3a5eca4bcb4e8aa399a69615906, type: 3}
-  - name: Fiery Arm
+  - name: Fiery Arms
     rarity: 0
     description: Sorry, the little 'flame' isn't actually real.
     shoulder: {fileID: 21300000, guid: 6a0b45c6c12e3fd41a6236a4b7ecbe98, type: 3}
@@ -1135,42 +1249,43 @@ MonoBehaviour:
     upperLeg: {fileID: 0}
     lowerLeg: {fileID: 0}
     boot: {fileID: 0}
-  - name: 
+  - name: Neon Legs
     rarity: 0
-    description: 
-    upperLeg: {fileID: 0}
-    lowerLeg: {fileID: 0}
-    boot: {fileID: 0}
-  - name: 
+    description: These would look sick on the dance floor!
+    upperLeg: {fileID: 21300000, guid: 39c14e52ba1d38147b8cd4b1b63d4900, type: 3}
+    lowerLeg: {fileID: 21300000, guid: 9c6d05d89d4121a4199ca5ba6347c927, type: 3}
+    boot: {fileID: 21300000, guid: 816b9d0467a670c44a2fc7a70d118a06, type: 3}
+  - name: Slitted Neon Legs
+    rarity: 1
+    description: You look like some sort of cyborg from the future.
+    upperLeg: {fileID: 21300000, guid: e14573803baaee947b179fc563f3aab1, type: 3}
+    lowerLeg: {fileID: 21300000, guid: 42c336a564c36074c857fa04832176c9, type: 3}
+    boot: {fileID: 21300000, guid: c603c6dea755cbb4883c79664d183da1, type: 3}
+  - name: Wired Suspension
+    rarity: 2
+    description: Ready to become a robotic wartank?
+    upperLeg: {fileID: 21300000, guid: 9a1340e183d52e147bccf33ecdd77570, type: 3}
+    lowerLeg: {fileID: 21300000, guid: 2100f49cf3356d943981fbe8c09c3567, type: 3}
+    boot: {fileID: 21300000, guid: 5128a6a93a3d5ab44ad2764850f60ed7, type: 3}
+  - name: Fiery Legs
     rarity: 0
-    description: 
-    upperLeg: {fileID: 0}
-    lowerLeg: {fileID: 0}
-    boot: {fileID: 0}
-  - name: 
-    rarity: 0
-    description: 
-    upperLeg: {fileID: 0}
-    lowerLeg: {fileID: 0}
-    boot: {fileID: 0}
-  - name: 
-    rarity: 0
-    description: 
-    upperLeg: {fileID: 0}
-    lowerLeg: {fileID: 0}
-    boot: {fileID: 0}
-  - name: 
-    rarity: 0
-    description: 
-    upperLeg: {fileID: 0}
-    lowerLeg: {fileID: 0}
-    boot: {fileID: 0}
-  - name: 
-    rarity: 0
-    description: 
-    upperLeg: {fileID: 0}
-    lowerLeg: {fileID: 0}
-    boot: {fileID: 0}
+    description: Burning feet!
+    upperLeg: {fileID: 21300000, guid: 9e994f3cd262bb340a5849fdd5e209bb, type: 3}
+    lowerLeg: {fileID: 21300000, guid: c19c4a6695fb18d4f859500f430f55fd, type: 3}
+    boot: {fileID: 21300000, guid: 90ab3487d0151c14291d477710ce3e33, type: 3}
+  - name: Sleek Heat
+    rarity: 1
+    description: 'Firewalking? Pffft. '
+    upperLeg: {fileID: 21300000, guid: 9759192307a92e34497ad58c2b300593, type: 3}
+    lowerLeg: {fileID: 21300000, guid: f8db4f0af96b82f4c9bfe8f5e538af76, type: 3}
+    boot: {fileID: 21300000, guid: d9d4fe940c5e6ce4494a1153f39c90d1, type: 3}
+  - name: Purging Rage
+    rarity: 3
+    description: You wouldn't be able to wear these if it weren't for your countless
+      leg days.
+    upperLeg: {fileID: 21300000, guid: a50abf9b4c5acc8449459d5f7fd95b05, type: 3}
+    lowerLeg: {fileID: 21300000, guid: 6e1f3557685c4a64fb1c185e28159bc8, type: 3}
+    boot: {fileID: 21300000, guid: 03c68df36464e484ba9dd1230c5a8fac, type: 3}
   currentWeapon: 
   currentMask: 
   currentChestplate: 
@@ -1189,33 +1304,45 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   weapon: {fileID: 173188}
+  heroHitParticles: {fileID: 159894, guid: 54d3c41e2144bb14283cdc625e9b3ebc, type: 2}
+  critHitObject: {fileID: 156710, guid: f2af84ccc8dcd8747b4344383e20e1a8, type: 2}
+  slamAttackParticles: {fileID: 183580, guid: 82b8a8606f7226346a21ff78eb0d87ec, type: 2}
   trail: {fileID: 11412134}
   defaultMovementSpeed: 3
   jumpHeight: 8.1
   trailOvertime: -0.3
   attackRange: 5
   isGrounded: 0
+  airBoostSpeed: 0.09
+  jumpAttackCheckDistance: 3.4
+  airGravScale: 0.725
   canAttack: 1
   dash: 0
   lightAttackTime: 0.4
   heavyAttackTime: 0.9
   jumpAttackTime: 0.8
+  airAttackTime: 0.6
   jumpInterval: 0.3
   lightAttackDashSpeed: 1
   heavyAttackDashSpeed: 0.7
+  airBoostDistance: 80
   pointA: {fileID: 404048}
   pointB: {fileID: 472964}
-  boxOrigination: {fileID: 459810}
   realheroPosition: {fileID: 401892}
+  externalColliders:
+  - {fileID: 426342}
+  - {fileID: 472864}
+  - {fileID: 459810}
   attackableMask:
     serializedVersion: 2
     m_Bits: 1024
-  maxHealth: 100
+  maxHealth: 400
   currentHealth: 0
-  knockbackRatio: 2.5
+  knockbackRatio: 3.75
   lightAttackStrength: 10
   heavyAttackStrength: 20
   slamAttackStrength: 30
+  blockReducer: 2
   criticalChance: 0
 --- !u!212 &21204990
 SpriteRenderer:

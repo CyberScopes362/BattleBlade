@@ -62,7 +62,6 @@ public class DamageModifier : MonoBehaviour
             givenKnockbackDirection = -1;
         else
             givenKnockbackDirection = 1;
-
         
         tempMove.TakeDamage(givenDamage, givenKnockback, givenKnockbackDirection);
 	}

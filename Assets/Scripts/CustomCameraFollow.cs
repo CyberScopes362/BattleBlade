@@ -10,6 +10,7 @@ public class CustomCameraFollow : MonoBehaviour
     Vector3 prevTransform;
 
     public Vector3 offset;
+    public float offsetYPreset;
     public float smoothSpeed;
     public float camPointGap;
     public float xOffset;
@@ -37,26 +38,27 @@ public class CustomCameraFollow : MonoBehaviour
     //Fixed Update for smooth interpolation and sync with hero
     void FixedUpdate()
     {
-        setPosition = new Vector3(hero.position.x + offset.x, Camera.main.transform.position.y, offset.z);
+        setPosition = new Vector3(hero.position.x + offset.x, transform.position.y, offset.z);
 
         //Movement related to start position
-        if(prevTransform.x < startPointX || prevTransform.x > endPointX)
+        if (prevTransform.x < startPointX || prevTransform.x > endPointX)
         {
             prevTransform = Vector3.SmoothDamp(prevTransform, setPosition, ref currentPosition, smoothSpeed * Time.deltaTime);
+            transform.position = new Vector3(transform.position.x, (hero.position.y + offset.y) * offsetYPreset, transform.position.z);
         }
         else
         {
             prevTransform = transform.position;
+            transform.position = new Vector3(transform.position.x, (hero.position.y + offset.y) * offsetYPreset, transform.position.z);
             transform.position = Vector3.SmoothDamp(transform.position, setPosition, ref currentPosition, smoothSpeed * Time.deltaTime);
         }
 
-        if(hero.transform.localScale.x == -1)
-        {
+        
+
+
+        if (hero.transform.localScale.x == -1)
             offset.x = -xOffset;
-        }
         else
-        {
             offset.x = xOffset;
-        }
     }
 }

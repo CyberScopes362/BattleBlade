@@ -112,6 +112,21 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &137690
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 4
+  m_Component:
+  - 4: {fileID: 403568}
+  m_Layer: 0
+  m_Name: InfiniteChase
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &141018
 GameObject:
   m_ObjectHideFlags: 1
@@ -242,6 +257,18 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!4 &403568
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 137690}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -5, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 427014}
+  m_RootOrder: 2
 --- !u!4 &412552
 Transform:
   m_ObjectHideFlags: 1
@@ -303,6 +330,7 @@ Transform:
   m_Children:
   - {fileID: 448304}
   - {fileID: 419348}
+  - {fileID: 403568}
   m_Father: {fileID: 432190}
   m_RootOrder: 2
 --- !u!4 &432190
@@ -520,8 +548,8 @@ MonoBehaviour:
   maxHealth: 40
   damageMin: 10
   damageMax: 20
-  knockbackMin: 4
-  knockbackMax: 5
+  knockbackMin: 1.5
+  knockbackMax: 2.75
   knockback: 0
   healthRatio: 0
   isHit: 0
@@ -537,18 +565,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 657cf657301458541b891ad774e48baa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1.9
-  speedDifferentiation: 0.4
-  attackRange: 1.4
+  speed: 1.65
+  attackSpeedMultiplier: 0.95
+  speedDifferentiation: 0.45
+  hitRange: 1
   attacking: 0
   initiateAttack: 0
   attacked: 0
   goToPlayer: 0
-  freezeCheck: 0
-  range: 0
   isGrounded: 0
   pointA: {fileID: 448304}
   pointB: {fileID: 419348}
+  infiniteChase: {fileID: 403568}
 --- !u!114 &11433102
 MonoBehaviour:
   m_ObjectHideFlags: 1
