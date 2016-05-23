@@ -55,10 +55,10 @@ public class ItemSelector : MonoBehaviour
 
 
         //Placeholder: Default stuff
-        SetWeapon("Crystalized Frostsbite");
+        SetWeapon("Legacy Scorched Blade");
         SetMask("Hellrider");
         SetChestplate("Roars of Hell");
-        SetArms("Exo Arms");
+        SetArms("Combustion");
         SetLegs("Purging Rage");
     }
 
@@ -98,8 +98,6 @@ public class ItemSelector : MonoBehaviour
             print("Invalid Weapon Choice.");
             return;
         }
-        else
-            print("Weapon Changed To: " + setWeapon.name);
 
         //Visuals
         weaponRenderer.sprite = setWeapon.weaponSprite;
@@ -115,6 +113,14 @@ public class ItemSelector : MonoBehaviour
         tempMove.heavyAttackStrength = setWeapon.heavyAttackDamage;
         tempMove.slamAttackStrength = setWeapon.slamAttackDamage;
         tempMove.criticalChance = setWeapon.criticalChance;
+        tempMove.knockbackRatio = setWeapon.knockbackRatio;
+
+        //Value Addons
+        tempMove.movS += setWeapon.movAdd;
+        tempMove.atkS += setWeapon.atkAdd;
+        tempMove.blkS += setWeapon.blkAdd;
+        tempMove.blkbstS += setWeapon.blkbstAdd;
+        tempMove.hthS += setWeapon.hthAdd;
     }
 
     public void SetMask(string name)
@@ -126,10 +132,18 @@ public class ItemSelector : MonoBehaviour
             print("Invalid Mask Choice.");
             return;
         }
-        else
-            print("Mask Changed To: " + setMask.name);
 
+        //Visuals
         maskRenderer.sprite = setMask.maskSprite;
+
+        //Values
+
+        //Value Addons
+        tempMove.movS += setMask.movAdd;
+        tempMove.atkS += setMask.atkAdd;
+        tempMove.blkS += setMask.blkAdd;
+        tempMove.blkbstS += setMask.blkbstAdd;
+        tempMove.hthS += setMask.hthAdd;
     }
 
     public void SetChestplate(string name)
@@ -141,11 +155,16 @@ public class ItemSelector : MonoBehaviour
             print("Invalid Chestplate Choice.");
             return;
         }
-        else
-            print("Chestplate Changed To: " + setChestplate.name);
 
         chestplateRenderer[0].sprite = setChestplate.body;
         chestplateRenderer[1].sprite = setChestplate.body;
+
+        //Value Addons
+        tempMove.movS += setChestplate.movAdd;
+        tempMove.atkS += setChestplate.atkAdd;
+        tempMove.blkS += setChestplate.blkAdd;
+        tempMove.blkbstS += setChestplate.blkbstAdd;
+        tempMove.hthS += setChestplate.hthAdd;
     }
 
     public void SetArms(string name)
@@ -157,13 +176,18 @@ public class ItemSelector : MonoBehaviour
             print("Invalid Arms Choice.");
             return;
         }
-        else
-            print("Arms Changed To: " + setArms.name);
 
         armsRenderer[0].sprite = setArms.shoulder;
         armsRenderer[1].sprite = setArms.arm;
         armsRenderer[2].sprite = setArms.shoulder;
         armsRenderer[3].sprite = setArms.arm;
+
+        //Value Addons
+        tempMove.movS += setArms.movAdd;
+        tempMove.atkS += setArms.atkAdd;
+        tempMove.blkS += setArms.blkAdd;
+        tempMove.blkbstS += setArms.blkbstAdd;
+        tempMove.hthS += setArms.hthAdd;
     }
 
     public void SetLegs(string name)
@@ -175,8 +199,6 @@ public class ItemSelector : MonoBehaviour
             print("Invalid Legs Choice.");
             return;
         }
-        else
-            print("Legs Changed To: " + setLegs.name);
 
         legsRenderer[0].sprite = setLegs.upperLeg;
         legsRenderer[1].sprite = setLegs.lowerLeg;
@@ -184,6 +206,13 @@ public class ItemSelector : MonoBehaviour
         legsRenderer[3].sprite = setLegs.upperLeg;
         legsRenderer[4].sprite = setLegs.lowerLeg;
         legsRenderer[5].sprite = setLegs.boot;
+
+        //Value Addons
+        tempMove.movS += setLegs.movAdd;
+        tempMove.atkS += setLegs.atkAdd;
+        tempMove.blkS += setLegs.blkAdd;
+        tempMove.blkbstS += setLegs.blkbstAdd;
+        tempMove.hthS += setLegs.hthAdd;
     }
 
 
@@ -206,6 +235,12 @@ public class ItemSelector : MonoBehaviour
         public float slamAttackDamage;
         public float knockbackRatio;
         public float criticalChance;
+
+        public float movAdd;
+        public float atkAdd;
+        public float blkAdd;
+        public float blkbstAdd;
+        public float hthAdd;
     }
 
     [System.Serializable]
@@ -216,6 +251,12 @@ public class ItemSelector : MonoBehaviour
         public string description;
 
         public Sprite maskSprite;
+
+        public float movAdd;
+        public float atkAdd;
+        public float blkAdd;
+        public float blkbstAdd;
+        public float hthAdd;
     }
 
     [System.Serializable]
@@ -226,6 +267,12 @@ public class ItemSelector : MonoBehaviour
         public string description;
 
         public Sprite body;
+
+        public float movAdd;
+        public float atkAdd;
+        public float blkAdd;
+        public float blkbstAdd;
+        public float hthAdd;
     }
 
     [System.Serializable]
@@ -238,6 +285,11 @@ public class ItemSelector : MonoBehaviour
         public Sprite shoulder;
         public Sprite arm;
 
+        public float movAdd;
+        public float atkAdd;
+        public float blkAdd;
+        public float blkbstAdd;
+        public float hthAdd;
     }
 
     [System.Serializable]
@@ -250,5 +302,11 @@ public class ItemSelector : MonoBehaviour
         public Sprite upperLeg;
         public Sprite lowerLeg;
         public Sprite boot;
+
+        public float movAdd;
+        public float atkAdd;
+        public float blkAdd;
+        public float blkbstAdd;
+        public float hthAdd;
     }
 }

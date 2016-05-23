@@ -11,39 +11,29 @@ public class SpikeScript : MonoBehaviour
 
     Vector2 heroPosition;
     RaycastHit2D checkRay;
+    LayerMask floorMask;
+    LayerMask playerLayer;
+
+    public Transform[] points;
 
     public float speed;
     public float attackSpeedMultiplier;
     public float speedDifferentiation;
     public float hitRange;
 
-    float setSpeed;
-
     public bool attacking = false;
     public bool initiateAttack = false;
     public bool attacked;
-
     public bool goToPlayer;
-    bool isDead;
-
-    bool nextLoopTrigger;
-    bool checkGoTo = true;
+    public bool isGrounded;
+    public bool freezeFix;
 
     float health;
-
-    public bool isGrounded;
-
-    LayerMask floorMask;
-    LayerMask playerLayer;
-
-    public Transform pointA;
-    public Transform pointB;
-    public Transform infiniteChase;
-
+    float setSpeed;
     float knockback;
 
-    bool deathTriggered = false;
-    int stuckFix = 0;
+    bool isDead;
+    bool deathTrigger;
 
 
     void Start()
@@ -67,23 +57,23 @@ public class SpikeScript : MonoBehaviour
 
     void Update()
     {
-        if (deathTriggered)
-            return;
+        //Grounded Check
+        isGrounded = Physics2D.OverlapArea(points[0].position, points[1].position, floorMask);
 
-        if (nextLoopTrigger)
+        if (deathTrigger)
         {
-            stuckFix = 0;
-            checkGoTo = true;
-            nextLoopTrigger = false;
+            if(isGrounded)
+            {
+                thisAnimator.SetTrigger("Die");
+                this.enabled = false;
+            }
+            else
+                return;
         }
-
 
         isDead = damageModifier.isDead;
         heroPosition = new Vector2(tempMove.realheroPosition.transform.position.x, transform.position.y);
         knockback = damageModifier.knockback;
-
-        //Grounded Check
-        isGrounded = Physics2D.OverlapArea(pointA.position, pointB.position, floorMask);
 
         //Hero Check
         checkRay = Physics2D.Raycast(transform.position, Vector2.left * transform.localScale.x * 4, hitRange, playerLayer);
@@ -101,19 +91,19 @@ public class SpikeScript : MonoBehaviour
                     transform.localScale = new Vector3(-0.5f, transform.localScale.y, transform.localScale.z);
             }
 
+            //Start State Checks
             if(checkRay)
             {
-                //Look if it aint broke dont fix it.
                 if (goToPlayer)
                 {
                     thisAnimator.SetTrigger("Attack");
                     goToPlayer = false;
-                    stuckFix = 1;
                 }
-                else
+
+                if(freezeFix)
                 {
-                    if(!goToPlayer && stuckFix == 0)
-                        goToPlayer = true;
+                    goToPlayer = true;
+                    freezeFix = false;
                 }
             }
             else
@@ -123,36 +113,28 @@ public class SpikeScript : MonoBehaviour
                     thisAnimator.SetTrigger("Move");
                     goToPlayer = true;
                 }
-
-                if(goToPlayer && checkGoTo)
-                {
-                    thisAnimator.SetTrigger("Move");
-                    goToPlayer = true;
-                    checkGoTo = false;
-                }
             }
+            //End State Checks
         }
 
         if (damageModifier.isHit == true)
         {
-            thisRigidbody.velocity = new Vector2(knockback, Mathf.Abs(knockback / 1.75f));
-            thisAnimator.SetTrigger("Hit");
-            isGrounded = false;
-            isDead = false;
-            damageModifier.isHit = false;
+            if(knockback != 0f)
+            {
+                thisRigidbody.velocity = new Vector2(knockback, Mathf.Abs(knockback / 1.75f));
+                thisAnimator.SetTrigger("Hit");
+            }
 
-            nextLoopTrigger = true;
+            isGrounded = false;
+            damageModifier.isHit = false;
         }
 
         if (isDead)
         {
-            if (isGrounded && deathTriggered == false)
+            if (deathTrigger == false)
             {
-                thisAnimator.SetTrigger("Die");
-                thisRigidbody.isKinematic = true;
-                GetComponent<BoxCollider2D>().enabled = false;
-                GetComponent<CircleCollider2D>().enabled = false;
-                deathTriggered = true;
+                deathTrigger = true;
+                gameObject.layer = LayerMask.NameToLayer("PassbyEntity");
                 GetComponentInParent<EnemyDeath>().enabled = true;
             }
         }
@@ -160,12 +142,12 @@ public class SpikeScript : MonoBehaviour
 
     void FixedUpdate()
     {
-        if (goToPlayer && isGrounded && deathTriggered == false)
+        if (goToPlayer && isGrounded && deathTrigger == false)
         {
             if (tempMove.isGrounded < 2)
                 thisRigidbody.position = Vector2.MoveTowards(transform.position, heroPosition, setSpeed * Time.deltaTime);
             else
-                thisRigidbody.position = Vector2.MoveTowards(transform.position, infiniteChase.position, Random.Range(setSpeed - 0.6f, setSpeed) * Time.deltaTime);
+                thisRigidbody.position = Vector2.MoveTowards(transform.position, points[2].position, Random.Range(setSpeed - 0.6f, setSpeed) * Time.deltaTime);
         }
     }
 
@@ -175,12 +157,17 @@ public class SpikeScript : MonoBehaviour
             damageModifier.Attack();
     }
 
-    void OnTriggerEnter(Collider heroCollider)
+    public void FreezeFix()
     {
-        print("Collided");
-        if(heroCollider.gameObject.GetComponent<TempMove>().isGrounded > 0)
+        freezeFix = true;
+    }
+
+    void OnCollisionEnter2D(Collision2D heroCollider)
+    {
+        if(heroCollider.gameObject.tag == "Player")
         {
-            damageModifier.Attack();
+            if (tempMove.isGrounded > 0 && tempMove.thisRigidbody.velocity.y <= 0f && tempMove.activeTimer <= 0f)
+                damageModifier.PushOut();
         }
     }
 }

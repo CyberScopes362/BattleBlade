@@ -8,7 +8,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 437348}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: TrailPointStart
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -24,7 +24,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 488274}
   - 114: {fileID: 11412134}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: Trail
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -312,7 +312,7 @@ GameObject:
   serializedVersion: 4
   m_Component:
   - 4: {fileID: 458080}
-  m_Layer: 12
+  m_Layer: 0
   m_Name: TrailPointEnd
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -329,7 +329,8 @@ GameObject:
   - 4: {fileID: 444920}
   - 212: {fileID: 21296620}
   - 61: {fileID: 6177040}
-  m_Layer: 12
+  - 68: {fileID: 6874482}
+  m_Layer: 0
   m_Name: Weapon
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -921,9 +922,9 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_UsedByEffector: 0
-  m_Offset: {x: -0.0016790032, y: 0.7331538}
+  m_Offset: {x: -0.0017613024, y: 0.72016984}
   serializedVersion: 2
-  m_Size: {x: 0.18321453, y: 1.2891}
+  m_Size: {x: 0.18321453, y: 1.2631246}
 --- !u!61 &6188886
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -949,9 +950,9 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_UsedByEffector: 0
-  m_Offset: {x: 0.48, y: 0.0947392}
+  m_Offset: {x: 0.318985, y: -0.23176503}
   serializedVersion: 2
-  m_Size: {x: 1.86, y: 2.5051007}
+  m_Size: {x: 1.5379639, y: 1.8520923}
 --- !u!61 &6196974
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -966,6 +967,21 @@ BoxCollider2D:
   m_Offset: {x: 0.6, y: 0.31}
   serializedVersion: 2
   m_Size: {x: 1.72, y: 2.03}
+--- !u!68 &6874482
+EdgeCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 173188}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_Offset: {x: -0.27, y: 0}
+  m_Points:
+  - {x: 0.49145544, y: 1.4371707}
+  - {x: 0.095708236, y: 0.108788066}
 --- !u!95 &9568848
 Animator:
   serializedVersion: 3
@@ -1044,6 +1060,11 @@ MonoBehaviour:
     slamAttackDamage: 14
     knockbackRatio: 5
     criticalChance: 0.05
+    movAdd: 0
+    atkAdd: 0
+    blkAdd: 0
+    blkbstAdd: 0
+    hthAdd: 0
   - name: Slicer
     rarity: 0
     description: This weapon was crafted with pieces of industrial metals for modern
@@ -1059,6 +1080,11 @@ MonoBehaviour:
     slamAttackDamage: 15
     knockbackRatio: 5
     criticalChance: 0.1
+    movAdd: 0
+    atkAdd: 0.05
+    blkAdd: 0.025
+    blkbstAdd: 0
+    hthAdd: 0
   - name: Requiem Slicer
     rarity: 3
     description: The slicer proved decent in close combat, but the Requiem versions'
@@ -1074,6 +1100,11 @@ MonoBehaviour:
     slamAttackDamage: 18
     knockbackRatio: 5
     criticalChance: 0.15
+    movAdd: 0
+    atkAdd: 0.05
+    blkAdd: 0.045
+    blkbstAdd: 0.035
+    hthAdd: 0
   - name: Blazer
     rarity: 0
     description: The Blazer was an ordinary steel weapon, until it was dipped into
@@ -1088,7 +1119,12 @@ MonoBehaviour:
     heavyAttackDamage: 14
     slamAttackDamage: 14
     knockbackRatio: 4
-    criticalChance: 0.15
+    criticalChance: 0.1
+    movAdd: 0.04
+    atkAdd: 0.04
+    blkAdd: 0.015
+    blkbstAdd: 0
+    hthAdd: 0
   - name: Infused Blazer
     rarity: 2
     description: This iteration of the Blazer was infused with demonic gems, and enchanted
@@ -1103,7 +1139,12 @@ MonoBehaviour:
     heavyAttackDamage: 14
     slamAttackDamage: 16
     knockbackRatio: 3.75
-    criticalChance: 0.2
+    criticalChance: 0.15
+    movAdd: 0.05
+    atkAdd: 0.05
+    blkAdd: 0.05
+    blkbstAdd: 0
+    hthAdd: 0
   - name: Frostsbite
     rarity: 0
     description: Usually, blades decay and rust when left in cold, wet conditions.
@@ -1119,7 +1160,12 @@ MonoBehaviour:
     heavyAttackDamage: 12
     slamAttackDamage: 16
     knockbackRatio: 4.5
-    criticalChance: 0.1
+    criticalChance: 0.08
+    movAdd: -0.1
+    atkAdd: -0.05
+    blkAdd: -0.1
+    blkbstAdd: 0.1
+    hthAdd: 0
   - name: Advanced Frostsbite
     rarity: 1
     description: This Frostsbite was left to decay for a prolonged period of time,
@@ -1134,11 +1180,16 @@ MonoBehaviour:
     heavyAttackDamage: 12
     slamAttackDamage: 18
     knockbackRatio: 4.5
-    criticalChance: 0.1
+    criticalChance: 0.09
+    movAdd: -0.05
+    atkAdd: 0
+    blkAdd: -0.1
+    blkbstAdd: 0.12
+    hthAdd: 0
   - name: Crystalized Frostsbite
     rarity: 2
-    description: Scientists decided to test the steel of the Frostsbite in an environment
-      of ice and other materials. Damn it's cold.
+    description: 'In an environment of ice and other chemicals, the ice crystalizes
+      into an unbrekable slit.   '
     weaponSprite: {fileID: 21300000, guid: 6c9f8229c05e2c442800572d97bd548c, type: 3}
     trailColor: {r: 0.30147058, g: 0.3640975, b: 1, a: 1}
     slashSprite: {fileID: 21300000, guid: 3340a79fcbf8043459aecb76f502494e, type: 3}
@@ -1149,99 +1200,239 @@ MonoBehaviour:
     heavyAttackDamage: 11
     slamAttackDamage: 20
     knockbackRatio: 4.5
-    criticalChance: 0.2
+    criticalChance: 0.15
+    movAdd: 0
+    atkAdd: 0.05
+    blkAdd: 0
+    blkbstAdd: 0.14
+    hthAdd: 0
+  - name: Legacy Scorched Blade
+    rarity: 3
+    description: A blade as such has been preserved for centuries to keep its form
+      and structure intact.
+    weaponSprite: {fileID: 21300000, guid: 1874d6ccfb3e76945bb8811e35e47051, type: 3}
+    trailColor: {r: 1, g: 0.90669376, b: 0.1544118, a: 1}
+    slashSprite: {fileID: 21300000, guid: 0142d63f01dbe9a4183d19979da56f57, type: 3}
+    slashColor: {r: 1, g: 0.93103445, b: 0, a: 1}
+    slashParticlesTexture: {fileID: 2800000, guid: 8a8b5df552a52d540a8e8428d3fb6002,
+      type: 3}
+    lightAttackDamage: 11
+    heavyAttackDamage: 10
+    slamAttackDamage: 18
+    knockbackRatio: 4
+    criticalChance: 0.1
+    movAdd: 0
+    atkAdd: 0
+    blkAdd: 0
+    blkbstAdd: 0.15
+    hthAdd: 0.05
+  - name: Archaic Club
+    rarity: 2
+    description: Its toxic coating and dark enchantments combined makes this club
+      a deadly threat.
+    weaponSprite: {fileID: 21300000, guid: 1cfc29ce5d094b74ba0519c7dd77adfa, type: 3}
+    trailColor: {r: 0.74340737, g: 0.1544118, b: 1, a: 1}
+    slashSprite: {fileID: 21300000, guid: 25c1e9e44ed62c143b0202924f0fa04d, type: 3}
+    slashColor: {r: 1, g: 0, b: 0.972414, a: 1}
+    slashParticlesTexture: {fileID: 10300, guid: 0000000000000000f000000000000000,
+      type: 0}
+    lightAttackDamage: 6
+    heavyAttackDamage: 18
+    slamAttackDamage: 19
+    knockbackRatio: 4
+    criticalChance: 0.025
+    movAdd: -0.24
+    atkAdd: -0.3
+    blkAdd: -0.1
+    blkbstAdd: 0.5
+    hthAdd: 0.2
   allMasks:
   - name: Default Mask
     rarity: -1
     description: This piece of equipment is well renowned for its... poor structure
       and lack of protection.
     maskSprite: {fileID: 0}
+    movAdd: 0
+    atkAdd: 0
+    blkAdd: 0
+    blkbstAdd: 0
+    hthAdd: 0
   - name: Neon Knight
     rarity: 0
     description: A mask which has been upgraded to be used with modern computer capabilities.
     maskSprite: {fileID: 21300000, guid: 01ebb70edaf8b16489cb4bfd0deb00f0, type: 3}
+    movAdd: 0.05
+    atkAdd: 0
+    blkAdd: 0
+    blkbstAdd: 0.05
+    hthAdd: 0.05
   - name: Refined Neon Knight
     rarity: 1
     description: The first iterations of the Neon Knight mask were impeded with various
       issues, and so an updated version was introduced.
     maskSprite: {fileID: 21300000, guid: 19524bf988d2aae40b88099a823bf1ce, type: 3}
+    movAdd: 0.06
+    atkAdd: 0.02
+    blkAdd: 0
+    blkbstAdd: 0.06
+    hthAdd: 0.05
   - name: Exo Knight
     rarity: 2
     description: Using top notch and highly expensive processors, the Exo Knight provides
       its user with beyond imaginable combat mechanisms.
     maskSprite: {fileID: 21300000, guid: 81c1abefaff53a1489275192981c9ed6, type: 3}
+    movAdd: 0.1
+    atkAdd: 0.02
+    blkAdd: 0
+    blkbstAdd: 0.6
+    hthAdd: 0.5
   - name: Hellwalker
     rarity: 0
     description: The Hellwalker was made for conditions of volcanic heat, but was
       used by many others for its unique design
     maskSprite: {fileID: 21300000, guid: c89c385daeca74d4ba031ec14dae84de, type: 3}
+    movAdd: 0.065
+    atkAdd: 0
+    blkAdd: 0
+    blkbstAdd: 0
+    hthAdd: 0
   - name: Hellrider
     rarity: 3
-    description: This mask was formed secretly by the producer of the Hellrider, however
-      never published it because of its immense power abilities.
+    description: This mask was formed anonymously by the producer of the Hellrider,
+      however never published it because of its immense power abilities.
     maskSprite: {fileID: 21300000, guid: 14713d91ea594674ba60ca85ffa3deb0, type: 3}
+    movAdd: 0.125
+    atkAdd: 0
+    blkAdd: 0
+    blkbstAdd: 0
+    hthAdd: 0.1
   allChestplates:
   - name: Default Chestplate
     rarity: -1
     description: You wouldn't want to go into battle with these on.
     body: {fileID: 0}
+    movAdd: 0
+    atkAdd: 0
+    blkAdd: 0
+    blkbstAdd: 0
+    hthAdd: 0
   - name: NeonTech
     rarity: 0
     description: A commonly used, basic computer-based chestplate. Does nothing special,
       does nothing wrong.
     body: {fileID: 21300000, guid: 3236c1aebb266c64c81a48aa50de4c05, type: 3}
+    movAdd: 0.05
+    atkAdd: 0.1
+    blkAdd: 0.05
+    blkbstAdd: 0.1
+    hthAdd: 0
   - name: Circuit Purge
     rarity: 1
     description: More wires, more energy, more power right?
     body: {fileID: 21300000, guid: 375a73598cf85e443a2d5065a560908f, type: 3}
+    movAdd: 0.1
+    atkAdd: 0.11
+    blkAdd: 0.06
+    blkbstAdd: 0.11
+    hthAdd: 0
   - name: CryptedTech
     rarity: 2
     description: One of the old eastern armor designs was remade for modern use. No,
       it doesn't have a coffee machine unfortunately.
     body: {fileID: 21300000, guid: 31d6fc5043b279b47bb9abc17b5d1cf0, type: 3}
+    movAdd: 0.125
+    atkAdd: 0.125
+    blkAdd: 0.075
+    blkbstAdd: 0.125
+    hthAdd: 0
   - name: Fiery Plate
     rarity: 0
     description: This piece of armor was made from a heap of molten scrap metal.
     body: {fileID: 21300000, guid: a61e9a82c1e1f8a4db6f45545e7b40a7, type: 3}
+    movAdd: 0.125
+    atkAdd: 0.1
+    blkAdd: -0.15
+    blkbstAdd: 0
+    hthAdd: 0.05
   - name: Flame Link
     rarity: 1
     description: Make fire run through your veins. Literally.
     body: {fileID: 21300000, guid: 88287738410629f44841a6bb372bb666, type: 3}
+    movAdd: 0.165
+    atkAdd: 0.125
+    blkAdd: -0.1
+    blkbstAdd: 0
+    hthAdd: 0.065
   - name: Roars of Hell
     rarity: 3
     description: You don't wanna touch that.
     body: {fileID: 21300000, guid: 223c52e6cd5a5a845a03733c159a2325, type: 3}
+    movAdd: 0.2
+    atkAdd: 0.15
+    blkAdd: -0.05
+    blkbstAdd: 0
+    hthAdd: 0.08
   allArms:
   - name: Neon
     rarity: 0
     description: Like other neon armor, something simple yet great.
     shoulder: {fileID: 21300000, guid: c52c96a4e8715324283d0a8fa46d5bc7, type: 3}
     arm: {fileID: 21300000, guid: d810d6f38c07a8642898075f1678b82a, type: 3}
+    movAdd: 0.1
+    atkAdd: 0.15
+    blkAdd: 0.025
+    blkbstAdd: 0
+    hthAdd: 0.05
   - name: Neon Upgraded
     rarity: 1
     description: Oooooo upgrades...
     shoulder: {fileID: 21300000, guid: cebfdc10be48cf74faa83a4053c6b4a2, type: 3}
     arm: {fileID: 21300000, guid: 99a75d59614efd342b561745526878cc, type: 3}
+    movAdd: 0.125
+    atkAdd: 0.15
+    blkAdd: 0.025
+    blkbstAdd: 0
+    hthAdd: 0.055
   - name: Exo Arms
     rarity: 2
     description: Be careful with this, it's quite expensive.
     shoulder: {fileID: 21300000, guid: e83eed58c05b73f409ba47d27f12b9ee, type: 3}
     arm: {fileID: 21300000, guid: d378c3a5eca4bcb4e8aa399a69615906, type: 3}
+    movAdd: 0.125
+    atkAdd: 0.15
+    blkAdd: 0.125
+    blkbstAdd: 0
+    hthAdd: 0.1
   - name: Fiery Arms
     rarity: 0
     description: Sorry, the little 'flame' isn't actually real.
     shoulder: {fileID: 21300000, guid: 6a0b45c6c12e3fd41a6236a4b7ecbe98, type: 3}
     arm: {fileID: 21300000, guid: a8da09627f8c1ab4686a0eb8bad45b5e, type: 3}
+    movAdd: 0.125
+    atkAdd: 0.135
+    blkAdd: -0.1
+    blkbstAdd: 0
+    hthAdd: 0
   - name: Inferno
     rarity: 1
     description: Try not to get this near your face.
     shoulder: {fileID: 21300000, guid: 0af2f77230bb0194e9f7b8de98d64a73, type: 3}
     arm: {fileID: 21300000, guid: c77ea2e83a0073a43875127629bae2db, type: 3}
+    movAdd: 0.145
+    atkAdd: 0.15
+    blkAdd: -0.125
+    blkbstAdd: 0
+    hthAdd: 0
   - name: Combustion
     rarity: 3
-    description: Seriously, this thing doesn't come with fans?!?!
+    description: Seriously, this thing doesn't come with cooling?!?!
     shoulder: {fileID: 21300000, guid: 70958fdb675510247a64386a01516f01, type: 3}
     arm: {fileID: 21300000, guid: 7b635bc9d51da4a4f9ddc600f1d792e2, type: 3}
+    movAdd: 0.17
+    atkAdd: 0.16
+    blkAdd: 0.05
+    blkbstAdd: 0
+    hthAdd: 0
   allLegs:
   - name: Default Legs
     rarity: -1
@@ -1249,36 +1440,66 @@ MonoBehaviour:
     upperLeg: {fileID: 0}
     lowerLeg: {fileID: 0}
     boot: {fileID: 0}
+    movAdd: 0
+    atkAdd: 0
+    blkAdd: 0
+    blkbstAdd: 0
+    hthAdd: 0
   - name: Neon Legs
     rarity: 0
     description: These would look sick on the dance floor!
     upperLeg: {fileID: 21300000, guid: 39c14e52ba1d38147b8cd4b1b63d4900, type: 3}
     lowerLeg: {fileID: 21300000, guid: 9c6d05d89d4121a4199ca5ba6347c927, type: 3}
     boot: {fileID: 21300000, guid: 816b9d0467a670c44a2fc7a70d118a06, type: 3}
+    movAdd: 0.15
+    atkAdd: 0.1
+    blkAdd: 0.05
+    blkbstAdd: 0
+    hthAdd: 0
   - name: Slitted Neon Legs
     rarity: 1
     description: You look like some sort of cyborg from the future.
     upperLeg: {fileID: 21300000, guid: e14573803baaee947b179fc563f3aab1, type: 3}
     lowerLeg: {fileID: 21300000, guid: 42c336a564c36074c857fa04832176c9, type: 3}
     boot: {fileID: 21300000, guid: c603c6dea755cbb4883c79664d183da1, type: 3}
+    movAdd: 0.175
+    atkAdd: 0.125
+    blkAdd: 0.075
+    blkbstAdd: 0.05
+    hthAdd: 0
   - name: Wired Suspension
     rarity: 2
     description: Ready to become a robotic wartank?
     upperLeg: {fileID: 21300000, guid: 9a1340e183d52e147bccf33ecdd77570, type: 3}
     lowerLeg: {fileID: 21300000, guid: 2100f49cf3356d943981fbe8c09c3567, type: 3}
     boot: {fileID: 21300000, guid: 5128a6a93a3d5ab44ad2764850f60ed7, type: 3}
+    movAdd: 0.2
+    atkAdd: 0.165
+    blkAdd: 0.1
+    blkbstAdd: 0.075
+    hthAdd: 0
   - name: Fiery Legs
     rarity: 0
     description: Burning feet!
     upperLeg: {fileID: 21300000, guid: 9e994f3cd262bb340a5849fdd5e209bb, type: 3}
     lowerLeg: {fileID: 21300000, guid: c19c4a6695fb18d4f859500f430f55fd, type: 3}
     boot: {fileID: 21300000, guid: 90ab3487d0151c14291d477710ce3e33, type: 3}
+    movAdd: 0.145
+    atkAdd: 0.15
+    blkAdd: -0.125
+    blkbstAdd: 0
+    hthAdd: 0
   - name: Sleek Heat
     rarity: 1
     description: 'Firewalking? Pffft. '
     upperLeg: {fileID: 21300000, guid: 9759192307a92e34497ad58c2b300593, type: 3}
     lowerLeg: {fileID: 21300000, guid: f8db4f0af96b82f4c9bfe8f5e538af76, type: 3}
     boot: {fileID: 21300000, guid: d9d4fe940c5e6ce4494a1153f39c90d1, type: 3}
+    movAdd: 0.175
+    atkAdd: 0.165
+    blkAdd: -0.15
+    blkbstAdd: 0
+    hthAdd: 0
   - name: Purging Rage
     rarity: 3
     description: You wouldn't be able to wear these if it weren't for your countless
@@ -1286,6 +1507,11 @@ MonoBehaviour:
     upperLeg: {fileID: 21300000, guid: a50abf9b4c5acc8449459d5f7fd95b05, type: 3}
     lowerLeg: {fileID: 21300000, guid: 6e1f3557685c4a64fb1c185e28159bc8, type: 3}
     boot: {fileID: 21300000, guid: 03c68df36464e484ba9dd1230c5a8fac, type: 3}
+    movAdd: 0.2
+    atkAdd: 0.25
+    blkAdd: -0.2
+    blkbstAdd: 0
+    hthAdd: 0
   currentWeapon: 
   currentMask: 
   currentChestplate: 
@@ -1307,6 +1533,8 @@ MonoBehaviour:
   heroHitParticles: {fileID: 159894, guid: 54d3c41e2144bb14283cdc625e9b3ebc, type: 2}
   critHitObject: {fileID: 156710, guid: f2af84ccc8dcd8747b4344383e20e1a8, type: 2}
   slamAttackParticles: {fileID: 183580, guid: 82b8a8606f7226346a21ff78eb0d87ec, type: 2}
+  thisAnimator: {fileID: 0}
+  thisRigidbody: {fileID: 0}
   trail: {fileID: 11412134}
   defaultMovementSpeed: 3
   jumpHeight: 8.1
@@ -1318,6 +1546,7 @@ MonoBehaviour:
   airGravScale: 0.725
   canAttack: 1
   dash: 0
+  activeTimer: 0
   lightAttackTime: 0.4
   heavyAttackTime: 0.9
   jumpAttackTime: 0.8
@@ -1336,14 +1565,19 @@ MonoBehaviour:
   attackableMask:
     serializedVersion: 2
     m_Bits: 1024
-  maxHealth: 400
+  maxHealth: 100
   currentHealth: 0
+  blockReducer: 2
   knockbackRatio: 3.75
   lightAttackStrength: 10
   heavyAttackStrength: 20
   slamAttackStrength: 30
-  blockReducer: 2
   criticalChance: 0
+  movS: 1
+  atkS: 1
+  blkS: 1
+  blkbstS: 1
+  hthS: 1
 --- !u!212 &21204990
 SpriteRenderer:
   m_ObjectHideFlags: 1

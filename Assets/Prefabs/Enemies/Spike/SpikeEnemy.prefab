@@ -545,9 +545,9 @@ MonoBehaviour:
   - {fileID: 21258248}
   - {fileID: 21279324}
   currentHealth: 0
-  maxHealth: 40
-  damageMin: 10
-  damageMax: 20
+  maxHealth: 35
+  damageMin: 3
+  damageMax: 6
   knockbackMin: 1.5
   knockbackMax: 2.75
   knockback: 0
@@ -565,7 +565,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 657cf657301458541b891ad774e48baa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1.65
+  speed: 2
   attackSpeedMultiplier: 0.95
   speedDifferentiation: 0.45
   hitRange: 1
@@ -574,9 +574,11 @@ MonoBehaviour:
   attacked: 0
   goToPlayer: 0
   isGrounded: 0
-  pointA: {fileID: 448304}
-  pointB: {fileID: 419348}
-  infiniteChase: {fileID: 403568}
+  points:
+  - {fileID: 448304}
+  - {fileID: 419348}
+  - {fileID: 403568}
+  freezeFix: 0
 --- !u!114 &11433102
 MonoBehaviour:
   m_ObjectHideFlags: 1

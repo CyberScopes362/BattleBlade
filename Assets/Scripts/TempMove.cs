@@ -1,4 +1,5 @@
 ﻿using UnityEngine;
+using UnityStandardAssets.CrossPlatformInput;
 using Xft;
 using System.Collections;
 
@@ -15,8 +16,12 @@ public class TempMove : MonoBehaviour
     GameObject floor;
 
     //Get Components
-    Animator thisAnimator;
-    Rigidbody2D thisRigidbody;
+    [HideInInspector]
+    public Animator thisAnimator;
+
+    [HideInInspector]
+    public Rigidbody2D thisRigidbody;
+
     EdgeCollider2D weaponCollider;
     public XWeaponTrail trail;
 
@@ -62,7 +67,9 @@ public class TempMove : MonoBehaviour
     bool midNoTimeAttack;
 
     //Timers and Set Times
-    float activeTimer;
+    [HideInInspector]
+    public float activeTimer;
+
     float jumpTimer;
     public float lightAttackTime = 0.5f;
     public float heavyAttackTime = 1f;
@@ -84,9 +91,7 @@ public class TempMove : MonoBehaviour
     //Colliders
     public Transform[] externalColliders;
 
-    //Class Related
-    enum HeroClass {Fire, Ice, Wind, Energy, Neon, Cyber, Nuclear}
-
+    //Masks
     LayerMask floorMask;
     public LayerMask attackableMask;
 
@@ -98,15 +103,30 @@ public class TempMove : MonoBehaviour
 
     float currentDamage;
     float currentKnockback;
+    float knockbackChance;
     float currentCriticalChance;
 
-    //These vars should be set by weapon
+    public float blockReducer;
+
+    //These vars are set by weapon
     public float knockbackRatio;
     public float lightAttackStrength;
     public float heavyAttackStrength;
     public float slamAttackStrength;
-    public float blockReducer;
     public float criticalChance;
+
+    //These vars are set by items/armor pieces/whatever
+    //Multipliers:
+    //Movement Speed
+    public float movS;
+    //Attack Speed
+    public float atkS;
+    //Blocking Speed
+    public float blkS;
+    //Blocking Boost
+    public float blkbstS;
+    //Total Health Additions
+    public float hthS;
 
 
     void Start()
@@ -122,14 +142,15 @@ public class TempMove : MonoBehaviour
         thisRigidbody = GetComponent<Rigidbody2D>();
         weaponCollider = weapon.GetComponent<EdgeCollider2D>();
 
-        blockingMovementSpeed = defaultMovementSpeed / 3f;
+        SetHeroStats();
+
+        blockingMovementSpeed = defaultMovementSpeed / 2.5f;
         activeTimer = 0f;
 
         defaultGravScale = thisRigidbody.gravityScale;
 
         currentHealth = maxHealth;
         thisAnimator.SetInteger("AttackType", 0);
-        SetHeroClass(HeroClass.Fire);
     }
 
     void Update()
@@ -154,11 +175,19 @@ public class TempMove : MonoBehaviour
                 if(isGrounded == 0)
                 {
                     //Light Attack
+#if UNITY_STANDALONE || UNITY_EDITOR
                     if (Input.GetButtonDown("Fire1"))
+#else
+                    if (CrossPlatformInputManager.GetButtonDown("Fire1"))
+#endif
                         Attack(0);
 
                     //Heavy Attack
+#if UNITY_STANDALONE || UNITY_EDITOR
                     if (Input.GetButtonDown("Fire2"))
+#else
+                    if (CrossPlatformInputManager.GetButtonDown("Fire2"))
+#endif
                         Attack(1);
                 }
                 else
@@ -166,11 +195,19 @@ public class TempMove : MonoBehaviour
                     if (isGrounded == 2 )
                     {
                         //Jump Slam Attack
+#if UNITY_STANDALONE || UNITY_EDITOR
                         if (Input.GetButtonDown("Fire2"))
+#else
+                        if (CrossPlatformInputManager.GetButtonDown("Fire2"))
+#endif
                             Attack(2);
 
                         //Air Attack
+#if UNITY_STANDALONE || UNITY_EDITOR
                         if (Input.GetButtonDown("Fire1"))
+#else
+                        if (CrossPlatformInputManager.GetButtonDown("Fire1"))
+#endif
                             Attack(3);
                     }
                 }
@@ -180,7 +217,11 @@ public class TempMove : MonoBehaviour
             canAttack = false;
 
         //Blocking
+#if UNITY_STANDALONE || UNITY_EDITOR
         if (Input.GetButton("Fire3") && isGrounded == 0)
+#else
+        if (CrossPlatformInputManager.GetButton("Fire3") && isGrounded == 0)
+#endif
         {
             thisAnimator.SetBool("Block", true);
             movementSpeed = blockingMovementSpeed;
@@ -207,7 +248,11 @@ public class TempMove : MonoBehaviour
         }
 
         //Jump Initiation
+#if UNITY_STANDALONE || UNITY_EDITOR
         if (Input.GetButtonDown("Jump"))
+#else
+        if (CrossPlatformInputManager.GetButtonDown("Jump"))
+#endif
             jumpInitiated = true;
 
 
@@ -217,9 +262,7 @@ public class TempMove : MonoBehaviour
             isGrounded = 0;
             thisAnimator.SetInteger("Jump", isGrounded);
             midNoTimeAttack = false;
-        }
-
-       
+        }   
     }
 
     void FixedUpdate()
@@ -232,19 +275,31 @@ public class TempMove : MonoBehaviour
         Vector3 dashForward = new Vector3(currentDashSpeed * flipRatio, 0f, 0f);
 
         //Movement
+#if UNITY_STANDALONE || UNITY_EDITOR
         if (canAttack == true && dash == false && (Input.GetAxis("Horizontal") > 0f || Input.GetAxis("Horizontal") < 0f))
+#else
+        if (canAttack == true && dash == false && (CrossPlatformInputManager.GetAxisRaw("Horizontal") > 0f || CrossPlatformInputManager.GetAxisRaw("Horizontal") < 0f))
+#endif
         {
             thisAnimator.SetBool("Walk", true);
             transform.position += moveForward * Time.deltaTime;
-            
-            if(Input.GetAxis("Horizontal") < 0f && isFlipped ==  false)
+
+#if UNITY_STANDALONE || UNITY_EDITOR
+            if (Input.GetAxis("Horizontal") < 0f && isFlipped == false)
+#else
+            if (CrossPlatformInputManager.GetAxisRaw("Horizontal") < 0f && isFlipped == false)
+#endif
             {
                 transform.localScale = new Vector3(-1, 1, 1);
                 flipRatio = -1;
                 isFlipped = true;
             }
 
+#if UNITY_STANDALONE || UNITY_EDITOR
             if (Input.GetAxis("Horizontal") > 0f && isFlipped == true)
+#else
+            if (CrossPlatformInputManager.GetAxisRaw("Horizontal") > 0f && isFlipped == true)
+#endif
             {
                 transform.localScale = new Vector3(1, 1, 1);
                 flipRatio = 1;
@@ -361,6 +416,7 @@ public class TempMove : MonoBehaviour
                 thisAnimator.SetTrigger("LightAttack");
                 activeTimer = lightAttackTime;
                 currentDamage = lightAttackStrength;
+                knockbackChance = 0.44f;
                 break;
             
             //Heavy
@@ -369,6 +425,7 @@ public class TempMove : MonoBehaviour
                 thisAnimator.SetTrigger("HeavyAttack");
                 activeTimer = heavyAttackTime;
                 currentDamage = heavyAttackStrength;
+                knockbackChance = 0.1f;
                 break;
 
             //Jump Attack
@@ -380,6 +437,7 @@ public class TempMove : MonoBehaviour
                     activeTimer = jumpAttackTime;
                     currentDamage = slamAttackStrength;
                     lerpToGround = true;
+                    knockbackChance = 0.05f;
                 }
                 break;
 
@@ -394,6 +452,7 @@ public class TempMove : MonoBehaviour
                     currentDamage = airAttackStrength;
                     midNoTimeAttack = true;
                     airBoost = true;
+                    knockbackChance = 0.3f;
                 }
                 break;
         }
@@ -406,17 +465,16 @@ public class TempMove : MonoBehaviour
         // eg currentDamage = currentDamage * boost/ability/whatever
         //
 
-        currentKnockback = currentDamage / knockbackRatio;
+        currentKnockback = knockbackRatio * (currentDamage / 10f);
 
         var hit = Physics2D.BoxCastAll(externalColliders[selectCollider].transform.position, new Vector2(externalColliders[selectCollider].GetComponent<BoxCollider2D>().bounds.size.x, externalColliders[selectCollider].GetComponent<BoxCollider2D>().bounds.size.y), 0f, Vector2.zero, attackRange, attackableMask);
 
         for (var i = 0; i < hit.Length; i++)
-            hit[i].transform.gameObject.GetComponentInParent<DamageModifier>().Hit(currentDamage, currentKnockback * flipRatio, critHitObject, criticalChance);
+            hit[i].transform.gameObject.GetComponentInParent<DamageModifier>().Hit(currentDamage, currentKnockback * flipRatio, critHitObject, criticalChance, knockbackChance);
     }
 
     public void TakeDamage(float takeDamage, float takeKnockback, int takeKnockbackDirection)
     {
-        //TODO: Activate block only when facing enemies
         if (block)
         {
             if((takeKnockbackDirection * transform.localScale.x) > 0)
@@ -447,11 +505,6 @@ public class TempMove : MonoBehaviour
         currentHealth -= takeDamage;
     }
 
-
-
-
-
-
     //Set Perks
     //Keep at 1dp for complete synchronization and simpler settings
     //
@@ -461,95 +514,37 @@ public class TempMove : MonoBehaviour
     //
     //
 
-    void SetHeroClass(HeroClass setClass)
+    void SetHeroStats()
     {
-        //Movement Speed
-        float movS;
-        //Attack Speed
-        float atkS;
-        //Blocking Speed
-        float blkS;
         //Attack Anim Speed (No edit required)
         float tempAtkSAnim;
 
-        switch (setClass)
-        {
-            case HeroClass.Fire:
-                //Set temp vars:
-                movS = 1.25f;
-                atkS = 1.2f;
-                blkS = 1.2f;
+        //Movement Speed 
+        movementSpeed = defaultMovementSpeed * movS;
+        setMovementSpeed = movementSpeed;
+        moveMultiplier = movS;
+        thisAnimator.SetFloat("MoveMultiplier", movS);
 
-                //Movement Speed 
-                movementSpeed = defaultMovementSpeed * movS;
-                setMovementSpeed = movementSpeed;
-                moveMultiplier = movS;
-                thisAnimator.SetFloat("MoveMultiplier", movS);
+        //Attack Speed
+        lightAttackTime = lightAttackTime / atkS;
+        heavyAttackTime = heavyAttackTime / atkS;
+        lightAttackDashSpeed = lightAttackDashSpeed * atkS;
+        heavyAttackDashSpeed = heavyAttackDashSpeed * atkS;
 
-                //Attack Speed
-                lightAttackTime = lightAttackTime / atkS;
-                heavyAttackTime = heavyAttackTime / atkS;
-                lightAttackDashSpeed = lightAttackDashSpeed * atkS;
-                heavyAttackDashSpeed = heavyAttackDashSpeed * atkS;
+        //Calculation for animation speed
+        tempAtkSAnim = atkS;
+        tempAtkSAnim = tempAtkSAnim - (atkS / 7f);
+        thisAnimator.SetFloat("SpeedMultiplier", tempAtkSAnim);
 
-                //Calculation for animation speed
-                tempAtkSAnim = atkS;
-                tempAtkSAnim = tempAtkSAnim - (atkS / 7f);
-                thisAnimator.SetFloat("SpeedMultiplier", tempAtkSAnim);
+        //Blocking Speed
+        blockingMovementSpeed *= blkS;
+        blockingMultiplier = blkS / 2f;
 
-                //Blocking Speed
-                blockingMovementSpeed *= blkS;
-                blockingMultiplier = blkS / 2f;
-                break;
+        //Blocking Boost
+        blockReducer *= blkbstS;
 
-            case HeroClass.Ice:
-                movementSpeed = defaultMovementSpeed;
-                break;
-
-            case HeroClass.Energy:
-                movementSpeed = defaultMovementSpeed * 0.75f;
-                break;
-
-            case HeroClass.Wind:
-                movementSpeed = defaultMovementSpeed * 1.5f;
-                break;
-
-            case HeroClass.Neon:
-                //Set temp vars:
-                movS = 1.2f;
-                atkS = 1.1f;
-                blkS = 1.4f;
-
-                //Movement Speed 
-                movementSpeed = defaultMovementSpeed * movS;
-                setMovementSpeed = movementSpeed;
-                moveMultiplier = movS;
-                thisAnimator.SetFloat("MoveMultiplier", movS);
-
-                //Attack Speed
-                lightAttackTime = lightAttackTime / atkS;
-                heavyAttackTime = heavyAttackTime / atkS;
-                lightAttackDashSpeed = lightAttackDashSpeed * atkS;
-                heavyAttackDashSpeed = heavyAttackDashSpeed * atkS;
-
-                //Calculation for animation speed
-                tempAtkSAnim = atkS;
-                tempAtkSAnim = tempAtkSAnim - (atkS / 7f);
-                thisAnimator.SetFloat("SpeedMultiplier", tempAtkSAnim);
-
-                //Blocking Speed
-                blockingMovementSpeed *= blkS;
-                blockingMultiplier = blkS / 2f;
-                break;
-
-            case HeroClass.Cyber:
-                movementSpeed = defaultMovementSpeed * 1.3f;
-                break;
-
-            case HeroClass.Nuclear:
-                movementSpeed = defaultMovementSpeed * 0.85f;
-                break;
-        }
+        //Total Health Multiplier
+        maxHealth *= hthS;
     }
 
     public void SetBlockCollider()

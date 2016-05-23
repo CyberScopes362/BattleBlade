@@ -259,7 +259,7 @@ ParticleSystem:
         rgba: 4294967295
       maxColor:
         serializedVersion: 2
-        rgba: 4294901790
+        rgba: 4278251007
       minMaxState: 0
     startSize:
       scalar: 0.17
@@ -1575,8 +1575,8 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -1521921173
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 3340a79fcbf8043459aecb76f502494e, type: 3}
-  m_Color: {r: 0.11724138, g: 0, b: 1, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 0142d63f01dbe9a4183d19979da56f57, type: 3}
+  m_Color: {r: 1, g: 0.93103445, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
 --- !u!1001 &100100000

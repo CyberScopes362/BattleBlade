@@ -42,19 +42,15 @@ public class CustomCameraFollow : MonoBehaviour
 
         //Movement related to start position
         if (prevTransform.x < startPointX || prevTransform.x > endPointX)
-        {
-            prevTransform = Vector3.SmoothDamp(prevTransform, setPosition, ref currentPosition, smoothSpeed * Time.deltaTime);
-            transform.position = new Vector3(transform.position.x, (hero.position.y + offset.y) * offsetYPreset, transform.position.z);
-        }
+            prevTransform = Vector3.SmoothDamp(transform.position, setPosition, ref currentPosition, smoothSpeed * Time.deltaTime);
         else
         {
-            prevTransform = transform.position;
-            transform.position = new Vector3(transform.position.x, (hero.position.y + offset.y) * offsetYPreset, transform.position.z);
             transform.position = Vector3.SmoothDamp(transform.position, setPosition, ref currentPosition, smoothSpeed * Time.deltaTime);
+            prevTransform = Vector3.SmoothDamp(transform.position, setPosition, ref currentPosition, smoothSpeed * Time.deltaTime);
         }
 
-        
-
+        //Add Y Movement
+        transform.position = new Vector3(transform.position.x, (hero.position.y + offset.y) * offsetYPreset, transform.position.z);
 
         if (hero.transform.localScale.x == -1)
             offset.x = -xOffset;

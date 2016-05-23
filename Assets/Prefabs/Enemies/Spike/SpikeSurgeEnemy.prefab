@@ -557,9 +557,11 @@ MonoBehaviour:
   attacked: 0
   goToPlayer: 0
   isGrounded: 0
-  pointA: {fileID: 489772}
-  pointB: {fileID: 486194}
-  infiniteChase: {fileID: 484118}
+  points:
+  - {fileID: 489772}
+  - {fileID: 486194}
+  - {fileID: 484118}
+  freezeFix: 0
 --- !u!114 &11470574
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -579,9 +581,9 @@ MonoBehaviour:
   - {fileID: 21223960}
   - {fileID: 21298914}
   currentHealth: 0
-  maxHealth: 80
-  damageMin: 15
-  damageMax: 25
+  maxHealth: 65
+  damageMin: 6
+  damageMax: 10
   knockbackMin: 2
   knockbackMax: 3
   knockback: 0

@@ -14,6 +14,8 @@ public class DamageModifier : MonoBehaviour
     SpriteRenderer healthBar;
     SpriteRenderer healthBarParent;
 
+    GameObject hero;
+
     public float currentHealth;
     public float maxHealth;
     public float damageMin;
@@ -41,6 +43,7 @@ public class DamageModifier : MonoBehaviour
         ObjectFinder objectFinder = GameObject.FindGameObjectWithTag("Initializer").GetComponent<ObjectFinder>();
 
         slashMarks = objectFinder.slashMarks;
+        hero = objectFinder.hero;
 
         currentHealth = maxHealth;
         tempMove = objectFinder.hero.GetComponent<TempMove>();
@@ -62,16 +65,35 @@ public class DamageModifier : MonoBehaviour
             givenKnockbackDirection = -1;
         else
             givenKnockbackDirection = 1;
-        
+
         tempMove.TakeDamage(givenDamage, givenKnockback, givenKnockbackDirection);
 	}
 
-    public void Hit(float takenDamage, float currentKnockback, GameObject critHitObject, float criticalChance)
+    public void PushOut()
+    {
+        givenDamage = UnityEngine.Random.Range(damageMin, damageMax);
+
+        if (hero.GetComponent<Rigidbody2D>().velocity.normalized.x < 0)
+            givenKnockbackDirection = -1;
+        else
+            givenKnockbackDirection = 1;
+
+        tempMove.TakeDamage(givenDamage, 0f, 0);
+        hero.GetComponent<Rigidbody2D>().velocity = new Vector2(5.45f * givenKnockbackDirection, 6.25f);
+        tempMove.thisAnimator.SetTrigger("TakeHit");
+    }
+
+    public void Hit(float takenDamage, float currentKnockback, GameObject critHitObject, float criticalChance, float knockbackChance)
     {
         if(!isHit)
         {
             isHit = true;
-            knockback = currentKnockback;
+
+            //Knockback Chance Generator
+            if (UnityEngine.Random.Range(0f, 1f) > knockbackChance)
+                knockback = currentKnockback;
+            else
+                knockback = 0f;
 
             //Crit Generator
             float critRandom = UnityEngine.Random.Range(0.0f, 1.0f);
