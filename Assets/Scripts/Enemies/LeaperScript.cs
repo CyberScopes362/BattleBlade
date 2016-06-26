@@ -5,6 +5,7 @@ public class LeaperScript : MonoBehaviour
 {
     Animator thisAnimator;
     GameObject hero;
+    Rigidbody2D heroRigidbody;
     TempMove tempMove;
     DamageModifier damageModifier;
     Rigidbody2D thisRigidbody;
@@ -13,11 +14,14 @@ public class LeaperScript : MonoBehaviour
     public GameObject weapon;
     public GameObject weaponTip;
 
-    bool isGrounded;
     float knockback;
-
     public float speed;
+    public float attackSpeedMultiplier;
     public float speedDifferentiation;
+
+    public float weaponCooldown;
+    public float laserDamage;
+    public float laserDamageDiff;
 
     LayerMask floorMask;
     LayerMask playerLayer;
@@ -25,7 +29,6 @@ public class LeaperScript : MonoBehaviour
     public Transform[] points;
     public ParticleSystem[] fireParticles;
     public float[] checkRanges;
-    RaycastHit2D closeRay;
     RaycastHit2D shortRay;
     RaycastHit2D longRay;
 
@@ -55,6 +58,7 @@ public class LeaperScript : MonoBehaviour
         hero = objectFinder.hero;
 
         tempMove = hero.GetComponent<TempMove>();
+        heroRigidbody = hero.GetComponent<Rigidbody2D>();
         thisAnimator = GetComponent<Animator>();
         thisRigidbody = GetComponent<Rigidbody2D>();
         damageModifier = GetComponentInParent<DamageModifier>();
@@ -67,41 +71,34 @@ public class LeaperScript : MonoBehaviour
         floorMask = objectFinder.floorMask;
         playerLayer = objectFinder.playerLayer;
 
+        thisAnimator.SetFloat("AttackSpeedMultiplier", attackSpeedMultiplier);
+        thisAnimator.SetFloat("SpeedMultiplier", (setSpeed / 12) + 1);
+
         setSpeed = Random.Range(speed - speedDifferentiation, speed + speedDifferentiation);
     }
 
     void Update()
     {
-        isDead = damageModifier.isDead;
 
+        isDead = damageModifier.isDead;
+        knockback = damageModifier.knockback;
         shootTimer -= Time.deltaTime;
 
-        //Grounded Check (Currently Useless)
-        isGrounded = Physics2D.OverlapArea(points[0].position, points[1].position, floorMask);
-
-        heroPosition = new Vector2(tempMove.realheroPosition.transform.position.x, transform.position.y);
+        heroPosition = new Vector2(tempMove.realheroPosition.transform.position.x - 0.2f, transform.position.y);
 
         //Raycasts
-        //Very close check
-        closeRay = Physics2D.Raycast(transform.position, Vector2.left * transform.localScale.x, checkRanges[0], playerLayer);
         //Short check
-        shortRay = Physics2D.Raycast(transform.position, Vector2.left * transform.localScale.x, checkRanges[1], playerLayer);
+        shortRay = Physics2D.Raycast(transform.position, Vector2.left * transform.localScale.x, checkRanges[0], playerLayer);
         //Far check
-        longRay = Physics2D.Raycast(transform.position, Vector2.left * transform.localScale.x, checkRanges[2], playerLayer);
+        longRay = Physics2D.Raycast(transform.position, Vector2.left * transform.localScale.x, checkRanges[1], playerLayer);
 
+        //If hero is within long range
         if(!attacking)
         {
             if (transform.position.x >= tempMove.realheroPosition.transform.position.x)
                 transform.localScale = new Vector3(1f, transform.localScale.y, transform.localScale.z);
             else
                 transform.localScale = new Vector3(-1f, transform.localScale.y, transform.localScale.z);
-        }
-
-        //If hero is within long range
-        if(!attacking)
-        {
-            if (closeRay && goToPlayer == false)
-                goToPlayer = true;
 
             if (longRay)
             {
@@ -147,32 +144,15 @@ public class LeaperScript : MonoBehaviour
         }
 
 
-
-        /*
-        if attacktimer is appropriate
-            if hero is within short range and direction/rotations are fine
-                do short range attack
-            else
-                if hero is beyond short range and within long range and direction/rotations are fine
-                    do long range attack
-                    attacktimer is set high as cooldown
-    
-        during cooldown, walk back slowly if enemy is close, otherwise walk forward slowly
-        */
-
-
-
-
-
         if (damageModifier.isHit == true)
         {
             if (knockback != 0f)
             {
-                thisRigidbody.velocity = new Vector2(knockback, 0f);
+                thisRigidbody.velocity = new Vector2(knockback / 1.5f, 0f);
                 thisAnimator.SetTrigger("Hit");
             }
 
-            isGrounded = false;
+            goToPlayer = false;
             damageModifier.isHit = false;
         }
 
@@ -183,6 +163,10 @@ public class LeaperScript : MonoBehaviour
                 deathTrigger = true;
                 gameObject.layer = LayerMask.NameToLayer("PassbyEntity");
                 GetComponentInParent<EnemyDeath>().enabled = true;
+
+                foreach (ParticleSystem i in fireParticles)
+                    i.Stop();
+
                 thisAnimator.SetTrigger("Die");
                 this.enabled = false;
             }
@@ -199,15 +183,23 @@ public class LeaperScript : MonoBehaviour
 
     public void InitiateAttack()
     {
+        //CHANGE
         if (!isDead)
         {
-            if(longRay)
+            if (shortRay)
             {
-                if (shortRay)
-                {
-                    damageModifier.Attack();
-                }
+                damageModifier.Attack();
             }
+        }
+    }
+
+    public void FixFreeze()
+    {
+        if(!goToPlayer)
+        {
+            goToPlayer = true;
+            thisAnimator.SetTrigger("Move");
+            checkWeaponRotation = false;
         }
     }
 
@@ -222,6 +214,7 @@ public class LeaperScript : MonoBehaviour
 
         if(prepared == 1)
         {
+            shootTimer = weaponCooldown;
             weaponParticles.Play();
 
             weaponLineMat.SetColor("_TintColor", new Color(1f, 1f, 1f, 1f));
@@ -235,8 +228,8 @@ public class LeaperScript : MonoBehaviour
 
             if (shotRaycast)
             {
-            //TODO: Change this to a proper attack command
-                damageModifier.Attack();
+                float randomSetDamage = Random.Range(laserDamage - laserDamageDiff, laserDamage + laserDamageDiff);
+                damageModifier.Attack(randomSetDamage);
             }
         }
 

@@ -23,6 +23,7 @@ public class DamageModifier : MonoBehaviour
     public float knockbackMin;
     public float knockbackMax;
 
+    [HideInInspector]
     public float knockback;
     public float healthRatio;
 
@@ -56,7 +57,7 @@ public class DamageModifier : MonoBehaviour
         defXScale = healthBarObject.transform.localScale.x;
     }
 
-	public void Attack() 
+	public void Attack(float setDamage = default(float)) 
 	{
         givenDamage = UnityEngine.Random.Range(damageMin, damageMax);
         givenKnockback = UnityEngine.Random.Range(knockbackMin, knockbackMax);
@@ -65,6 +66,9 @@ public class DamageModifier : MonoBehaviour
             givenKnockbackDirection = -1;
         else
             givenKnockbackDirection = 1;
+
+        if (setDamage != 0)
+            givenDamage = setDamage;
 
         tempMove.TakeDamage(givenDamage, givenKnockback, givenKnockbackDirection);
 	}
@@ -79,7 +83,7 @@ public class DamageModifier : MonoBehaviour
             givenKnockbackDirection = 1;
 
         tempMove.TakeDamage(givenDamage, 0f, 0);
-        hero.GetComponent<Rigidbody2D>().velocity = new Vector2(5.45f * givenKnockbackDirection, 6.25f);
+        hero.GetComponent<Rigidbody2D>().velocity = new Vector2(3.5f * givenKnockbackDirection, 4f);
         tempMove.thisAnimator.SetTrigger("TakeHit");
     }
 

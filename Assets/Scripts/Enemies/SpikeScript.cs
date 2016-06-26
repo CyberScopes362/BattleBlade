@@ -50,9 +50,9 @@ public class SpikeScript : MonoBehaviour
         damageModifier = GetComponentInParent<DamageModifier>();
 
         setSpeed = Random.Range(speed - speedDifferentiation, speed + speedDifferentiation);
-        thisAnimator.SetFloat("AttackSpeedMultiplier", attackSpeedMultiplier);
 
-        thisAnimator.SetFloat("SpeedMultiplier", (setSpeed / 12) + 1);
+        thisAnimator.SetFloat("AttackSpeedMultiplier", attackSpeedMultiplier);
+        thisAnimator.SetFloat("SpeedMultiplier", (setSpeed / 8) + 1);
     }
 
     void Update()
@@ -162,7 +162,7 @@ public class SpikeScript : MonoBehaviour
         freezeFix = true;
     }
 
-    void OnCollisionEnter2D(Collision2D heroCollider)
+    void OnTriggerEnter2D(Collider2D heroCollider)
     {
         if(heroCollider.gameObject.tag == "Player")
         {

@@ -7,8 +7,8 @@ using System.Collections;
 //
 // 0 = Common
 // 1 = Rare
-// 2 = Heroic
-// 3 = Mythical
+// 2 = Mythical
+// 3 = Heroic
 //
 //
 

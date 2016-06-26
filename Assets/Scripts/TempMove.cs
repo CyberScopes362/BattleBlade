@@ -86,6 +86,8 @@ public class TempMove : MonoBehaviour
     //Vectors
     public Transform pointA;
     public Transform pointB;
+    public Transform internalPointA;
+    public Transform internalPointB;
     public Transform realheroPosition;
 
     //Colliders
@@ -263,6 +265,8 @@ public class TempMove : MonoBehaviour
             thisAnimator.SetInteger("Jump", isGrounded);
             midNoTimeAttack = false;
         }   
+
+        
     }
 
     void FixedUpdate()
@@ -416,7 +420,7 @@ public class TempMove : MonoBehaviour
                 thisAnimator.SetTrigger("LightAttack");
                 activeTimer = lightAttackTime;
                 currentDamage = lightAttackStrength;
-                knockbackChance = 0.44f;
+                knockbackChance = 0.65f;
                 break;
             
             //Heavy
@@ -425,7 +429,7 @@ public class TempMove : MonoBehaviour
                 thisAnimator.SetTrigger("HeavyAttack");
                 activeTimer = heavyAttackTime;
                 currentDamage = heavyAttackStrength;
-                knockbackChance = 0.1f;
+                knockbackChance = 0.18f;
                 break;
 
             //Jump Attack
@@ -437,7 +441,7 @@ public class TempMove : MonoBehaviour
                     activeTimer = jumpAttackTime;
                     currentDamage = slamAttackStrength;
                     lerpToGround = true;
-                    knockbackChance = 0.05f;
+                    knockbackChance = 0.06f;
                 }
                 break;
 
@@ -465,12 +469,15 @@ public class TempMove : MonoBehaviour
         // eg currentDamage = currentDamage * boost/ability/whatever
         //
 
+        
         currentKnockback = knockbackRatio * (currentDamage / 10f);
 
         var hit = Physics2D.BoxCastAll(externalColliders[selectCollider].transform.position, new Vector2(externalColliders[selectCollider].GetComponent<BoxCollider2D>().bounds.size.x, externalColliders[selectCollider].GetComponent<BoxCollider2D>().bounds.size.y), 0f, Vector2.zero, attackRange, attackableMask);
 
         for (var i = 0; i < hit.Length; i++)
+        {
             hit[i].transform.gameObject.GetComponentInParent<DamageModifier>().Hit(currentDamage, currentKnockback * flipRatio, critHitObject, criticalChance, knockbackChance);
+        }
     }
 
     public void TakeDamage(float takeDamage, float takeKnockback, int takeKnockbackDirection)

@@ -364,13 +364,13 @@ AnimationClip:
         tangentMode: 0
       - time: 0.5
         value: {x: 0, y: 0.903, z: 0}
-        inSlope: {x: 0, y: -0.46499985, z: 0}
-        outSlope: {x: 0, y: -0.46499985, z: 0}
+        inSlope: {x: 0, y: -0.48599976, z: 0}
+        outSlope: {x: 0, y: -0.48599976, z: 0}
         tangentMode: 0
       - time: 0.6666667
-        value: {x: 0, y: 0.77, z: 0}
-        inSlope: {x: 0, y: -0.798, z: 0}
-        outSlope: {x: 0, y: -0.798, z: 0}
+        value: {x: 0, y: 0.763, z: 0}
+        inSlope: {x: 0, y: -0.8399998, z: 0}
+        outSlope: {x: 0, y: -0.8399998, z: 0}
         tangentMode: 0
       m_PreInfinity: 2
       m_PostInfinity: 2
@@ -664,13 +664,13 @@ AnimationClip:
         tangentMode: 10
       - time: 0.5
         value: 0.903
-        inSlope: -0.46499985
-        outSlope: -0.46499985
+        inSlope: -0.48599976
+        outSlope: -0.48599976
         tangentMode: 10
       - time: 0.6666667
-        value: 0.77
-        inSlope: -0.798
-        outSlope: -0.798
+        value: 0.763
+        inSlope: -0.8399998
+        outSlope: -0.8399998
         tangentMode: 10
       m_PreInfinity: 2
       m_PostInfinity: 2
@@ -2361,6 +2361,13 @@ AnimationClip:
   m_Events:
   - time: 0.33333334
     functionName: InitiateAttack
+    data: 
+    objectReferenceParameter: {fileID: 0}
+    floatParameter: 0
+    intParameter: 0
+    messageOptions: 0
+  - time: 0.6666667
+    functionName: FixFreeze
     data: 
     objectReferenceParameter: {fileID: 0}
     floatParameter: 0
