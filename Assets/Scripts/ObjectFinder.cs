@@ -28,4 +28,6 @@ public class ObjectFinder : MonoBehaviour
 
     public GameObject slashMarks;
     public GameObject absoluteShield;
+    public GameObject criticalHitObj;
+    public GameObject heroTrailObj;
 }

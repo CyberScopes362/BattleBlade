@@ -69,6 +69,12 @@ public class TouchController : MonoBehaviour
                 resetParameter = "Jump";
                 break;
 
+            case "SlashAttack":
+                CrossPlatformInputManager.SetButtonDown("Fire4");
+                resetSelf = true;
+                resetParameter = "SlashAttack";
+                break;
+
             case "Block":
                 CrossPlatformInputManager.SetButtonDown("Fire3");
                 break;
@@ -87,6 +93,10 @@ public class TouchController : MonoBehaviour
             {
                 case "Jump":
                     CrossPlatformInputManager.SetButtonUp("Jump");
+                    break;
+
+                case "SlashAttack":
+                    CrossPlatformInputManager.SetButtonUp("Fire4");
                     break;
 
                 case "LightAttack":

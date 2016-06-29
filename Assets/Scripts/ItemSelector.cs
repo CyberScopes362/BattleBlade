@@ -22,13 +22,11 @@ public class ItemSelector : MonoBehaviour
     public SpriteRenderer[] armsRenderer;
     public SpriteRenderer[] legsRenderer;
 
-
     public List<Weapons> allWeapons = new List<Weapons>();
     public List<Masks> allMasks = new List<Masks>();
     public List<Chestplate> allChestplates = new List<Chestplate>();
     public List<Arms> allArms = new List<Arms>();
     public List<Legs> allLegs = new List<Legs>();
-
 
     public string currentWeapon;
     public string currentMask;
@@ -39,6 +37,7 @@ public class ItemSelector : MonoBehaviour
     public bool invokeChanges;
 
     XWeaponTrail weaponTrail;
+    XWeaponTrail heroTrail;
     GameObject slashMarks;
     TempMove tempMove;
     GameObject absoluteShield;
@@ -50,6 +49,7 @@ public class ItemSelector : MonoBehaviour
 
         slashMarks = objectFinder.slashMarks;
         absoluteShield = objectFinder.absoluteShield;
+        heroTrail = objectFinder.heroTrailObj.GetComponent<XWeaponTrail>();
         weaponTrail = weaponRenderer.gameObject.GetComponentInChildren<XWeaponTrail>();
         tempMove = GetComponent<TempMove>();
 
@@ -102,6 +102,7 @@ public class ItemSelector : MonoBehaviour
         //Visuals
         weaponRenderer.sprite = setWeapon.weaponSprite;
         weaponTrail.MyColor = setWeapon.trailColor;
+        heroTrail.MyColor = setWeapon.trailColor;
         slashMarks.GetComponent<SpriteRenderer>().sprite = setWeapon.slashSprite;
         slashMarks.GetComponent<SpriteRenderer>().color = setWeapon.slashColor;
         slashMarks.GetComponent<ParticleSystem>().startColor = setWeapon.slashColor;

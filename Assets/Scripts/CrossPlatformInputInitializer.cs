@@ -12,6 +12,7 @@ public class CrossPlatformInputInitializer : MonoBehaviour
     CrossPlatformInputManager.VirtualButton fire1Button;
     CrossPlatformInputManager.VirtualButton fire2Button;
     CrossPlatformInputManager.VirtualButton fire3Button;
+    CrossPlatformInputManager.VirtualButton fire4Button;
 
     void Start()
     {
@@ -38,5 +39,9 @@ public class CrossPlatformInputInitializer : MonoBehaviour
         //Register Fire3
         fire3Button = new CrossPlatformInputManager.VirtualButton("Fire3");
         CrossPlatformInputManager.RegisterVirtualButton(fire3Button);
+
+        //Register Fire4
+        fire4Button = new CrossPlatformInputManager.VirtualButton("Fire4");
+        CrossPlatformInputManager.RegisterVirtualButton(fire4Button);
     }
 }

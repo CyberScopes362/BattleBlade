@@ -24,6 +24,7 @@ public class TempMove : MonoBehaviour
 
     EdgeCollider2D weaponCollider;
     public XWeaponTrail trail;
+    XWeaponTrail heroTrail;
 
     //General Speeds and number values
     public float defaultMovementSpeed = 4f;
@@ -73,6 +74,7 @@ public class TempMove : MonoBehaviour
     float jumpTimer;
     public float lightAttackTime = 0.5f;
     public float heavyAttackTime = 1f;
+    public float slashAttackTime;
     public float jumpAttackTime;
     public float airAttackTime;
     public float jumpInterval = 0.3f;
@@ -81,6 +83,7 @@ public class TempMove : MonoBehaviour
     float currentDashSpeed;
     public float lightAttackDashSpeed = 1.4f;
     public float heavyAttackDashSpeed = 0.9f;
+    public float slashDashSpeed = 3f;
     public float airBoostDistance;
 
     //Vectors
@@ -117,6 +120,9 @@ public class TempMove : MonoBehaviour
     public float slamAttackStrength;
     public float criticalChance;
 
+    //This is calculated so not set by weapon
+    public float slashAttackStrength;
+
     //These vars are set by items/armor pieces/whatever
     //Multipliers:
     //Movement Speed
@@ -139,6 +145,7 @@ public class TempMove : MonoBehaviour
         floor = objectFinder.floor;
         floorMask = objectFinder.floorMask;
         absoluteShield = objectFinder.absoluteShield;
+        heroTrail = objectFinder.heroTrailObj.GetComponent<XWeaponTrail>();
 
         thisAnimator = GetComponent<Animator>();
         thisRigidbody = GetComponent<Rigidbody2D>();
@@ -148,6 +155,7 @@ public class TempMove : MonoBehaviour
 
         blockingMovementSpeed = defaultMovementSpeed / 2.5f;
         activeTimer = 0f;
+        heroTrail.Deactivate();
 
         defaultGravScale = thisRigidbody.gravityScale;
 
@@ -191,6 +199,14 @@ public class TempMove : MonoBehaviour
                     if (CrossPlatformInputManager.GetButtonDown("Fire2"))
 #endif
                         Attack(1);
+
+                    //Slash Attack
+#if UNITY_STANDALONE || UNITY_EDITOR
+                    if (Input.GetButtonDown("Fire4"))
+#else
+                    if (CrossPlatformInputManager.GetButtonDown("Fire4"))
+#endif
+                        Attack(4);
                 }
                 else
                 {
@@ -265,8 +281,6 @@ public class TempMove : MonoBehaviour
             thisAnimator.SetInteger("Jump", isGrounded);
             midNoTimeAttack = false;
         }   
-
-        
     }
 
     void FixedUpdate()
@@ -429,7 +443,7 @@ public class TempMove : MonoBehaviour
                 thisAnimator.SetTrigger("HeavyAttack");
                 activeTimer = heavyAttackTime;
                 currentDamage = heavyAttackStrength;
-                knockbackChance = 0.18f;
+                knockbackChance = 0.175f;
                 break;
 
             //Jump Attack
@@ -441,7 +455,7 @@ public class TempMove : MonoBehaviour
                     activeTimer = jumpAttackTime;
                     currentDamage = slamAttackStrength;
                     lerpToGround = true;
-                    knockbackChance = 0.06f;
+                    knockbackChance = 0.075f;
                 }
                 break;
 
@@ -459,6 +473,15 @@ public class TempMove : MonoBehaviour
                     knockbackChance = 0.3f;
                 }
                 break;
+
+            //Slash Attack
+            case 4:
+                currentDashSpeed = slashDashSpeed;
+                thisAnimator.SetTrigger("SlashAttack");
+                activeTimer = slashAttackTime;
+                currentDamage = (lightAttackStrength + heavyAttackStrength) / 2.5f;
+                knockbackChance = 0.75f;
+                break;
         }
     }
 
@@ -475,9 +498,7 @@ public class TempMove : MonoBehaviour
         var hit = Physics2D.BoxCastAll(externalColliders[selectCollider].transform.position, new Vector2(externalColliders[selectCollider].GetComponent<BoxCollider2D>().bounds.size.x, externalColliders[selectCollider].GetComponent<BoxCollider2D>().bounds.size.y), 0f, Vector2.zero, attackRange, attackableMask);
 
         for (var i = 0; i < hit.Length; i++)
-        {
             hit[i].transform.gameObject.GetComponentInParent<DamageModifier>().Hit(currentDamage, currentKnockback * flipRatio, critHitObject, criticalChance, knockbackChance);
-        }
     }
 
     public void TakeDamage(float takeDamage, float takeKnockback, int takeKnockbackDirection)
@@ -535,8 +556,10 @@ public class TempMove : MonoBehaviour
         //Attack Speed
         lightAttackTime = lightAttackTime / atkS;
         heavyAttackTime = heavyAttackTime / atkS;
+        slashAttackTime = slashAttackTime / atkS;
         lightAttackDashSpeed = lightAttackDashSpeed * atkS;
         heavyAttackDashSpeed = heavyAttackDashSpeed * atkS;
+        slashDashSpeed = slashDashSpeed * (atkS / 2f);
 
         //Calculation for animation speed
         tempAtkSAnim = atkS;
@@ -562,6 +585,21 @@ public class TempMove : MonoBehaviour
 
     public void ActivateTrail()
     {
-         trail.Activate();
+        trail.Activate();
+    }
+
+    public void ActivateHeroTrail()
+    {
+        heroTrail.Activate();
+    }
+
+    public void DeactivateTrail()
+    {
+        trail.Deactivate();
+    }
+
+    public void DeactivateHeroTrail()
+    {
+        heroTrail.Deactivate();
     }
 }

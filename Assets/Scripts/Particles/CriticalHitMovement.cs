@@ -4,6 +4,39 @@ using System.Collections;
 public class CriticalHitMovement : MonoBehaviour
 {
     TextMesh thisText;
+    public Color setColor;
+
+    float timer = 0f;
+    public float move;
+
+    void Start()
+    {
+        thisText = GetComponent<TextMesh>();
+        thisText.GetComponent<Renderer>().sortingLayerName = "Effects";
+    }
+
+    void Update()
+    {
+        timer += 1.4f * Time.deltaTime;
+        transform.position = new Vector3(transform.position.x, transform.position.y - move * Time.deltaTime, transform.position.z);
+
+        if (timer > 0.6f)
+        {
+            setColor = Color.Lerp(setColor, Color.clear, 2.6f * Time.deltaTime);
+
+            if (setColor.a <= 0.08f)
+                Destroy(gameObject);
+        }
+
+        thisText.color = setColor;
+    }
+}
+
+//
+// Old system - Colour changing
+//
+/* 
+    TextMesh thisText;
     public float moveUp;
     Color setColor;
 
@@ -48,4 +81,4 @@ public class CriticalHitMovement : MonoBehaviour
 
         thisText.color = setColor;
     }
-}
+*/

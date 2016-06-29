@@ -47,6 +47,12 @@ namespace Xft
 
         public Color MyColor = Color.white;
         public Material MyMaterial;
+
+        //
+        //MY EDIT
+        //
+        public string setSortingLayer = "Hero";
+        public int sortingLayerNumber = 3;
         #endregion
 
 
@@ -429,8 +435,8 @@ namespace Xft
             //
             //--MY EDIT--
             //Change sorting layer of trails.
-            mr.sortingLayerName = "Hero";
-            mr.sortingOrder = 3;
+            mr.sortingLayerName = setSortingLayer;
+            mr.sortingOrder = sortingLayerNumber;
             //--END EDIT--
             //
 

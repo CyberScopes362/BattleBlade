@@ -5,7 +5,7 @@ public class LeaperScript : MonoBehaviour
 {
     Animator thisAnimator;
     GameObject hero;
-    Rigidbody2D heroRigidbody;
+  //Rigidbody2D heroRigidbody;
     TempMove tempMove;
     DamageModifier damageModifier;
     Rigidbody2D thisRigidbody;
@@ -58,7 +58,7 @@ public class LeaperScript : MonoBehaviour
         hero = objectFinder.hero;
 
         tempMove = hero.GetComponent<TempMove>();
-        heroRigidbody = hero.GetComponent<Rigidbody2D>();
+      //heroRigidbody = hero.GetComponent<Rigidbody2D>();
         thisAnimator = GetComponent<Animator>();
         thisRigidbody = GetComponent<Rigidbody2D>();
         damageModifier = GetComponentInParent<DamageModifier>();
@@ -229,7 +229,7 @@ public class LeaperScript : MonoBehaviour
             if (shotRaycast)
             {
                 float randomSetDamage = Random.Range(laserDamage - laserDamageDiff, laserDamage + laserDamageDiff);
-                damageModifier.Attack(randomSetDamage);
+                damageModifier.RayAttack(randomSetDamage);
             }
         }
 

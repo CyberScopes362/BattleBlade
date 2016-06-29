@@ -38,7 +38,9 @@ public class DamageModifier : MonoBehaviour
 
     Color healthBarParentColor;
 
-	
+    bool critHit;
+
+
     void Start()
     {
         ObjectFinder objectFinder = GameObject.FindGameObjectWithTag("Initializer").GetComponent<ObjectFinder>();
@@ -73,6 +75,16 @@ public class DamageModifier : MonoBehaviour
         tempMove.TakeDamage(givenDamage, givenKnockback, givenKnockbackDirection);
 	}
 
+    public void RayAttack(float setDamage = default(float))
+    {
+        givenDamage = UnityEngine.Random.Range(damageMin, damageMax);
+
+        if (setDamage != 0)
+            givenDamage = setDamage;
+
+        tempMove.TakeDamage(givenDamage, 0f, givenKnockbackDirection);
+    }
+
     public void PushOut()
     {
         givenDamage = UnityEngine.Random.Range(damageMin, damageMax);
@@ -83,7 +95,7 @@ public class DamageModifier : MonoBehaviour
             givenKnockbackDirection = 1;
 
         tempMove.TakeDamage(givenDamage, 0f, 0);
-        hero.GetComponent<Rigidbody2D>().velocity = new Vector2(3.5f * givenKnockbackDirection, 4f);
+        hero.GetComponent<Rigidbody2D>().velocity = new Vector2(4.75f * givenKnockbackDirection, 5f);
         tempMove.thisAnimator.SetTrigger("TakeHit");
     }
 
@@ -105,12 +117,19 @@ public class DamageModifier : MonoBehaviour
             if (criticalChance > critRandom)
             {
                 takenDamage *= UnityEngine.Random.Range(1.5f, 3.0f);
-                Instantiate(critHitObject, new Vector3(enemyObject.transform.position.x, enemyObject.transform.position.y + 0.5f + UnityEngine.Random.Range(-0.5f, 0.75f), enemyObject.transform.position.z), Quaternion.Euler(enemyObject.transform.rotation.x, enemyObject.transform.rotation.y, UnityEngine.Random.Range(-30f, 30f)));
+                Instantiate(critHitObject, new Vector3(enemyObject.transform.position.x, healthBarObject.transform.position.y - 0.22f, enemyObject.transform.position.z), critHitObject.transform.rotation);
+                critHit = true;
             }
+
 
             currentHealth -= takenDamage;
 
             var createSlash = Instantiate(slashMarks, enemyObject.transform.position, Quaternion.Euler(0, 0, UnityEngine.Random.Range(0, 360))) as GameObject;
+
+            //Disable particles if there is no knockback
+            if (knockback == 0f)
+                createSlash.GetComponent<ParticleSystem>().Stop();
+
             createSlash.GetComponent<SlashMarksScript>().takenDamage = takenDamage;
 
             showHealthTimer = 5f;
@@ -122,6 +141,9 @@ public class DamageModifier : MonoBehaviour
         showHealthTimer -= 1f * Time.deltaTime;
 
         healthRatio = (currentHealth / maxHealth) * defXScale;
+        if (healthRatio < 0f)
+            healthRatio = 0;
+
         healthBarObject.transform.localScale = Vector2.Lerp(healthBarObject.transform.localScale, new Vector2(healthRatio, healthBarObject.transform.localScale.y), 12f * Time.deltaTime);
 
         if(showHealthTimer <= 0f)
@@ -143,6 +165,12 @@ public class DamageModifier : MonoBehaviour
                 healthBar.color = Color.Lerp(Color.red, Color.green, currentHealth / maxHealth);
                 healthBarParentColor = Color.white;
             }
+        }
+
+        if (critHit)
+        {
+            healthBarParent.color = Color.red;
+            critHit = false;
         }
 
         healthBarParent.color = Color.Lerp(healthBarParent.color, healthBarParentColor, 4f * Time.deltaTime);
