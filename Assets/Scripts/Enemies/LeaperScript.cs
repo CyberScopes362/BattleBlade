@@ -176,14 +176,12 @@ public class LeaperScript : MonoBehaviour
     void FixedUpdate()
     {
         if (goToPlayer)
-        {
             thisRigidbody.position = Vector2.MoveTowards(transform.position, heroPosition, setSpeed * Time.deltaTime);
-        }
     }
 
     public void InitiateAttack()
     {
-        //CHANGE
+        //CHANGE (Done?)
         if (!isDead)
         {
             if (shortRay)
@@ -221,10 +219,10 @@ public class LeaperScript : MonoBehaviour
             lineAlpha = 1f;
 
             Ray2D shotRay = new Ray2D(weaponTip.transform.position, new Vector2(weaponTip.transform.up.x * transform.localScale.x, weaponTip.transform.up.y));
-            RaycastHit2D shotRaycast = Physics2D.Raycast(weaponTip.transform.position, new Vector2(weaponTip.transform.up.x * transform.localScale.x, weaponTip.transform.up.y), 12f, playerLayer);
+            RaycastHit2D shotRaycast = Physics2D.Raycast(weaponTip.transform.position, new Vector2(weaponTip.transform.up.x * transform.localScale.x, weaponTip.transform.up.y), 16f, playerLayer);
 
             weaponLine.SetPosition(0, weaponTip.transform.position);
-            weaponLine.SetPosition(1, shotRay.GetPoint(12f));
+            weaponLine.SetPosition(1, shotRay.GetPoint(16f));
 
             if (shotRaycast)
             {

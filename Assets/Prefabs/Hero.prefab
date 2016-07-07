@@ -661,7 +661,7 @@ Transform:
   m_LocalRotation: {x: 0, y: -0, z: 0.0077670105, w: -0.99996984}
   m_LocalPosition: {x: 0.07600069, y: 0.329, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 345.5938}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 337.60007}
   m_Children:
   - {fileID: 409340}
   m_Father: {fileID: 469024}
@@ -695,7 +695,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: -0.106264085, w: 0.994338}
   m_LocalPosition: {x: -0.002, y: -0.27200007, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -12.2}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -23.640621}
   m_Children:
   - {fileID: 458658}
   m_Father: {fileID: 441642}
@@ -709,7 +709,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0.12504554, w: 0.992151}
   m_LocalPosition: {x: 0.074, y: 0.2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 14.366799}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 14.175001}
   m_Children:
   - {fileID: 466356}
   m_Father: {fileID: 485832}
@@ -749,7 +749,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0.44637468, w: 0.8948462}
   m_LocalPosition: {x: -0.067, y: 0.2, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 53.0226}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 43.95556}
   m_Children:
   - {fileID: 497114}
   m_Father: {fileID: 485832}
@@ -789,7 +789,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100158}
   m_LocalRotation: {x: 0, y: 0, z: -0.12743843, w: 0.99184656}
-  m_LocalPosition: {x: -0.05, y: 0.357, z: 0.01}
+  m_LocalPosition: {x: -0.058, y: 0.421, z: 0.01}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -14.6432}
   m_Children: []
@@ -804,7 +804,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0.28100175, w: 0.95970726}
   m_LocalPosition: {x: 0.145, y: -0.272, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 32.64}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 32.362503}
   m_Children:
   - {fileID: 493980}
   m_Father: {fileID: 441642}
@@ -833,7 +833,7 @@ Transform:
   m_LocalRotation: {x: 0, y: -0, z: 0.820152, w: -0.57214576}
   m_LocalPosition: {x: 0.018, y: -0.431, z: -0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 125.66872}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 28.500002}
   m_Children:
   - {fileID: 428512}
   m_Father: {fileID: 466356}
@@ -845,7 +845,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 171330}
   m_LocalRotation: {x: 0, y: 0, z: 0.12986192, w: -0.99153215}
-  m_LocalPosition: {x: 0.104, y: -0.042, z: 0.03}
+  m_LocalPosition: {x: 0.121, y: -0.091, z: 0.03}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -14.9232}
   m_Children: []
@@ -860,7 +860,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: -0.12602584, w: 0.992027}
   m_LocalPosition: {x: 0, y: -0.389, z: -0.01}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -14.48}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -28.101248}
   m_Children:
   - {fileID: 468340}
   m_Father: {fileID: 418116}
@@ -930,7 +930,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0.644791, w: 0.76435894}
   m_LocalPosition: {x: 0.001, y: -0.33, z: 0.01}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 80.299995}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 108.285194}
   m_Children:
   - {fileID: 444920}
   m_Father: {fileID: 421840}
@@ -944,7 +944,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0.22529119, w: 0.9742915}
   m_LocalPosition: {x: -0.028, y: -0.409, z: -0.01}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 26.039999}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 50.28125}
   m_Children:
   - {fileID: 458080}
   m_Father: {fileID: 458658}
@@ -958,7 +958,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: -0.0002617804, w: 1}
   m_LocalPosition: {x: 0, y: -0.021078099, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 359.97}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 310.30002}
   m_Children:
   - {fileID: 415862}
   - {fileID: 415742}
@@ -1044,7 +1044,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0.0008726948, w: 0.99999964}
   m_LocalPosition: {x: -0.034, y: -0.412, z: -0.01}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0.099999994}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 42.100002}
   m_Children: []
   m_Father: {fileID: 493980}
   m_RootOrder: 0
@@ -1085,7 +1085,7 @@ Transform:
   m_LocalRotation: {x: 0, y: -0, z: 0.27144054, w: -0.9624552}
   m_LocalPosition: {x: 0, y: -0.389, z: -0.01}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -31.5}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -81}
   m_Children:
   - {fileID: 481222}
   m_Father: {fileID: 438740}
@@ -1099,7 +1099,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0.21984622, w: 0.97553456}
   m_LocalPosition: {x: 0.001, y: -0.33, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 25.4}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 71.96667}
   m_Children: []
   m_Father: {fileID: 426916}
   m_RootOrder: 0
@@ -1284,14 +1284,14 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 100294}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f6c2c9828fec98747a1b0680f47bed80, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   PointStart: {fileID: 437348}
   PointEnd: {fileID: 458080}
-  MaxFrame: 10
+  MaxFrame: 15
   Granularity: 60
   Fps: 60
   MyColor: {r: 1, g: 1, b: 1, a: 1}
@@ -1812,7 +1812,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   PointStart: {fileID: 471802}
   PointEnd: {fileID: 458838}
-  MaxFrame: 16
+  MaxFrame: 15
   Granularity: 60
   Fps: 60
   MyColor: {r: 0.41911763, g: 0.4711966, b: 1, a: 1}
@@ -1850,7 +1850,7 @@ MonoBehaviour:
   activeTimer: 0
   lightAttackTime: 0.22
   heavyAttackTime: 0.9
-  slashAttackTime: 0.57
+  slashAttackTime: 0.53
   jumpAttackTime: 0.8
   airAttackTime: 0.6
   jumpInterval: 0.3

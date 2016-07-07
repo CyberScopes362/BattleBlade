@@ -66,6 +66,7 @@ public class TempMove : MonoBehaviour
     bool airBoost = false;
     bool inAirHeightCheck;
     bool midNoTimeAttack;
+    bool heroTrailInitiate;
 
     //Timers and Set Times
     [HideInInspector]
@@ -155,7 +156,10 @@ public class TempMove : MonoBehaviour
 
         blockingMovementSpeed = defaultMovementSpeed / 2.5f;
         activeTimer = 0f;
-        heroTrail.Deactivate();
+
+        //Initiate trails
+        heroTrail.Activate();
+        trail.Activate();
 
         defaultGravScale = thisRigidbody.gravityScale;
 
@@ -173,8 +177,20 @@ public class TempMove : MonoBehaviour
         //Attacking
         //-------------
 
+        //Weapon Trail system
         if (activeTimer <= trailOvertime)
-            trail.Deactivate();
+        {
+            trail.StopSmoothly(0.06f);
+            activeTimer = 0f;
+
+            //Initiate Realign of trails
+            if (!heroTrailInitiate)
+            {
+                trail.Deactivate();
+                heroTrail.Deactivate();
+                heroTrailInitiate = true;
+            }
+        }
 
         if (activeTimer <= 0f)
         {
@@ -593,13 +609,15 @@ public class TempMove : MonoBehaviour
         heroTrail.Activate();
     }
 
-    public void DeactivateTrail()
+    public void StopTrail()
     {
         trail.Deactivate();
     }
 
-    public void DeactivateHeroTrail()
+    public void StopHeroTrail()
     {
-        heroTrail.Deactivate();
+        heroTrail.StopSmoothly(0.1f);
     }
+
+
 }

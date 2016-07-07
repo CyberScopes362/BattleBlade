@@ -55,7 +55,7 @@ public class ItemSelector : MonoBehaviour
 
 
         //Placeholder: Default stuff
-        SetWeapon("Legacy Scorched Blade");
+        SetWeapon("Requiem Slicer");
         SetMask("Hellrider");
         SetChestplate("Roars of Hell");
         SetArms("Combustion");
