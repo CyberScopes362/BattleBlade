@@ -1880,7 +1880,8 @@ MonoBehaviour:
   - 25
   - 20
   staminaAdditions: 0
-  blockReducer: 2
+  canStaminaBlock: 0
+  blockReducer: 1
   knockbackRatio: 3.75
   lightAttackStrength: 7.6
   heavyAttackStrength: 22

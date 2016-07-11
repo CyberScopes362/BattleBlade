@@ -289,7 +289,7 @@ public class TempMove : MonoBehaviour
         {
             thisAnimator.SetBool("Block", true);
             movementSpeed = blockingMovementSpeed;
-            currentStamina -= 30f * Time.deltaTime;
+            currentStamina -= (30f / blockReducer) * Time.deltaTime;
 
             if (!block)
                 block = true;
@@ -557,7 +557,7 @@ public class TempMove : MonoBehaviour
         {
             if((takeKnockbackDirection * transform.localScale.x) > 0)
             {
-                takeDamage /= blockReducer;
+                takeDamage = 0f;
                 Instantiate(absoluteShield, transform.position, transform.rotation);
             }
             else

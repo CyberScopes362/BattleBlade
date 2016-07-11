@@ -218,10 +218,10 @@ public class LeaperScript : MonoBehaviour
             lineAlpha = 1f;
 
             Ray2D shotRay = new Ray2D(weaponTip.transform.position, new Vector2(weaponTip.transform.up.x * transform.localScale.x, weaponTip.transform.up.y));
-            RaycastHit2D shotRaycast = Physics2D.Raycast(weaponTip.transform.position, new Vector2(weaponTip.transform.up.x * transform.localScale.x, weaponTip.transform.up.y), 16f, playerLayer);
+            RaycastHit2D shotRaycast = Physics2D.Raycast(weaponTip.transform.position, new Vector2(weaponTip.transform.up.x * transform.localScale.x, weaponTip.transform.up.y), 18f, playerLayer);
 
             weaponLine.SetPosition(0, weaponTip.transform.position);
-            weaponLine.SetPosition(1, shotRay.GetPoint(16f));
+            weaponLine.SetPosition(1, shotRay.GetPoint(18f));
 
             if (shotRaycast)
             {
