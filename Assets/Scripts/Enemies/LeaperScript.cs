@@ -5,7 +5,6 @@ public class LeaperScript : MonoBehaviour
 {
     Animator thisAnimator;
     GameObject hero;
-  //Rigidbody2D heroRigidbody;
     TempMove tempMove;
     DamageModifier damageModifier;
     Rigidbody2D thisRigidbody;
@@ -17,13 +16,13 @@ public class LeaperScript : MonoBehaviour
     float knockback;
     public float speed;
     public float attackSpeedMultiplier;
+    public float speedMultiplier;
     public float speedDifferentiation;
 
     public float weaponCooldown;
     public float laserDamage;
     public float laserDamageDiff;
 
-    LayerMask floorMask;
     LayerMask playerLayer;
 
     public Transform[] points;
@@ -58,7 +57,6 @@ public class LeaperScript : MonoBehaviour
         hero = objectFinder.hero;
 
         tempMove = hero.GetComponent<TempMove>();
-      //heroRigidbody = hero.GetComponent<Rigidbody2D>();
         thisAnimator = GetComponent<Animator>();
         thisRigidbody = GetComponent<Rigidbody2D>();
         damageModifier = GetComponentInParent<DamageModifier>();
@@ -68,11 +66,12 @@ public class LeaperScript : MonoBehaviour
         weaponLineMat = weaponLine.material;
         weaponParticles = weaponTip.GetComponent<ParticleSystem>();
 
-        floorMask = objectFinder.floorMask;
         playerLayer = objectFinder.playerLayer;
 
-        thisAnimator.SetFloat("AttackSpeedMultiplier", attackSpeedMultiplier);
-        thisAnimator.SetFloat("SpeedMultiplier", (setSpeed / 12) + 1);
+        //Random Additions to differentiate and stop enemy syncing
+        thisAnimator.SetFloat("AttackSpeedMultiplier", attackSpeedMultiplier + Random.Range(-0.075f, 0.075f));
+        thisAnimator.SetFloat("HitSpeedMultiplier", 1f + Random.Range(-0.2f, 2f));
+        thisAnimator.SetFloat("SpeedMultiplier", speedMultiplier + Random.Range(-0.1f, 0.1f));
 
         setSpeed = Random.Range(speed - speedDifferentiation, speed + speedDifferentiation);
     }
@@ -148,7 +147,7 @@ public class LeaperScript : MonoBehaviour
         {
             if (knockback != 0f)
             {
-                thisRigidbody.velocity = new Vector2(knockback / 1.5f, 0f);
+                thisRigidbody.velocity = new Vector2(knockback / 2f, 0f);
                 thisAnimator.SetTrigger("Hit");
             }
 

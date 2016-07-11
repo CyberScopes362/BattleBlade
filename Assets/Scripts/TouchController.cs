@@ -6,8 +6,16 @@ using System.Collections;
 
 public class TouchController : MonoBehaviour
 {
+    TempMove tempMove;
     public Image leftArrow;
     public Image rightArrow;
+    public Image jumpSlamIndicator;
+    public Image airAttackIndicator;
+
+    public Button slashButton;
+    public Button blockButton;
+
+    public Color grayedOutColor;
 
     bool resetSelf = false;
     string resetParameter;
@@ -16,6 +24,8 @@ public class TouchController : MonoBehaviour
 
     void Start()
     {
+        tempMove = GameObject.FindGameObjectWithTag("Initializer").GetComponent<ObjectFinder>().hero.GetComponent<TempMove>();
+
         leftArrow.color = new Color(1f, 1f, 1f, 0.7f);
         rightArrow.color = new Color(1f, 1f, 1f, 0.7f);
     }
@@ -83,6 +93,38 @@ public class TouchController : MonoBehaviour
                 CrossPlatformInputManager.SetButtonUp("Fire3");
                 break;
         }
+    }
+
+    void Update()
+    {
+        //For allowing of clicking buttons/indicator systems:
+
+        //Slash Button
+        if (tempMove.currentStamina >= tempMove.staminaList[1])
+            slashButton.interactable = true;
+        else
+            slashButton.interactable = false;
+
+        //Block Button
+        if (tempMove.currentStamina > 0f && tempMove.canStaminaBlock)
+            blockButton.interactable = true;
+        else
+        {
+            blockButton.interactable = false;
+            ExecuteCommand("BlockRelease");
+        }
+
+        //Jump Slam Attack Indicator
+        if (tempMove.currentStamina >= tempMove.staminaList[0])
+            jumpSlamIndicator.color = Color.white;
+        else
+            jumpSlamIndicator.color = grayedOutColor;
+
+        //Air Attack Indicator
+        if (tempMove.currentStamina >= tempMove.staminaList[2])
+            airAttackIndicator.color = Color.white;
+        else
+            airAttackIndicator.color = grayedOutColor;
     }
 
     void LateUpdate()

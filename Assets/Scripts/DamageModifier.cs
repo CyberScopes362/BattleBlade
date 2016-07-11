@@ -95,7 +95,7 @@ public class DamageModifier : MonoBehaviour
             givenKnockbackDirection = 1;
 
         tempMove.TakeDamage(givenDamage, 0f, 0);
-        hero.GetComponent<Rigidbody2D>().velocity = new Vector2(4.75f * givenKnockbackDirection, 5f);
+        hero.GetComponent<Rigidbody2D>().velocity = new Vector2(5f * givenKnockbackDirection, 5f);
         tempMove.thisAnimator.SetTrigger("TakeHit");
     }
 

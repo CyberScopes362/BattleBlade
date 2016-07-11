@@ -4539,6 +4539,11 @@ See Also: WWW.assetBundle, WWW.LoadFromCacheOrDownload.</param>
         <para>Routing target.</para>
       </summary>
     </member>
+    <member name="P:UnityEngine.Audio.AudioMixer.updateMode">
+      <summary>
+        <para>How time should progress for this AudioMixer. Used during Snapshot transitions.</para>
+      </summary>
+    </member>
     <member name="M:UnityEngine.Audio.AudioMixer.ClearFloat(System.String)">
       <summary>
         <para>Resets an exposed parameter to its initial value.</para>
@@ -4609,6 +4614,21 @@ See Also: WWW.assetBundle, WWW.LoadFromCacheOrDownload.</param>
         <para>Performs an interpolated transition towards this snapshot over the time interval specified.</para>
       </summary>
       <param name="timeToReach">Relative time after which this snapshot should be reached from any current state.</param>
+    </member>
+    <member name="T:UnityEngine.Audio.AudioMixerUpdateMode">
+      <summary>
+        <para>The mode in which an AudioMixer should update its time.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Audio.AudioMixerUpdateMode.Normal">
+      <summary>
+        <para>Update the AudioMixer with scaled game time.</para>
+      </summary>
+    </member>
+    <member name="F:UnityEngine.Audio.AudioMixerUpdateMode.UnscaledTime">
+      <summary>
+        <para>Update the AudioMixer with unscaled realtime.</para>
+      </summary>
     </member>
     <member name="T:UnityEngine.AudioChorusFilter">
       <summary>
@@ -5532,6 +5552,11 @@ See Also: WWW.assetBundle, WWW.LoadFromCacheOrDownload.</param>
     <member name="P:UnityEngine.AudioSource.isPlaying">
       <summary>
         <para>Is the clip playing right now (Read Only)?</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.AudioSource.isVirtual">
+      <summary>
+        <para>True if all sounds played by the AudioSource (main sound started by Play() or playOnAwake as well as one-shots) are culled by the audio system.</para>
       </summary>
     </member>
     <member name="P:UnityEngine.AudioSource.loop">
@@ -41257,6 +41282,11 @@ Returns NULL if there is no associated alpha texture for the source sprite. This
     <member name="P:UnityEngine.SystemInfo.supportsAccelerometer">
       <summary>
         <para>Is an accelerometer available on the device?</para>
+      </summary>
+    </member>
+    <member name="P:UnityEngine.SystemInfo.supportsAudio">
+      <summary>
+        <para>Is there an Audio device available for playback?</para>
       </summary>
     </member>
     <member name="P:UnityEngine.SystemInfo.supportsComputeShaders">

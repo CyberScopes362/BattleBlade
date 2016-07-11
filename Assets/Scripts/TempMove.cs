@@ -106,6 +106,12 @@ public class TempMove : MonoBehaviour
     //-----
     public float maxHealth;
     public float currentHealth;
+    public float maxStamina;
+    public float currentStamina;
+    public float[] staminaList;
+    public float staminaAdditions;
+    [HideInInspector]
+    public bool canStaminaBlock;
 
     float currentDamage;
     float currentKnockback;
@@ -164,6 +170,7 @@ public class TempMove : MonoBehaviour
         defaultGravScale = thisRigidbody.gravityScale;
 
         currentHealth = maxHealth;
+        currentStamina = maxStamina;
         thisAnimator.SetInteger("AttackType", 0);
     }
 
@@ -172,6 +179,23 @@ public class TempMove : MonoBehaviour
         //Timer Updates
         activeTimer -= 1f * Time.deltaTime;
         jumpTimer += 1f * Time.deltaTime;
+
+        //Stamina Growth
+        if (currentStamina < 100f)
+            currentStamina += (10f + staminaAdditions) * Time.deltaTime;
+        else
+            currentStamina = 100f;
+
+        //Stamina system for blocking:
+        if(!block)
+        {
+            if (currentStamina > 20f)
+                canStaminaBlock = true;
+            else
+                canStaminaBlock = false;
+        }
+        else
+            canStaminaBlock = true;
 
         //-------------
         //Attacking
@@ -218,11 +242,13 @@ public class TempMove : MonoBehaviour
 
                     //Slash Attack
 #if UNITY_STANDALONE || UNITY_EDITOR
-                    if (Input.GetButtonDown("Fire4"))
+                    if (Input.GetButtonDown("Fire4") )
 #else
                     if (CrossPlatformInputManager.GetButtonDown("Fire4"))
 #endif
-                        Attack(4);
+                        //Slash Attack = Stamina List Value 1
+                        if(currentStamina >= staminaList[1])
+                            Attack(4);
                 }
                 else
                 {
@@ -234,7 +260,9 @@ public class TempMove : MonoBehaviour
 #else
                         if (CrossPlatformInputManager.GetButtonDown("Fire2"))
 #endif
-                            Attack(2);
+                            //Jump Slam Attack = Stamina List Value 0
+                            if (currentStamina >= staminaList[0])
+                                Attack(2);
 
                         //Air Attack
 #if UNITY_STANDALONE || UNITY_EDITOR
@@ -242,7 +270,9 @@ public class TempMove : MonoBehaviour
 #else
                         if (CrossPlatformInputManager.GetButtonDown("Fire1"))
 #endif
-                            Attack(3);
+                            //Air Attack = Stamina List Value 2
+                            if (currentStamina >= staminaList[2])
+                                Attack(3);
                     }
                 }
             } 
@@ -252,15 +282,16 @@ public class TempMove : MonoBehaviour
 
         //Blocking
 #if UNITY_STANDALONE || UNITY_EDITOR
-        if (Input.GetButton("Fire3") && isGrounded == 0)
+        if (Input.GetButton("Fire3") && isGrounded == 0 && currentStamina > 0f && canStaminaBlock)
 #else
         if (CrossPlatformInputManager.GetButton("Fire3") && isGrounded == 0)
 #endif
         {
             thisAnimator.SetBool("Block", true);
             movementSpeed = blockingMovementSpeed;
+            currentStamina -= 30f * Time.deltaTime;
 
-            if(!block)
+            if (!block)
                 block = true;
 
             if (thisAnimator.GetFloat("MoveMultiplier") != blockingMultiplier)
@@ -462,7 +493,7 @@ public class TempMove : MonoBehaviour
                 knockbackChance = 0.175f;
                 break;
 
-            //Jump Attack
+            //Jump Slam Attack
             case 2:
                 if(!inAirHeightCheck)
                 {
@@ -472,6 +503,7 @@ public class TempMove : MonoBehaviour
                     currentDamage = slamAttackStrength;
                     lerpToGround = true;
                     knockbackChance = 0.075f;
+                    currentStamina -= staminaList[0];
                 }
                 break;
 
@@ -487,6 +519,7 @@ public class TempMove : MonoBehaviour
                     midNoTimeAttack = true;
                     airBoost = true;
                     knockbackChance = 0.3f;
+                    currentStamina -= staminaList[2];
                 }
                 break;
 
@@ -495,8 +528,9 @@ public class TempMove : MonoBehaviour
                 currentDashSpeed = slashDashSpeed;
                 thisAnimator.SetTrigger("SlashAttack");
                 activeTimer = slashAttackTime;
-                currentDamage = (lightAttackStrength + heavyAttackStrength) / 2.5f;
+                currentDamage = (lightAttackStrength + heavyAttackStrength) / 2f;
                 knockbackChance = 0.75f;
+                currentStamina -= staminaList[1];
                 break;
         }
     }
@@ -595,7 +629,7 @@ public class TempMove : MonoBehaviour
 
     public void SetBlockCollider()
     {
-        if (weaponCollider.isTrigger != false)
+        if (weaponCollider.isTrigger)
             weaponCollider.isTrigger = false;
     }
 

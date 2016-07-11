@@ -89,7 +89,7 @@ Material:
         first:
           name: _FrontTex
         second:
-          m_Texture: {fileID: 2800000, guid: 5e9775898c0c6314cac33c2424b18fc1, type: 3}
+          m_Texture: {fileID: 2800000, guid: 4781816d9b15d41468bfb36f25a7d6a9, type: 3}
           m_Scale: {x: 1, y: 1}
           m_Offset: {x: 0, y: 0}
       data:
