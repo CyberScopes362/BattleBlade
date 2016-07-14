@@ -266,31 +266,43 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   skyboxTextures:
   - {fileID: 2800000, guid: 5e9775898c0c6314cac33c2424b18fc1, type: 3}
-  - {fileID: 2800000, guid: 4781816d9b15d41468bfb36f25a7d6a9, type: 3}
   - {fileID: 2800000, guid: 6f23d298b5ba2f2498efb6b30034ee6e, type: 3}
+  - {fileID: 2800000, guid: 2f43cc6e9d0089a438da72c4fcf16a1a, type: 3}
   - {fileID: 2800000, guid: 6bdf8135ae8405a4bbd1a7eda42c38c9, type: 3}
+  - {fileID: 2800000, guid: 4781816d9b15d41468bfb36f25a7d6a9, type: 3}
+  - {fileID: 2800000, guid: 3f7e15a660e82ec4581b10f03e8c8857, type: 3}
   backgroundSprites:
   - {fileID: 21300000, guid: 9256a066fbfa8664f816b7e30e800b82, type: 3}
+  - {fileID: 21300000, guid: f6d839c4b68681d488127791ec83ab7e, type: 3}
   midgroundSprites:
   - {fileID: 21300000, guid: 483fec48a6805e24493abfba15a59387, type: 3}
+  - {fileID: 21300000, guid: b623dbf2ec876114fa00c35f88a8a2a2, type: 3}
   foregroundSprites:
   - {fileID: 21300000, guid: 0aa537137eb1e4544a63a7f40a2f8174, type: 3}
+  - {fileID: 21300000, guid: 19fb7f086e802404892abe9a85bdca54, type: 3}
+  actualgroundSprites:
+  - {fileID: 21300000, guid: 003e2f676d0664c43be12fcd7c3a7e36, type: 3}
+  - {fileID: 21300000, guid: 0f2a4ec70a84459478ad24953fe425d0, type: 3}
   backgroundSpritesColors:
   - {r: 0.89411765, g: 0.4509804, b: 0.12941177, a: 1}
-  - {r: 0.8352941, g: 0.17254902, b: 0.62352943, a: 1}
+  - {r: 0.77205884, g: 0.25546065, b: 0.25546065, a: 1}
   midgroundSpritesColors:
   - {r: 0.6745098, g: 0.28627452, b: 0.039215688, a: 0.9411765}
-  - {r: 0.4117647, g: 0, b: 0.41568628, a: 0.9411765}
+  - {r: 0.71323526, g: 0.052443776, b: 0.052443776, a: 0.9411765}
   foregroundSpritesColors:
   - {r: 0.29803923, g: 0.15294118, b: 0, a: 1}
-  - {r: 0.28627452, g: 0, b: 0.34901962, a: 1}
+  - {r: 0.41911763, g: 0, b: 0, a: 1}
   gradientColors:
   - {r: 1, g: 0.14482757, b: 0, a: 1}
-  - {r: 0.8897059, g: 0, b: 0.71790034, a: 1}
+  - {r: 0.6102941, g: 0.6102941, b: 0.6102941, a: 1}
+  skyEffects:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
   floorSizeX: 9
   pointGapWidth: 5
   parallaxGap: 8
-  environmentType: MountainsX
+  environmentType: Valleys
 --- !u!212 &21236406
 SpriteRenderer:
   m_ObjectHideFlags: 1

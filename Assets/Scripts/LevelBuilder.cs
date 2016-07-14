@@ -12,24 +12,29 @@ public class LevelBuilder : MonoBehaviour
     GameObject gradientBottom;
     GameObject startPoint;
     GameObject endPoint;
+
     GameObject backgroundScenery;
     GameObject midgroundScenery;
     GameObject foregroundScenery;
+    GameObject actualgroundScenery;
+
     GameObject backgroundSceneryParent;
     GameObject midgroundSceneryParent;
     GameObject foregroundSceneryParent;
+    GameObject actualgroundSceneryParent;
 
     public List<Texture> skyboxTextures = new List<Texture>();
 
     public List<Sprite> backgroundSprites = new List<Sprite>();
     public List<Sprite> midgroundSprites = new List<Sprite>();
     public List<Sprite> foregroundSprites = new List<Sprite>();
+    public List<Sprite> actualgroundSprites = new List<Sprite>();
 
     public List<Color> backgroundSpritesColors = new List<Color>();
     public List<Color> midgroundSpritesColors = new List<Color>();
     public List<Color> foregroundSpritesColors = new List<Color>();
     public List<Color> gradientColors = new List<Color>();
-
+    public List<GameObject> skyEffects = new List<GameObject>();
 
     public float floorSizeX;
     public float pointGapWidth;
@@ -55,12 +60,16 @@ public class LevelBuilder : MonoBehaviour
         gradientBottom = objectFinder.gradientBottom;
         startPoint = objectFinder.startPoint;
         endPoint = objectFinder.endPoint;
+
         backgroundScenery = objectFinder.backgroundScenery;
         midgroundScenery = objectFinder.midgroundScenery;
         foregroundScenery = objectFinder.foregroundScenery;
+        actualgroundScenery = objectFinder.actualgroundScenery;
+
         backgroundSceneryParent = objectFinder.backgroundSceneryParent;
         midgroundSceneryParent = objectFinder.midgroundSceneryParent;
         foregroundSceneryParent = objectFinder.foregroundSceneryParent;
+        actualgroundSceneryParent = objectFinder.actualgroundSceneryParent;
 
         floorRenderer = floor.GetComponent<SpriteRenderer>();
 
@@ -69,10 +78,12 @@ public class LevelBuilder : MonoBehaviour
         {
             case "Mountains":
                 RenderSettings.skybox.SetTexture("_FrontTex", skyboxTextures[0]);
+                skyEffects[0].SetActive(true);
 
                 backgroundScenery.GetComponent<SpriteRenderer>().sprite = backgroundSprites[0];
                 midgroundScenery.GetComponent<SpriteRenderer>().sprite = midgroundSprites[0];
                 foregroundScenery.GetComponent<SpriteRenderer>().sprite = foregroundSprites[0];
+                actualgroundScenery.GetComponent<SpriteRenderer>().sprite = actualgroundSprites[0];
 
                 backgroundScenery.GetComponent<SpriteRenderer>().color = backgroundSpritesColors[0];
                 midgroundScenery.GetComponent<SpriteRenderer>().color = midgroundSpritesColors[0];
@@ -82,12 +93,14 @@ public class LevelBuilder : MonoBehaviour
                 gradientBottom.GetComponent<SpriteRenderer>().color = gradientColors[0];
                 break;
 
-            //Just a weird test, remove when this section gets fully updated.
-            case "MountainsX":
+            case "Valleys":
                 RenderSettings.skybox.SetTexture("_FrontTex", skyboxTextures[1]);
-                backgroundScenery.GetComponent<SpriteRenderer>().sprite = backgroundSprites[0];
-                midgroundScenery.GetComponent<SpriteRenderer>().sprite = midgroundSprites[0];
-                foregroundScenery.GetComponent<SpriteRenderer>().sprite = foregroundSprites[0];
+                skyEffects[1].SetActive(true);
+
+                backgroundScenery.GetComponent<SpriteRenderer>().sprite = backgroundSprites[1];
+                midgroundScenery.GetComponent<SpriteRenderer>().sprite = midgroundSprites[1];
+                foregroundScenery.GetComponent<SpriteRenderer>().sprite = foregroundSprites[1];
+                actualgroundScenery.GetComponent<SpriteRenderer>().sprite = actualgroundSprites[1];
 
                 backgroundScenery.GetComponent<SpriteRenderer>().color = backgroundSpritesColors[1];
                 midgroundScenery.GetComponent<SpriteRenderer>().color = midgroundSpritesColors[1];
@@ -120,6 +133,7 @@ public class LevelBuilder : MonoBehaviour
         backgroundScenery.transform.position = groundsPosition;
         midgroundScenery.transform.position = groundsPosition;
         foregroundScenery.transform.position = groundsPosition;
+        actualgroundScenery.transform.position = groundsPosition;
 
         //Scenery Multiplier
         float totalSceneryWidth = sceneryRenderer.bounds.size.x;
@@ -127,7 +141,7 @@ public class LevelBuilder : MonoBehaviour
 
         //Use lists instead of arrays; Flexibility and dynamic growth
         //For loop for each ground, while loop for each scenery in section
-        for (int x = 0; x < 3; x++)
+        for (int x = 0; x < 4; x++)
         {
             //Setting for each ground
             switch(x)
@@ -145,6 +159,11 @@ public class LevelBuilder : MonoBehaviour
                 case 2:
                     setScenery = foregroundScenery;
                     setSceneryParent = foregroundSceneryParent;
+                    break;
+
+                case 3:
+                    setScenery = actualgroundScenery;
+                    setSceneryParent = actualgroundSceneryParent;
                     break;
             }
 

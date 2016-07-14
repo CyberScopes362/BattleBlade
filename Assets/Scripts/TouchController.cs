@@ -9,22 +9,30 @@ public class TouchController : MonoBehaviour
     TempMove tempMove;
     public Image leftArrow;
     public Image rightArrow;
+
     public Image jumpSlamIndicator;
     public Image airAttackIndicator;
+    public Image slashIndicator;
+    public Image blockIndicator;
 
     public Button slashButton;
     public Button blockButton;
 
-    public Color grayedOutColor;
+    public Color chargingColor;
 
     bool resetSelf = false;
     string resetParameter;
 
     bool dragged = false;
 
+    float currentStamina;
+    float[] staminaList;
+    float minStaminaBlock;
+
     void Start()
     {
         tempMove = GameObject.FindGameObjectWithTag("Initializer").GetComponent<ObjectFinder>().hero.GetComponent<TempMove>();
+        minStaminaBlock = tempMove.minStaminaBlock;
 
         leftArrow.color = new Color(1f, 1f, 1f, 0.7f);
         rightArrow.color = new Color(1f, 1f, 1f, 0.7f);
@@ -98,33 +106,50 @@ public class TouchController : MonoBehaviour
     void Update()
     {
         //For allowing of clicking buttons/indicator systems:
+        currentStamina = tempMove.currentStamina;
+        staminaList = tempMove.staminaList;
 
-        //Slash Button
-        if (tempMove.currentStamina >= tempMove.staminaList[1])
+        //Slash Button and Indicator
+        if (currentStamina >= staminaList[1])
+        {
             slashButton.interactable = true;
+            slashIndicator.color = Color.white;
+        }
         else
+        {
             slashButton.interactable = false;
+            slashIndicator.color = chargingColor;
+        }
 
         //Block Button
-        if (tempMove.currentStamina > 0f && tempMove.canStaminaBlock)
+        if (currentStamina > 0f && tempMove.canStaminaBlock)
+        {
             blockButton.interactable = true;
+            blockIndicator.color = Color.white;
+        }
         else
         {
             blockButton.interactable = false;
             ExecuteCommand("BlockRelease");
+            blockIndicator.color = chargingColor;
         }
 
         //Jump Slam Attack Indicator
-        if (tempMove.currentStamina >= tempMove.staminaList[0])
+        if (currentStamina >= staminaList[0])
             jumpSlamIndicator.color = Color.white;
         else
-            jumpSlamIndicator.color = grayedOutColor;
+            jumpSlamIndicator.color = chargingColor;
 
         //Air Attack Indicator
-        if (tempMove.currentStamina >= tempMove.staminaList[2])
+        if (currentStamina >= staminaList[2])
             airAttackIndicator.color = Color.white;
         else
-            airAttackIndicator.color = grayedOutColor;
+            airAttackIndicator.color = chargingColor;
+
+        jumpSlamIndicator.fillAmount = currentStamina / staminaList[0];
+        airAttackIndicator.fillAmount = currentStamina / staminaList[2];
+        slashIndicator.fillAmount = currentStamina / staminaList[1];
+        blockIndicator.fillAmount = currentStamina / minStaminaBlock;
     }
 
     void LateUpdate()

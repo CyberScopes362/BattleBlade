@@ -112,6 +112,7 @@ public class TempMove : MonoBehaviour
     public float staminaAdditions;
     [HideInInspector]
     public bool canStaminaBlock;
+    public float minStaminaBlock = 20f;
 
     float currentDamage;
     float currentKnockback;
@@ -189,7 +190,7 @@ public class TempMove : MonoBehaviour
         //Stamina system for blocking:
         if(!block)
         {
-            if (currentStamina > 20f)
+            if (currentStamina > minStaminaBlock)
                 canStaminaBlock = true;
             else
                 canStaminaBlock = false;

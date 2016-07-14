@@ -105,9 +105,11 @@ MonoBehaviour:
   backgroundSceneryParent: {fileID: 0}
   midgroundSceneryParent: {fileID: 0}
   foregroundSceneryParent: {fileID: 0}
+  actualgroundSceneryParent: {fileID: 0}
   backgroundScenery: {fileID: 0}
   midgroundScenery: {fileID: 0}
   foregroundScenery: {fileID: 0}
+  actualgroundScenery: {fileID: 0}
   startPoint: {fileID: 0}
   endPoint: {fileID: 0}
   spawnPoint: {fileID: 0}

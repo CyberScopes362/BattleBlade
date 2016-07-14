@@ -13,10 +13,12 @@ public class ObjectFinder : MonoBehaviour
     public GameObject backgroundSceneryParent;
     public GameObject midgroundSceneryParent;
     public GameObject foregroundSceneryParent;
+    public GameObject actualgroundSceneryParent;
 
     public GameObject backgroundScenery;
     public GameObject midgroundScenery;
     public GameObject foregroundScenery;
+    public GameObject actualgroundScenery;
 
     public GameObject startPoint;
     public GameObject endPoint;
