@@ -39,6 +39,7 @@ public class DamageModifier : MonoBehaviour
     Color healthBarParentColor;
 
     bool critHit;
+    bool knockbackHit;
 
 
     void Start()
@@ -75,14 +76,20 @@ public class DamageModifier : MonoBehaviour
         tempMove.TakeDamage(givenDamage, givenKnockback, givenKnockbackDirection);
 	}
 
-    public void RayAttack(float setDamage = default(float))
+    public void RayAttack(float setDamage = default(float), float staminaRemoval = default(float))
     {
         givenDamage = UnityEngine.Random.Range(damageMin, damageMax);
 
         if (setDamage != 0)
             givenDamage = setDamage;
 
-        tempMove.TakeDamage(givenDamage, 0f, givenKnockbackDirection);
+        if (enemyObject.transform.localScale.x < 0)
+            givenKnockbackDirection = -1;
+        else
+            givenKnockbackDirection = 1;
+
+        tempMove.TakeDamage(givenDamage, 0f, givenKnockbackDirection, staminaRemoval);
+        
     }
 
     public void PushOut()
@@ -105,11 +112,17 @@ public class DamageModifier : MonoBehaviour
         {
             isHit = true;
 
-            //Knockback Chance Generator
+            //Knockback Chance Generator + Randomizer
             if (UnityEngine.Random.Range(0f, 1f) > knockbackChance)
+            {
                 knockback = currentKnockback;
+                knockback = knockback + UnityEngine.Random.Range(-0.8f, 0.8f);
+                knockbackHit = true;
+            }
             else
+            {
                 knockback = 0f;
+            }
 
             //Crit Generator
             float critRandom = UnityEngine.Random.Range(0.0f, 1.0f);
@@ -121,14 +134,14 @@ public class DamageModifier : MonoBehaviour
                 critHit = true;
             }
 
-
             currentHealth -= takenDamage;
 
             var createSlash = Instantiate(slashMarks, enemyObject.transform.position, Quaternion.Euler(0, 0, UnityEngine.Random.Range(0, 360))) as GameObject;
 
+            /* Below is commented because it didnt look full of 'effects' - change if necessary */
             //Disable particles if there is no knockback
-            if (knockback == 0f)
-                createSlash.GetComponent<ParticleSystem>().Stop();
+            //if (knockback == 0f)
+            //    createSlash.GetComponent<ParticleSystem>().Stop();
 
             createSlash.GetComponent<SlashMarksScript>().takenDamage = takenDamage;
 
@@ -171,6 +184,12 @@ public class DamageModifier : MonoBehaviour
         {
             healthBarParent.color = Color.red;
             critHit = false;
+        }
+
+        if(knockbackHit)
+        {
+            healthBarParent.color = Color.magenta;
+            knockbackHit = false;
         }
 
         healthBarParent.color = Color.Lerp(healthBarParent.color, healthBarParentColor, 4f * Time.deltaTime);

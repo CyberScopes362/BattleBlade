@@ -130,7 +130,6 @@ public class TouchController : MonoBehaviour
         else
         {
             blockButton.interactable = false;
-            ExecuteCommand("BlockRelease");
             blockIndicator.color = chargingColor;
         }
 

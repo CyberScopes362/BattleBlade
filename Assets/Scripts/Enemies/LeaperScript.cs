@@ -22,6 +22,7 @@ public class LeaperScript : MonoBehaviour
     public float weaponCooldown;
     public float laserDamage;
     public float laserDamageDiff;
+    public float staminaRemoval;
 
     LayerMask playerLayer;
 
@@ -42,6 +43,7 @@ public class LeaperScript : MonoBehaviour
     bool setRotation;
     bool isDead;
     bool deathTrigger;
+    public bool isHitAnim;
 
     public bool attacking = false;
 
@@ -69,16 +71,17 @@ public class LeaperScript : MonoBehaviour
         playerLayer = objectFinder.playerLayer;
 
         //Random Additions to differentiate and stop enemy syncing
-        thisAnimator.SetFloat("AttackSpeedMultiplier", attackSpeedMultiplier + Random.Range(-0.075f, 0.075f));
-        thisAnimator.SetFloat("HitSpeedMultiplier", 1f + Random.Range(-0.2f, 2f));
+        thisAnimator.SetFloat("AttackSpeedMultiplier", attackSpeedMultiplier + Random.Range(-0.1f, 0.1f));
         thisAnimator.SetFloat("SpeedMultiplier", speedMultiplier + Random.Range(-0.1f, 0.1f));
+        thisAnimator.SetFloat("HitSpeedMultiplier", 1f + Random.Range(-0.2f, 0.2f));
+
+        weaponCooldown += Random.Range(-0.4f, 0.4f);
 
         setSpeed = Random.Range(speed - speedDifferentiation, speed + speedDifferentiation);
     }
 
     void Update()
     {
-
         isDead = damageModifier.isDead;
         knockback = damageModifier.knockback;
         shootTimer -= Time.deltaTime;
@@ -92,7 +95,7 @@ public class LeaperScript : MonoBehaviour
         longRay = Physics2D.Raycast(transform.position, Vector2.left * transform.localScale.x, checkRanges[1], playerLayer);
 
         //If hero is within long range
-        if(!attacking)
+        if(!attacking && !isHitAnim)
         {
             if (transform.position.x >= tempMove.realheroPosition.transform.position.x)
                 transform.localScale = new Vector3(1f, transform.localScale.y, transform.localScale.z);
@@ -106,8 +109,8 @@ public class LeaperScript : MonoBehaviour
                 {
                     if (goToPlayer)
                     {
-                        goToPlayer = false;
                         thisAnimator.SetTrigger("AttackShort");
+                        goToPlayer = false;
                     }
                 }
                 else
@@ -117,16 +120,16 @@ public class LeaperScript : MonoBehaviour
                     {
                         if (goToPlayer)
                         {
-                            goToPlayer = false;
                             thisAnimator.SetTrigger("AttackLongDirect");
+                            goToPlayer = false;
                         }
                     }
                     else
                     {
                         if (!goToPlayer)
                         {
-                            goToPlayer = true;
                             thisAnimator.SetTrigger("Move");
+                            goToPlayer = true;
                         }
                     }
                 }
@@ -192,12 +195,9 @@ public class LeaperScript : MonoBehaviour
 
     public void FixFreeze()
     {
-        if(!goToPlayer)
-        {
-            goToPlayer = true;
-            thisAnimator.SetTrigger("Move");
-            checkWeaponRotation = false;
-        }
+        thisAnimator.SetTrigger("Move");
+        goToPlayer = true;
+        checkWeaponRotation = false;
     }
 
     public void DirectShot(int prepared)
@@ -221,12 +221,20 @@ public class LeaperScript : MonoBehaviour
             RaycastHit2D shotRaycast = Physics2D.Raycast(weaponTip.transform.position, new Vector2(weaponTip.transform.up.x * transform.localScale.x, weaponTip.transform.up.y), 18f, playerLayer);
 
             weaponLine.SetPosition(0, weaponTip.transform.position);
-            weaponLine.SetPosition(1, shotRay.GetPoint(18f));
 
+           /* var heroLimit = Mathf.Sqrt((Mathf.Pow(hero.transform.position.x - weaponTip.transform.position.x, 2) -  Mathf.Pow(hero.transform.position.y - weaponTip.transform.position.y, 2)));
+
+            if (float.IsNaN(heroLimit))
+                heroLimit = 18f;
+
+    */
+
+            weaponLine.SetPosition(1, shotRay.GetPoint(18f));
+             
             if (shotRaycast)
             {
                 float randomSetDamage = Random.Range(laserDamage - laserDamageDiff, laserDamage + laserDamageDiff);
-                damageModifier.RayAttack(randomSetDamage);
+                damageModifier.RayAttack(randomSetDamage, staminaRemoval);
             }
         }
 

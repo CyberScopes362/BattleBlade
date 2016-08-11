@@ -27,6 +27,7 @@ public class SpikeScript : MonoBehaviour
     public bool goToPlayer;
     public bool isGrounded;
     public bool freezeFix;
+    bool notConsecutiveJump = true;
 
     float health;
     float setSpeed;
@@ -70,6 +71,14 @@ public class SpikeScript : MonoBehaviour
             else
                 return;
         }
+
+        //Consecutive jump check (so spike doesnt continually damaging hero)
+        if(!notConsecutiveJump)
+        {
+            if (tempMove.isGrounded == 0)
+                notConsecutiveJump = true;
+        }
+        
 
         isDead = damageModifier.isDead;
         heroPosition = new Vector2(tempMove.realheroPosition.transform.position.x, transform.position.y);
@@ -166,8 +175,11 @@ public class SpikeScript : MonoBehaviour
     {
         if(heroCollider.gameObject.tag == "Player")
         {
-            if (tempMove.isGrounded > 0 && tempMove.thisRigidbody.velocity.y <= 0f && tempMove.activeTimer <= 0f)
+            if (tempMove.isGrounded > 0 && tempMove.thisRigidbody.velocity.y <= 0f && tempMove.activeTimer <= 0f && notConsecutiveJump)
+            {
                 damageModifier.PushOut();
+                notConsecutiveJump = false;
+            }
         }
     }
 }

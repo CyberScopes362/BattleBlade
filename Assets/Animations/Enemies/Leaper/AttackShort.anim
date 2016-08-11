@@ -237,18 +237,18 @@ AnimationClip:
       m_Curve:
       - time: 0
         value: {x: 0, y: 0, z: -0.03}
-        inSlope: {x: 0, y: 0, z: 88.56}
-        outSlope: {x: 0, y: 0, z: 88.56}
+        inSlope: {x: 0, y: 0, z: 35.92}
+        outSlope: {x: 0, y: 0, z: 35.92}
         tangentMode: 0
       - time: 0.25
-        value: {x: 0, y: 0, z: 22.109999}
-        inSlope: {x: 0, y: 0, z: -35.579987}
-        outSlope: {x: 0, y: 0, z: -35.579987}
+        value: {x: 0, y: 0, z: 8.95}
+        inSlope: {x: 0, y: 0, z: 17.060001}
+        outSlope: {x: 0, y: 0, z: 17.060001}
         tangentMode: 0
       - time: 0.33333334
         value: {x: 0, y: 0, z: 8.8}
-        inSlope: {x: 0, y: 0, z: -79.859985}
-        outSlope: {x: 0, y: 0, z: -79.859985}
+        inSlope: {x: 0, y: 0, z: -0.8999976}
+        outSlope: {x: 0, y: 0, z: -0.8999976}
         tangentMode: 0
       - time: 0.41666666
         value: {x: 0, y: 0, z: 8.8}
@@ -1639,18 +1639,18 @@ AnimationClip:
       m_Curve:
       - time: 0
         value: -0.03
-        inSlope: 88.56
-        outSlope: 88.56
+        inSlope: 35.92
+        outSlope: 35.92
         tangentMode: 10
       - time: 0.25
-        value: 22.109999
-        inSlope: -35.579987
-        outSlope: -35.579987
+        value: 8.95
+        inSlope: 17.060001
+        outSlope: 17.060001
         tangentMode: 10
       - time: 0.33333334
         value: 8.8
-        inSlope: -79.859985
-        outSlope: -79.859985
+        inSlope: -0.8999976
+        outSlope: -0.8999976
         tangentMode: 10
       - time: 0.41666666
         value: 8.8
@@ -2082,7 +2082,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: Legs/LeaperLeftLeg/LeaperLeftLowLeg/LeaperLeftFoot
+    path: Legs/LeaperRightLeg
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -2092,7 +2092,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: Legs/LeaperLeftLeg/LeaperLeftLowLeg/LeaperLeftFoot
+    path: Legs/LeaperRightLeg
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -2102,7 +2102,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.x
-    path: Legs/LeaperLeftLeg/LeaperLeftLowLeg/LeaperLeftFoot
+    path: Legs/LeaperRightLeg
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -2352,7 +2352,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.x
-    path: Legs/LeaperRightLeg
+    path: Legs/LeaperLeftLeg/LeaperLeftLowLeg/LeaperLeftFoot
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -2362,7 +2362,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.y
-    path: Legs/LeaperRightLeg
+    path: Legs/LeaperLeftLeg/LeaperLeftLowLeg/LeaperLeftFoot
     classID: 4
     script: {fileID: 0}
   - curve:
@@ -2372,7 +2372,7 @@ AnimationClip:
       m_PostInfinity: 2
       m_RotationOrder: 4
     attribute: m_LocalEulerAngles.z
-    path: Legs/LeaperRightLeg
+    path: Legs/LeaperLeftLeg/LeaperLeftLowLeg/LeaperLeftFoot
     classID: 4
     script: {fileID: 0}
   m_HasGenericRootTransform: 0

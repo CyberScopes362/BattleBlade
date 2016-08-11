@@ -17,8 +17,11 @@ public class CrossPlatformInputInitializer : MonoBehaviour
     void Start()
     {
 #if UNITY_STANDALONE || UNITY_EDITOR
-        touchControls.SetActive(false);
+//        touchControls.SetActive(false);
 #endif
+        //Initial check to make sure axises arent already registered; done by testing one input
+        if (CrossPlatformInputManager.AxisExists("Horizontal"))
+            return;
 
         //Register Horizontal Axis
         horizontalVirtualAxis = new CrossPlatformInputManager.VirtualAxis("Horizontal");

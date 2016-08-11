@@ -102,6 +102,7 @@ MonoBehaviour:
   gradientTop: {fileID: 0}
   gradientBottom: {fileID: 0}
   hero: {fileID: 0}
+  inventory: {fileID: 0}
   backgroundSceneryParent: {fileID: 0}
   midgroundSceneryParent: {fileID: 0}
   foregroundSceneryParent: {fileID: 0}

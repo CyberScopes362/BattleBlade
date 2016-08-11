@@ -9,6 +9,7 @@ public class ObjectFinder : MonoBehaviour
     public GameObject gradientBottom;
 
     public GameObject hero;
+    public GameObject inventory;
 
     public GameObject backgroundSceneryParent;
     public GameObject midgroundSceneryParent;

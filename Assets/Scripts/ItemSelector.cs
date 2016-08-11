@@ -14,8 +14,6 @@ using System.Collections;
 
 public class ItemSelector : MonoBehaviour
 {
-    ObjectFinder objectFinder;
-
     public SpriteRenderer weaponRenderer;
     public SpriteRenderer maskRenderer;
     public SpriteRenderer[] chestplateRenderer;
@@ -45,7 +43,7 @@ public class ItemSelector : MonoBehaviour
 
     void Start()
     {
-        objectFinder = GameObject.FindGameObjectWithTag("Initializer").GetComponent<ObjectFinder>();
+        ObjectFinder objectFinder = GameObject.FindGameObjectWithTag("Initializer").GetComponent<ObjectFinder>();
 
         slashMarks = objectFinder.slashMarks;
         absoluteShield = objectFinder.absoluteShield;
@@ -56,10 +54,10 @@ public class ItemSelector : MonoBehaviour
 
         //Placeholder: Default stuff
         SetWeapon("Requiem Slicer");
-        SetMask("Hellrider");
-        SetChestplate("Roars of Hell");
-        SetArms("Combustion");
-        SetLegs("Purging Rage");
+        SetMask("Exo Knight");
+        SetChestplate("CryptedTech");
+        SetArms("Exo Arms");
+        SetLegs("Wired Suspension");
     }
 
 

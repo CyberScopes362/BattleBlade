@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using UnityEngine.UI;
 using System.Collections;
+using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 
 public class LevelBuilder : MonoBehaviour 
@@ -48,7 +49,6 @@ public class LevelBuilder : MonoBehaviour
     SpriteRenderer floorRenderer;
 
     List<GameObject> createdScenery = new List<GameObject>();
-
 
     void Start()
     {
@@ -133,7 +133,7 @@ public class LevelBuilder : MonoBehaviour
         backgroundScenery.transform.position = groundsPosition;
         midgroundScenery.transform.position = groundsPosition;
         foregroundScenery.transform.position = groundsPosition;
-        actualgroundScenery.transform.position = groundsPosition;
+        actualgroundScenery.transform.position = new Vector2(groundsPosition.x, groundsPosition.y - 0.06f);
 
         //Scenery Multiplier
         float totalSceneryWidth = sceneryRenderer.bounds.size.x;

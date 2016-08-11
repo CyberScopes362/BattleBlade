@@ -443,7 +443,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -0.06}
   m_Children:
   - {fileID: 482658}
   - {fileID: 417362}
@@ -460,7 +460,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.39, y: -0.642, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -0.03}
   m_Children:
   - {fileID: 473206}
   m_Father: {fileID: 491230}
@@ -487,7 +487,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0.753, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0.29999998}
   m_Children:
   - {fileID: 402146}
   m_Father: {fileID: 442768}
@@ -514,7 +514,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.56, y: -0.53400004, z: -0.144}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -0.03}
   m_Children: []
   m_Father: {fileID: 476716}
   m_RootOrder: 0
@@ -679,7 +679,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.552, y: -0.537, z: -1}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -0.03}
   m_Children: []
   m_Father: {fileID: 402622}
   m_RootOrder: 0
@@ -692,7 +692,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.368, y: -0.63, z: -0.078}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -0.089999996}
   m_Children:
   - {fileID: 421926}
   m_Father: {fileID: 484444}
@@ -706,7 +706,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.286, y: 0.417, z: -0.61}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -0.03}
   m_Children:
   - {fileID: 497036}
   m_Father: {fileID: 402146}
@@ -720,7 +720,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: -0.005, z: -0.251}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -0.03}
   m_Children:
   - {fileID: 476716}
   m_Father: {fileID: 401532}
@@ -734,7 +734,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.185, y: 0.01, z: 2}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: -0.03}
   m_Children:
   - {fileID: 402622}
   m_Father: {fileID: 401532}
@@ -748,7 +748,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: -0.334, y: 0.328, z: -0.187}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 360}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 350.8}
   m_Children:
   - {fileID: 406732}
   - {fileID: 467334}
@@ -859,8 +859,9 @@ MonoBehaviour:
   speedMultiplier: 1
   speedDifferentiation: 0.275
   weaponCooldown: 3.6
-  laserDamage: 10
+  laserDamage: 5
   laserDamageDiff: 2
+  staminaRemoval: 12
   points:
   - {fileID: 426000}
   - {fileID: 464776}
@@ -871,6 +872,7 @@ MonoBehaviour:
   - 1.25
   - 4.5
   goToPlayer: 0
+  isHitAnim: 0
   attacking: 0
 --- !u!114 &11496412
 MonoBehaviour:
@@ -897,8 +899,8 @@ MonoBehaviour:
   - {fileID: 21229674}
   currentHealth: 0
   maxHealth: 110
-  damageMin: 14
-  damageMax: 18
+  damageMin: 12
+  damageMax: 16
   knockbackMin: 4
   knockbackMax: 6
   knockback: 2.25
@@ -7008,7 +7010,7 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -176667675
+  m_SortingLayerID: -1766574537
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: b52d493f68452474a96278774f9dbed0, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
@@ -7338,7 +7340,7 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -176667675
+  m_SortingLayerID: -1766574537
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: 1d568f9a07a8c7f4dbe8364c9b3b8450, type: 3}
   m_Color: {r: 0, g: 1, b: 0.006896496, a: 1}

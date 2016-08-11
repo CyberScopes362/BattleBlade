@@ -25,6 +25,7 @@ public class TempMove : MonoBehaviour
     EdgeCollider2D weaponCollider;
     public XWeaponTrail trail;
     XWeaponTrail heroTrail;
+    InventoryController inventoryController;
 
     //General Speeds and number values
     public float defaultMovementSpeed = 4f;
@@ -54,6 +55,8 @@ public class TempMove : MonoBehaviour
     public float airGravScale;
     float defaultGravScale;
 
+    float hitDelayTimer;
+
     //Initiators between Update and FixedUpdate
     bool jumpInitiated = false;
 
@@ -67,6 +70,8 @@ public class TempMove : MonoBehaviour
     bool inAirHeightCheck;
     bool midNoTimeAttack;
     bool heroTrailInitiate;
+    public bool jumpOverride;
+    public bool isReplenishing;
 
     //Timers and Set Times
     [HideInInspector]
@@ -120,6 +125,8 @@ public class TempMove : MonoBehaviour
     float currentCriticalChance;
 
     public float blockReducer;
+    public float potionHealthBoost = 1f;
+    public float potionStaminaBoost = 1f;
 
     //These vars are set by weapon
     public float knockbackRatio;
@@ -149,6 +156,7 @@ public class TempMove : MonoBehaviour
     {
         ObjectFinder objectFinder = GameObject.FindGameObjectWithTag("Initializer").GetComponent<ObjectFinder>();
 
+        inventoryController = objectFinder.inventory.GetComponent<InventoryController>();
         transform.position = objectFinder.spawnPoint.transform.position;
         floor = objectFinder.floor;
         floorMask = objectFinder.floorMask;
@@ -178,14 +186,24 @@ public class TempMove : MonoBehaviour
     void Update()
     {
         //Timer Updates
-        activeTimer -= 1f * Time.deltaTime;
-        jumpTimer += 1f * Time.deltaTime;
+        activeTimer -= Time.deltaTime;
+        jumpTimer += Time.deltaTime;
+        hitDelayTimer -= Time.deltaTime;
 
         //Stamina Growth
         if (currentStamina < 100f)
-            currentStamina += (10f + staminaAdditions) * Time.deltaTime;
+            currentStamina += (12f + staminaAdditions) * potionStaminaBoost * Time.deltaTime;
         else
             currentStamina = 100f;
+
+        //Slow health regen when not damaged
+        if (currentHealth > 1f && currentHealth < maxHealth)
+            if (hitDelayTimer <= 0f)
+                currentHealth += 3f * potionHealthBoost * Time.deltaTime;
+
+        //Health Limit
+        if (currentHealth > maxHealth)
+            currentHealth = maxHealth;
 
         //Stamina system for blocking:
         if(!block)
@@ -221,7 +239,7 @@ public class TempMove : MonoBehaviour
         {
             canAttack = true;
 
-            if(block == false)
+            if(!block && !isReplenishing)
             {
                 if(isGrounded == 0)
                 {
@@ -283,14 +301,14 @@ public class TempMove : MonoBehaviour
 
         //Blocking
 #if UNITY_STANDALONE || UNITY_EDITOR
-        if (Input.GetButton("Fire3") && isGrounded == 0 && currentStamina > 0f && canStaminaBlock)
+        if (Input.GetButton("Fire3") && isGrounded == 0 && currentStamina > 0f && canStaminaBlock && !isReplenishing)
 #else
-        if (CrossPlatformInputManager.GetButton("Fire3") && isGrounded == 0)
+        if (CrossPlatformInputManager.GetButton("Fire3") && isGrounded == 0 && currentStamina > 0f && canStaminaBlock)
 #endif
         {
             thisAnimator.SetBool("Block", true);
             movementSpeed = blockingMovementSpeed;
-            currentStamina -= (30f / blockReducer) * Time.deltaTime;
+            currentStamina -= (50f / blockReducer) * Time.deltaTime;
 
             if (!block)
                 block = true;
@@ -378,8 +396,11 @@ public class TempMove : MonoBehaviour
         //Jumping
         if(jumpInitiated)
         {
-            if(jumpTimer > jumpInterval && isGrounded < 2 && dash == false && canAttack == true)
+            if(jumpTimer > jumpInterval && isGrounded < 2 && (dash == false || jumpOverride) && canAttack && !isReplenishing)
             {
+                if(jumpOverride)
+                    thisAnimator.SetTrigger("AttackConsecutive");
+
                 isGrounded += 1;
                 jumpTimer = 0f;
 
@@ -482,7 +503,7 @@ public class TempMove : MonoBehaviour
                 thisAnimator.SetTrigger("LightAttack");
                 activeTimer = lightAttackTime;
                 currentDamage = lightAttackStrength;
-                knockbackChance = 0.65f;
+                knockbackChance = 0.655f;
                 break;
             
             //Heavy
@@ -491,7 +512,7 @@ public class TempMove : MonoBehaviour
                 thisAnimator.SetTrigger("HeavyAttack");
                 activeTimer = heavyAttackTime;
                 currentDamage = heavyAttackStrength;
-                knockbackChance = 0.175f;
+                knockbackChance = 0.094f;
                 break;
 
             //Jump Slam Attack
@@ -503,7 +524,7 @@ public class TempMove : MonoBehaviour
                     activeTimer = jumpAttackTime;
                     currentDamage = slamAttackStrength;
                     lerpToGround = true;
-                    knockbackChance = 0.075f;
+                    knockbackChance = 0.05f;
                     currentStamina -= staminaList[0];
                 }
                 break;
@@ -519,7 +540,7 @@ public class TempMove : MonoBehaviour
                     currentDamage = airAttackStrength;
                     midNoTimeAttack = true;
                     airBoost = true;
-                    knockbackChance = 0.3f;
+                    knockbackChance = 0.325f;
                     currentStamina -= staminaList[2];
                 }
                 break;
@@ -529,7 +550,7 @@ public class TempMove : MonoBehaviour
                 currentDashSpeed = slashDashSpeed;
                 thisAnimator.SetTrigger("SlashAttack");
                 activeTimer = slashAttackTime;
-                currentDamage = (lightAttackStrength + heavyAttackStrength) / 2f;
+                currentDamage = (lightAttackStrength + heavyAttackStrength) / 1.8f;
                 knockbackChance = 0.75f;
                 currentStamina -= staminaList[1];
                 break;
@@ -542,7 +563,6 @@ public class TempMove : MonoBehaviour
         //## Damage modifiers go here
         // eg currentDamage = currentDamage * boost/ability/whatever
         //
-
         
         currentKnockback = knockbackRatio * (currentDamage / 10f);
 
@@ -552,13 +572,14 @@ public class TempMove : MonoBehaviour
             hit[i].transform.gameObject.GetComponentInParent<DamageModifier>().Hit(currentDamage, currentKnockback * flipRatio, critHitObject, criticalChance, knockbackChance);
     }
 
-    public void TakeDamage(float takeDamage, float takeKnockback, int takeKnockbackDirection)
+    public void TakeDamage(float takeDamage, float takeKnockback, int takeKnockbackDirection, float staminaRemoval = default(float))
     {
         if (block)
         {
             if((takeKnockbackDirection * transform.localScale.x) > 0)
             {
                 takeDamage = 0f;
+                staminaRemoval = 0f;
                 Instantiate(absoluteShield, transform.position, transform.rotation);
             }
             else
@@ -581,7 +602,11 @@ public class TempMove : MonoBehaviour
             thisRigidbody.velocity = new Vector2((-takeKnockback * takeKnockbackDirection) / 1.25f, thisRigidbody.velocity.y);
         }
 
+        hitDelayTimer = 3.5f;
         currentHealth -= takeDamage;
+
+        if(staminaRemoval != 0)
+            currentStamina -= (staminaRemoval + UnityEngine.Random.Range(-3f, 3f));
     }
 
     //Set Perks
@@ -652,6 +677,11 @@ public class TempMove : MonoBehaviour
     public void StopHeroTrail()
     {
         heroTrail.StopSmoothly(0.1f);
+    }
+
+    public void OnSetParticles()
+    {
+        inventoryController.OnStartParticles();
     }
 
 

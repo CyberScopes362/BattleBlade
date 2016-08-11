@@ -63,23 +63,29 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
-  - name: Floor
-    uniqueID: 4039558053
-    locked: 0
   - name: Enemies
     uniqueID: 4118299621
     locked: 0
   - name: Hero
     uniqueID: 661350963
     locked: 0
-  - name: Items
-    uniqueID: 242169641
+  - name: Floor
+    uniqueID: 4039558053
     locked: 0
-  - name: Effects
-    uniqueID: 2773046123
+  - name: ActualGround
+    uniqueID: 3642375807
     locked: 0
   - name: Fog
     uniqueID: 2139711599
+    locked: 0
+  - name: Items
+    uniqueID: 242169641
+    locked: 0
+  - name: UIStatus
+    uniqueID: 2528392759
+    locked: 0
+  - name: Effects
+    uniqueID: 2773046123
     locked: 0
   - name: Canvas
     uniqueID: 2340899127

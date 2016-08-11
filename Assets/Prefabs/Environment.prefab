@@ -302,7 +302,7 @@ MonoBehaviour:
   floorSizeX: 9
   pointGapWidth: 5
   parallaxGap: 8
-  environmentType: Valleys
+  environmentType: Mountains
 --- !u!212 &21236406
 SpriteRenderer:
   m_ObjectHideFlags: 1
