@@ -52,17 +52,17 @@ public class InventoryController : MonoBehaviour
         }
         else
         {
-            if (potionsTotal[0] == 0 || boosting[0] || tempMove.currentHealth >= tempMove.maxHealth)
+            if (potionsTotal[0] == 0 || boosting[0])
                 potionRenderers[0].color = Color.gray;
             else
                 potionRenderers[0].color = Color.white;
 
-            if (potionsTotal[1] == 0 || boosting[1] || tempMove.currentStamina >= tempMove.maxStamina)
+            if (potionsTotal[1] == 0 || boosting[1])
                 potionRenderers[1].color = Color.gray;
             else
                 potionRenderers[1].color = Color.white;
 
-            if (potionsTotal[2] == 0 || boosting[0] || boosting[1] || (tempMove.currentHealth >= tempMove.maxHealth && tempMove.currentStamina >= tempMove.maxStamina))
+            if (potionsTotal[2] == 0 || boosting[0] || boosting[1])
                 potionRenderers[2].color = Color.gray;
             else
                 potionRenderers[2].color = Color.white;

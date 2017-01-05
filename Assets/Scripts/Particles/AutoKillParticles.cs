@@ -5,6 +5,6 @@ public class AutoKillParticles : MonoBehaviour
 {
     void Start()
     {
-        Destroy(gameObject, GetComponent<ParticleSystem>().startLifetime + GetComponent<ParticleSystem>().duration);
+        Destroy(gameObject, GetComponent<ParticleSystem>().main.startLifetime.constant + GetComponent<ParticleSystem>().main.duration);
     }
 }

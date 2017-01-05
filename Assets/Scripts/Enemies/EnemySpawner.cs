@@ -21,7 +21,6 @@ public class EnemySpawner : MonoBehaviour
             Spawn(enemy[Random.Range(0, enemy.Length)/*1*/]);
             timer = 0f;
         }
-      
     }
     
     void Spawn(GameObject enemy)

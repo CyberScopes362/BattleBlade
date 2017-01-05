@@ -53,7 +53,7 @@ public class ItemSelector : MonoBehaviour
 
 
         //Placeholder: Default stuff
-        SetWeapon("Requiem Slicer");
+        SetWeapon("Legacy Scorched Blade");
         SetMask("Exo Knight");
         SetChestplate("CryptedTech");
         SetArms("Exo Arms");
@@ -103,7 +103,10 @@ public class ItemSelector : MonoBehaviour
         heroTrail.MyColor = setWeapon.trailColor;
         slashMarks.GetComponent<SpriteRenderer>().sprite = setWeapon.slashSprite;
         slashMarks.GetComponent<SpriteRenderer>().color = setWeapon.slashColor;
-        slashMarks.GetComponent<ParticleSystem>().startColor = setWeapon.slashColor;
+        // -> Cant access startColor because of new update so have to create a temp var and set it there
+        var slashMarksMainModule = slashMarks.GetComponent<ParticleSystem>().main;
+        slashMarksMainModule.startColor = setWeapon.slashColor;
+        //slashMarks.GetComponent<ParticleSystem>().main.startColor.color = setWeapon.slashColor;
         slashMarks.GetComponent<ParticleSystemRenderer>().sharedMaterial.mainTexture = setWeapon.slashParticlesTexture;
         absoluteShield.GetComponent<AbsoluteShieldEffector>().setColor = setWeapon.slashColor;
 

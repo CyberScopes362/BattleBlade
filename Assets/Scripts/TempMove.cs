@@ -422,17 +422,17 @@ public class TempMove : MonoBehaviour
                 thisAnimator.SetTrigger("JumpAttackSlamExecute");
                 //Use pointB as point to create slam particles
                 Instantiate(slamAttackParticles, pointB.transform.position, transform.rotation);
+                
+                growingSpeed = 0.1f;
+                thisRigidbody.constraints = RigidbodyConstraints2D.FreezeRotation;
+                airFloatCounter = 0.4f;
 
                 lerpToGround = false;
-                growingSpeed = 0.1f;
-                thisRigidbody.isKinematic = false;
-
-                airFloatCounter = 0.4f;
             }
             else
             {
                 transform.position = Vector2.Lerp(transform.position, new Vector2(transform.position.x, floor.transform.position.y), growingSpeed * Time.deltaTime);
-                thisRigidbody.isKinematic = true;
+                thisRigidbody.constraints = RigidbodyConstraints2D.FreezeRotation | RigidbodyConstraints2D.FreezePositionY;
 
                 airFloatCounter -= 1f * Time.deltaTime;
 
@@ -444,7 +444,7 @@ public class TempMove : MonoBehaviour
                     growingSpeed += 3.4f * Time.deltaTime;
 
                     if (growingSpeed >= 3f)
-                        thisRigidbody.isKinematic = false;
+                        thisRigidbody.constraints = RigidbodyConstraints2D.FreezeRotation;
                 }
             }
         }

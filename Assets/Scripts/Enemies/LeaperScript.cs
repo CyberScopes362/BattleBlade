@@ -111,6 +111,7 @@ public class LeaperScript : MonoBehaviour
                     {
                         thisAnimator.SetTrigger("AttackShort");
                         goToPlayer = false;
+                        return;
                     }
                 }
                 else
@@ -122,6 +123,7 @@ public class LeaperScript : MonoBehaviour
                         {
                             thisAnimator.SetTrigger("AttackLongDirect");
                             goToPlayer = false;
+                            return;
                         }
                     }
                     else
@@ -130,6 +132,7 @@ public class LeaperScript : MonoBehaviour
                         {
                             thisAnimator.SetTrigger("Move");
                             goToPlayer = true;
+                            return;
                         }
                     }
                 }
@@ -141,6 +144,7 @@ public class LeaperScript : MonoBehaviour
                 {
                     goToPlayer = true;
                     thisAnimator.SetTrigger("Move");
+                    return;
                 }
             }
         }
@@ -218,19 +222,30 @@ public class LeaperScript : MonoBehaviour
             lineAlpha = 1f;
 
             Ray2D shotRay = new Ray2D(weaponTip.transform.position, new Vector2(weaponTip.transform.up.x * transform.localScale.x, weaponTip.transform.up.y));
-            RaycastHit2D shotRaycast = Physics2D.Raycast(weaponTip.transform.position, new Vector2(weaponTip.transform.up.x * transform.localScale.x, weaponTip.transform.up.y), 18f, playerLayer);
+            
 
             weaponLine.SetPosition(0, weaponTip.transform.position);
 
-           /* var heroLimit = Mathf.Sqrt((Mathf.Pow(hero.transform.position.x - weaponTip.transform.position.x, 2) -  Mathf.Pow(hero.transform.position.y - weaponTip.transform.position.y, 2)));
+
+            /* var heroLimit = Mathf.Sqrt((Mathf.Pow(hero.transform.position.x - weaponTip.transform.position.x, 2) -  Mathf.Pow(hero.transform.position.y - weaponTip.transform.position.y, 2)));
 
             if (float.IsNaN(heroLimit))
                 heroLimit = 18f;
 
     */
+            RaycastHit2D shotRaycast;
 
-            weaponLine.SetPosition(1, shotRay.GetPoint(18f));
-             
+            if(transform.localScale.x > 0)
+            {
+                weaponLine.SetPosition(1, shotRay.GetPoint(17f));
+                shotRaycast = Physics2D.Raycast(weaponTip.transform.position, new Vector2(weaponTip.transform.up.x * transform.localScale.x, weaponTip.transform.up.y), 17f, playerLayer);
+            }
+            else
+            {
+                weaponLine.SetPosition(1, new Vector2(shotRay.GetPoint(17f).x + (transform.position.x - shotRay.GetPoint(17f).x) * 2f, shotRay.GetPoint(18f).y));
+                shotRaycast = Physics2D.Raycast(weaponTip.transform.position, new Vector2(-1f * weaponTip.transform.up.x * transform.localScale.x, weaponTip.transform.up.y), 17f, playerLayer);
+            }
+
             if (shotRaycast)
             {
                 float randomSetDamage = Random.Range(laserDamage - laserDamageDiff, laserDamage + laserDamageDiff);
@@ -248,7 +263,11 @@ public class LeaperScript : MonoBehaviour
         {
             if (setRotation)
             {
-                weapon.transform.rotation = new Quaternion(weapon.transform.rotation.x, weapon.transform.rotation.y, weapon.transform.rotation.z - (transform.localScale.x * Mathf.Atan((weapon.transform.position.y - hero.transform.position.y) / (weapon.transform.position.x - hero.transform.position.x))) + 0.244346f, weapon.transform.rotation.w);
+                if(transform.localScale.x > 0)
+                    weapon.transform.rotation = new Quaternion(weapon.transform.rotation.x, weapon.transform.rotation.y, weapon.transform.rotation.z - (Mathf.Atan((weapon.transform.position.y - hero.transform.position.y) / (weapon.transform.position.x - hero.transform.position.x))) + 0.244346f, weapon.transform.rotation.w);
+                else
+                    weapon.transform.rotation = new Quaternion(weapon.transform.rotation.x, weapon.transform.rotation.y, weapon.transform.rotation.z - (Mathf.Atan((weapon.transform.position.y - hero.transform.position.y) / (weapon.transform.position.x - hero.transform.position.x))) - 0.244346f, weapon.transform.rotation.w);
+
                 tempRotation = weapon.transform.rotation;
             }
             else

@@ -30,7 +30,8 @@ public class DamageModifier : MonoBehaviour
     public bool isHit = false;
     public bool isDead = false;
 
-    float showHealthTimer;
+    [HideInInspector]
+    public float showHealthTimer;
     float givenDamage;
     float givenKnockback;
     int givenKnockbackDirection;
@@ -41,6 +42,10 @@ public class DamageModifier : MonoBehaviour
     bool critHit;
     bool knockbackHit;
 
+    public bool overriderHealthbarPlacement;
+
+    float xDistBar;
+    float yDistBar;
 
     void Start()
     {
@@ -58,6 +63,9 @@ public class DamageModifier : MonoBehaviour
         healthBar.color = Color.green;
 
         defXScale = healthBarObject.transform.localScale.x;
+
+        xDistBar = healthBarParent.transform.localPosition.x;
+        yDistBar = healthBarParent.transform.localPosition.y;
     }
 
 	public void Attack(float setDamage = default(float)) 
@@ -180,16 +188,16 @@ public class DamageModifier : MonoBehaviour
             }
         }
 
+        if (knockbackHit)
+        {
+            healthBarParent.color = Color.yellow;
+            knockbackHit = false;
+        }
+
         if (critHit)
         {
             healthBarParent.color = Color.red;
             critHit = false;
-        }
-
-        if(knockbackHit)
-        {
-            healthBarParent.color = Color.magenta;
-            knockbackHit = false;
         }
 
         healthBarParent.color = Color.Lerp(healthBarParent.color, healthBarParentColor, 4f * Time.deltaTime);
@@ -197,6 +205,9 @@ public class DamageModifier : MonoBehaviour
 
     void FixedUpdate()
     {
-        healthBarParent.transform.position = new Vector2(enemyObject.transform.position.x - healthBarParent.bounds.extents.x, 1.55f);
+        if(!overriderHealthbarPlacement)
+            healthBarParent.transform.position = new Vector2(enemyObject.transform.position.x - healthBarParent.bounds.extents.x, 1.55f);
+        else
+            healthBarParent.transform.position = new Vector2(enemyObject.transform.position.x - healthBarParent.bounds.extents.x + xDistBar, enemyObject.transform.position.y - healthBarParent.bounds.extents.y + yDistBar);
     }
 }

@@ -29,6 +29,7 @@ public class EnemyDeath : MonoBehaviour
             {
                 deathParticles.Play();
                 startParticles = true;
+                return;
             }
             else
             {

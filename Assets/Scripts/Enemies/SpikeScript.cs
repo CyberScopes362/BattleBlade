@@ -107,12 +107,14 @@ public class SpikeScript : MonoBehaviour
                 {
                     thisAnimator.SetTrigger("Attack");
                     goToPlayer = false;
+                    return;
                 }
 
                 if(freezeFix)
                 {
                     goToPlayer = true;
                     freezeFix = false;
+                    return;
                 }
             }
             else
@@ -121,6 +123,7 @@ public class SpikeScript : MonoBehaviour
                 {
                     thisAnimator.SetTrigger("Move");
                     goToPlayer = true;
+                    return;
                 }
             }
             //End State Checks
