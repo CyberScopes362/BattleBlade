@@ -37,6 +37,7 @@ public class RaptorScript : MonoBehaviour
 
     public Transform boostParticlesTrans;
     public Transform hornGlowLaserTrans;
+    public Transform parentPos;
 
     bool deathTrigger;
 
@@ -54,6 +55,16 @@ public class RaptorScript : MonoBehaviour
 
         setSpeed = Random.Range(speed - speedDifferentiation, speed + speedDifferentiation);
 
+        //Differentiation betwen enemies; stop syncing
+        parentPos.position = new Vector2(parentPos.position.x, parentPos.position.y + Random.Range(-0.35f, 0.35f));
+
+        xDistances[0] += Random.Range(-0.25f, 0.25f);
+        xDistances[1] += Random.Range(-0.25f, 0.25f);
+
+        laserWaitTime += Random.Range(-0.4f, 0.4f);
+        swoopWaitTime += Random.Range(-0.6f, 0.6f);
+
+        heroApartDistant += Random.Range(-0.35f, 0.35f);
     }
 
     void Update()
@@ -157,6 +168,7 @@ public class RaptorScript : MonoBehaviour
         {
             if (deathTrigger == false)
             {
+                parentPos.position = new Vector2(parentPos.transform.position.x, 5.44f);
                 deathTrigger = true;
                 gameObject.layer = LayerMask.NameToLayer("PassbyEntity");
                 GetComponentInParent<EnemyDeath>().enabled = true;

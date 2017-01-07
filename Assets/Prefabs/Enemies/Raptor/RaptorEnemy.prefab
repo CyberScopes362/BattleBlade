@@ -560,7 +560,7 @@ MonoBehaviour:
   laserProjectile: {fileID: 1528996073907582, guid: 795d497eff37a7a4187eda435adf4823,
     type: 2}
   heroDistance: 0
-  heroApartDistant: 1
+  heroApartDistant: 1.5
   attacking: 0
   goToPlayer: 0
   isHitAnim: 0
@@ -570,9 +570,10 @@ MonoBehaviour:
   - 3
   - 5
   speed: 2
-  speedDifferentiation: 0
+  speedDifferentiation: 0.5
   boostParticlesTrans: {fileID: 435332}
   hornGlowLaserTrans: {fileID: 434066}
+  parentPos: {fileID: 413022}
 --- !u!114 &11411434
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -632,7 +633,7 @@ MonoBehaviour:
   - {fileID: 21245750}
   - {fileID: 21260762}
   currentHealth: 0
-  maxHealth: 60
+  maxHealth: 55
   damageMin: 12
   damageMax: 14
   knockbackMin: 4

@@ -121,7 +121,7 @@ public class TouchController : MonoBehaviour
             slashIndicator.color = chargingColor;
         }
 
-        //Block Button
+        //Block Button and indicator
         if (currentStamina > 0f && tempMove.canStaminaBlock)
         {
             blockButton.interactable = true;

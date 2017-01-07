@@ -5,11 +5,11 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 459710}
-  - 114: {fileID: 11448764}
-  - 114: {fileID: 11464296}
+  - component: {fileID: 459710}
+  - component: {fileID: 11448764}
+  - component: {fileID: 11464296}
   m_Layer: 0
   m_Name: Initializer
   m_TagString: Initializer
@@ -22,11 +22,11 @@ GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  serializedVersion: 4
+  serializedVersion: 5
   m_Component:
-  - 4: {fileID: 433588}
-  - 114: {fileID: 11414814}
-  - 114: {fileID: 11440484}
+  - component: {fileID: 433588}
+  - component: {fileID: 11414814}
+  - component: {fileID: 11440484}
   m_Layer: 0
   m_Name: EventSystem
   m_TagString: Untagged
@@ -43,10 +43,10 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 459710}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &459710
 Transform:
   m_ObjectHideFlags: 1
@@ -56,11 +56,11 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children:
   - {fileID: 433588}
   m_Father: {fileID: 0}
   m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &11414814
 MonoBehaviour:
   m_ObjectHideFlags: 1
