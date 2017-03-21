@@ -19,6 +19,8 @@ public class TempMove : MonoBehaviour
     [HideInInspector]
     public Animator thisAnimator;
 
+    public Animator stunnedAnimator;
+
     [HideInInspector]
     public Rigidbody2D thisRigidbody;
 
@@ -72,6 +74,7 @@ public class TempMove : MonoBehaviour
     bool heroTrailInitiate;
     public bool jumpOverride;
     public bool isReplenishing;
+    public bool stunned;
 
     //Timers and Set Times
     [HideInInspector]
@@ -239,7 +242,7 @@ public class TempMove : MonoBehaviour
         {
             canAttack = true;
 
-            if(!block && !isReplenishing)
+            if(!block && !isReplenishing && !stunned)
             {
                 if(isGrounded == 0)
                 {
@@ -303,7 +306,7 @@ public class TempMove : MonoBehaviour
 #if UNITY_STANDALONE || UNITY_EDITOR
         if (Input.GetButton("Fire3") && isGrounded == 0 && currentStamina > 0f && canStaminaBlock && !isReplenishing)
 #else
-        if (CrossPlatformInputManager.GetButton("Fire3") && isGrounded == 0 && currentStamina > 0f && canStaminaBlock)
+        if (CrossPlatformInputManager.GetButton("Fire3") && isGrounded == 0 && currentStamina > 0f && canStaminaBlock && !isReplenishing)
 #endif
         {
             thisAnimator.SetBool("Block", true);
@@ -344,6 +347,7 @@ public class TempMove : MonoBehaviour
         if (Physics2D.OverlapArea(pointA.position, pointB.position, floorMask))
         {
             isGrounded = 0;
+            stunned = false;
             thisAnimator.SetInteger("Jump", isGrounded);
             midNoTimeAttack = false;
         }   
@@ -360,9 +364,9 @@ public class TempMove : MonoBehaviour
 
         //Movement
 #if UNITY_STANDALONE || UNITY_EDITOR
-        if (canAttack == true && dash == false && (Input.GetAxis("Horizontal") > 0f || Input.GetAxis("Horizontal") < 0f))
+        if (canAttack == true && dash == false && (Input.GetAxis("Horizontal") > 0f || Input.GetAxis("Horizontal") < 0f) && !stunned)
 #else
-        if (canAttack == true && dash == false && (CrossPlatformInputManager.GetAxisRaw("Horizontal") > 0f || CrossPlatformInputManager.GetAxisRaw("Horizontal") < 0f))
+        if (canAttack == true && dash == false && (CrossPlatformInputManager.GetAxisRaw("Horizontal") > 0f || CrossPlatformInputManager.GetAxisRaw("Horizontal") < 0f) && !stunned)
 #endif
         {
             thisAnimator.SetBool("Walk", true);
@@ -396,7 +400,7 @@ public class TempMove : MonoBehaviour
         //Jumping
         if(jumpInitiated)
         {
-            if(jumpTimer > jumpInterval && isGrounded < 2 && (dash == false || jumpOverride) && canAttack && !isReplenishing)
+            if(jumpTimer > jumpInterval && isGrounded < 2 && (dash == false || jumpOverride) && canAttack && !isReplenishing && !stunned)
             {
                 if(jumpOverride)
                     thisAnimator.SetTrigger("AttackConsecutive");
@@ -585,21 +589,27 @@ public class TempMove : MonoBehaviour
             else
             {
                 //Dont want to play hit animation while jumping.
-                if (isGrounded == 0)
+               // if (isGrounded == 0)
                     thisAnimator.SetTrigger("TakeHit");
 
                 Instantiate(heroHitParticles, transform.position, transform.rotation);
                 thisRigidbody.velocity = new Vector2((-takeKnockback * takeKnockbackDirection) / 1.25f, thisRigidbody.velocity.y);
+
+                if (isGrounded != 0 && takeKnockback > 0)
+                    DoStun();
             }
         }
         else
         {
             //Dont want to play hit animation while jumping.
-            if (isGrounded == 0)
+          //  if (isGrounded == 0)
                 thisAnimator.SetTrigger("TakeHit");
 
             Instantiate(heroHitParticles, transform.position, transform.rotation);
             thisRigidbody.velocity = new Vector2((-takeKnockback * takeKnockbackDirection) / 1.25f, thisRigidbody.velocity.y);
+
+            if (isGrounded != 0 && takeKnockback > 0)
+                DoStun();
         }
 
         hitDelayTimer = 3.5f;
@@ -610,7 +620,7 @@ public class TempMove : MonoBehaviour
     }
 
     //Set Perks
-    //Keep at 1dp for complete synchronization and simpler settings
+    //Keep at 1dp for complete synchronisation and simpler settings
     //
     // 
     // SUBJECT TO CHANGE - THESE STATS SHOULD BE SET BY ARMOR ITSELF 
@@ -651,6 +661,12 @@ public class TempMove : MonoBehaviour
 
         //Total Health Multiplier
         maxHealth *= hthS;
+    }
+
+    public void DoStun()
+    {
+        stunned = true;
+        stunnedAnimator.SetTrigger("isStunned");
     }
 
     public void SetBlockCollider()

@@ -112,8 +112,11 @@ public class TouchController : MonoBehaviour
         //Slash Button and Indicator
         if (currentStamina >= staminaList[1])
         {
-            slashButton.interactable = true;
-            slashIndicator.color = Color.white;
+            if(!slashButton.interactable)
+            {
+                slashButton.interactable = true;
+                slashIndicator.color = Color.white;
+            }
         }
         else
         {
@@ -124,8 +127,11 @@ public class TouchController : MonoBehaviour
         //Block Button and indicator
         if (currentStamina > 0f && tempMove.canStaminaBlock)
         {
-            blockButton.interactable = true;
-            blockIndicator.color = Color.white;
+            if(!blockButton.interactable)
+            {
+                blockButton.interactable = true;
+                blockIndicator.color = Color.white;
+            }
         }
         else
         {

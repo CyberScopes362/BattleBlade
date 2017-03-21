@@ -12,8 +12,10 @@ public class InGameUIStatus : MonoBehaviour
     public Image lifeBar;
     public Image staminaBar;
 
-    public Text healthTextTime;
-    public Text staminaTextTime;
+    public Image healthTimerImg;
+    public Image staminaTimerImg;
+    //public Text healthTextTime;
+    //public Text staminaTextTime;
     float healthTextfloat;
     float staminaTextfloat;
     Color defHealthTextCol;
@@ -54,11 +56,11 @@ public class InGameUIStatus : MonoBehaviour
         healthflash = Color.white;
         staminaflash = Color.white;
 
-        defHealthTextCol = healthTextTime.color;
-        defStaminaTextCol = staminaTextTime.color;
+        defHealthTextCol = healthTimerImg.color;
+        defStaminaTextCol = staminaTimerImg.color;
 
-        healthTextTime.color = Color.clear;
-        staminaTextTime.color = Color.clear;
+        healthTimerImg.color = Color.clear;
+        staminaTimerImg.color = Color.clear;
     }
 	
 	void Update() 
@@ -102,8 +104,8 @@ public class InGameUIStatus : MonoBehaviour
             if (lifeBarPrnt.color != Color.white)
                 lifeBarPrnt.color = Color.Lerp(lifeBarPrnt.color, Color.white, 6f * Time.deltaTime);
 
-            if (healthTextTime.color.a > 0)
-                healthTextTime.color = Color.Lerp(healthTextTime.color, Color.clear, 4f * Time.deltaTime);
+            if (healthTimerImg.color.a > 0)
+                healthTimerImg.color = Color.Lerp(healthTimerImg.color, Color.clear, 4f * Time.deltaTime);
 
             if(unsetH)
             {
@@ -135,8 +137,8 @@ public class InGameUIStatus : MonoBehaviour
             if (staminaBarPrnt.color != Color.white)
                 staminaBarPrnt.color = Color.Lerp(staminaBarPrnt.color, Color.white, 6f * Time.deltaTime);
 
-            if (staminaTextTime.color.a > 0)
-                staminaTextTime.color = Color.Lerp(staminaTextTime.color, Color.clear, 4f * Time.deltaTime);
+            if (staminaTimerImg.color.a > 0)
+                staminaTimerImg.color = Color.Lerp(staminaTimerImg.color, Color.clear, 4f * Time.deltaTime);
 
             if (unsetS)
             {
@@ -151,27 +153,25 @@ public class InGameUIStatus : MonoBehaviour
     {
         if(!unsetH)
         {
-            healthTextTime.color = defHealthTextCol;
-            healthTextfloat = 11f;
+            healthTimerImg.color = defHealthTextCol;
+            healthTextfloat = 10f;
             unsetH = true;
         }
 
         healthTextfloat -= Time.deltaTime;
-        var inted = Mathf.FloorToInt(healthTextfloat);
-        healthTextTime.text = inted.ToString();
+        healthTimerImg.fillAmount = healthTextfloat / 10f;
     }
 
     void SetStaminaTimer()
     {
         if (!unsetS)
         {
-            staminaTextTime.color = defStaminaTextCol;
-            staminaTextfloat = 11f;
+            staminaTimerImg.color = defStaminaTextCol;
+            staminaTextfloat = 10f;
             unsetS = true;
         }
 
         staminaTextfloat -= Time.deltaTime;
-        var inted = Mathf.FloorToInt(staminaTextfloat);
-        staminaTextTime.text = inted.ToString();
+        staminaTimerImg.fillAmount = staminaTextfloat / 10f;
     }
 }

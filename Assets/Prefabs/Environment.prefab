@@ -264,45 +264,48 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 88a3d22892b34e1409bb2ae9341866bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  skyboxTextures:
-  - {fileID: 2800000, guid: 5e9775898c0c6314cac33c2424b18fc1, type: 3}
-  - {fileID: 2800000, guid: 6f23d298b5ba2f2498efb6b30034ee6e, type: 3}
-  - {fileID: 2800000, guid: 2f43cc6e9d0089a438da72c4fcf16a1a, type: 3}
-  - {fileID: 2800000, guid: 6bdf8135ae8405a4bbd1a7eda42c38c9, type: 3}
-  - {fileID: 2800000, guid: 4781816d9b15d41468bfb36f25a7d6a9, type: 3}
-  - {fileID: 2800000, guid: 3f7e15a660e82ec4581b10f03e8c8857, type: 3}
-  backgroundSprites:
-  - {fileID: 21300000, guid: 9256a066fbfa8664f816b7e30e800b82, type: 3}
-  - {fileID: 21300000, guid: f6d839c4b68681d488127791ec83ab7e, type: 3}
-  midgroundSprites:
-  - {fileID: 21300000, guid: 483fec48a6805e24493abfba15a59387, type: 3}
-  - {fileID: 21300000, guid: b623dbf2ec876114fa00c35f88a8a2a2, type: 3}
-  foregroundSprites:
-  - {fileID: 21300000, guid: 0aa537137eb1e4544a63a7f40a2f8174, type: 3}
-  - {fileID: 21300000, guid: 19fb7f086e802404892abe9a85bdca54, type: 3}
-  actualgroundSprites:
-  - {fileID: 21300000, guid: 003e2f676d0664c43be12fcd7c3a7e36, type: 3}
-  - {fileID: 21300000, guid: 0f2a4ec70a84459478ad24953fe425d0, type: 3}
-  backgroundSpritesColors:
-  - {r: 0.89411765, g: 0.4509804, b: 0.12941177, a: 1}
-  - {r: 0.77205884, g: 0.25546065, b: 0.25546065, a: 1}
-  midgroundSpritesColors:
-  - {r: 0.6745098, g: 0.28627452, b: 0.039215688, a: 0.9411765}
-  - {r: 0.71323526, g: 0.052443776, b: 0.052443776, a: 0.9411765}
-  foregroundSpritesColors:
-  - {r: 0.29803923, g: 0.15294118, b: 0, a: 1}
-  - {r: 0.41911763, g: 0, b: 0, a: 1}
-  gradientColors:
-  - {r: 1, g: 0.14482757, b: 0, a: 1}
-  - {r: 0.6102941, g: 0.6102941, b: 0.6102941, a: 1}
-  skyEffects:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  allLevels:
+  - name: Mountains
+    skyboxGradient: {fileID: 2800000, guid: 5e9775898c0c6314cac33c2424b18fc1, type: 3}
+    bgSprite: {fileID: 21300000, guid: 9256a066fbfa8664f816b7e30e800b82, type: 3}
+    mgSprite: {fileID: 21300000, guid: 483fec48a6805e24493abfba15a59387, type: 3}
+    fgSprite: {fileID: 21300000, guid: 0aa537137eb1e4544a63a7f40a2f8174, type: 3}
+    agSprite: {fileID: 21300000, guid: 003e2f676d0664c43be12fcd7c3a7e36, type: 3}
+    bgColor: {r: 0.89411765, g: 0.4509804, b: 0.12941177, a: 1}
+    mgColor: {r: 0.6745098, g: 0.28627452, b: 0.039215688, a: 0.9411765}
+    fgColor: {r: 0.29803923, g: 0.15294118, b: 0, a: 1}
+    floorAuraColor: {r: 1, g: 0.14509805, b: 0, a: 1}
+    skyEffect: {fileID: 1115944642770412, guid: 8d13a86af9704c244883fe773c476e87,
+      type: 2}
+  - name: Valley
+    skyboxGradient: {fileID: 2800000, guid: 6f23d298b5ba2f2498efb6b30034ee6e, type: 3}
+    bgSprite: {fileID: 21300000, guid: f6d839c4b68681d488127791ec83ab7e, type: 3}
+    mgSprite: {fileID: 21300000, guid: b623dbf2ec876114fa00c35f88a8a2a2, type: 3}
+    fgSprite: {fileID: 21300000, guid: b61ec03229a05a24b926f5bdceda5a6f, type: 3}
+    agSprite: {fileID: 21300000, guid: 0f2a4ec70a84459478ad24953fe425d0, type: 3}
+    bgColor: {r: 0.77254903, g: 0.25490198, b: 0.25490198, a: 1}
+    mgColor: {r: 0.7137255, g: 0.050980393, b: 0.050980393, a: 0.9411765}
+    fgColor: {r: 0.41960785, g: 0, b: 0, a: 1}
+    floorAuraColor: {r: 0.6117647, g: 0.6117647, b: 0.6117647, a: 1}
+    skyEffect: {fileID: 1904446642376182, guid: 36324961ec00d99449c9aeb0bd2e887c,
+      type: 2}
+  - name: Night
+    skyboxGradient: {fileID: 2800000, guid: c6a0c25e63acbd34eac6435fffee7e0c, type: 3}
+    bgSprite: {fileID: 21300000, guid: 57822f27ce8bd8743a96424bea361cef, type: 3}
+    mgSprite: {fileID: 21300000, guid: f1f73e1a3156cb44fab84fb738003e1a, type: 3}
+    fgSprite: {fileID: 21300000, guid: d260606a69b60644c97e58fa3388ca52, type: 3}
+    agSprite: {fileID: 21300000, guid: 0f2a4ec70a84459478ad24953fe425d0, type: 3}
+    bgColor: {r: 0.06666667, g: 0.22745098, b: 0.32156864, a: 1}
+    mgColor: {r: 0.003921569, g: 0.07450981, b: 0.21176471, a: 0.9411765}
+    fgColor: {r: 0, g: 0.043137256, b: 0.16078432, a: 1}
+    floorAuraColor: {r: 0, g: 0.5176471, b: 0.654902, a: 1}
+    skyEffect: {fileID: 1169105283476742, guid: ef7e3cdfdea903a45a3e42f00c9f8e6d,
+      type: 2}
   floorSizeX: 9
   pointGapWidth: 5
   parallaxGap: 8
-  environmentType: Valleys
+  environmentType: Night
+  _switch: 0
 --- !u!212 &21236406
 SpriteRenderer:
   m_ObjectHideFlags: 1

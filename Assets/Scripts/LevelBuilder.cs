@@ -24,18 +24,7 @@ public class LevelBuilder : MonoBehaviour
     GameObject foregroundSceneryParent;
     GameObject actualgroundSceneryParent;
 
-    public List<Texture> skyboxTextures = new List<Texture>();
-
-    public List<Sprite> backgroundSprites = new List<Sprite>();
-    public List<Sprite> midgroundSprites = new List<Sprite>();
-    public List<Sprite> foregroundSprites = new List<Sprite>();
-    public List<Sprite> actualgroundSprites = new List<Sprite>();
-
-    public List<Color> backgroundSpritesColors = new List<Color>();
-    public List<Color> midgroundSpritesColors = new List<Color>();
-    public List<Color> foregroundSpritesColors = new List<Color>();
-    public List<Color> gradientColors = new List<Color>();
-    public List<GameObject> skyEffects = new List<GameObject>();
+    public List<LevelComponents> allLevels = new List<LevelComponents>();
 
     public float floorSizeX;
     public float pointGapWidth;
@@ -49,6 +38,38 @@ public class LevelBuilder : MonoBehaviour
     SpriteRenderer floorRenderer;
 
     List<GameObject> createdScenery = new List<GameObject>();
+
+    //For fading
+    List<SpriteRenderer> allFadeSpritesBG = new List<SpriteRenderer>();
+    List<SpriteRenderer> allFadeSpritesMG = new List<SpriteRenderer>();
+    List<SpriteRenderer> allFadeSpritesFG = new List<SpriteRenderer>();
+    List<SpriteRenderer> allFadeSpritesAG = new List<SpriteRenderer>();
+    Color[] newColorSet = new Color[4];
+    Sprite[] newSpriteSet = new Sprite[4];
+    Color[] newColor = new Color[4];
+    Color gradientColor;
+    float colorAlpha;
+    public bool _switch;
+    Sprite[] gradients = new Sprite[2];
+
+
+
+
+    [System.Serializable]
+    public class LevelComponents
+    {
+        public string name;
+        public Texture skyboxGradient;
+        public Sprite bgSprite;
+        public Sprite mgSprite;
+        public Sprite fgSprite;
+        public Sprite agSprite;
+        public Color bgColor;
+        public Color mgColor;
+        public Color fgColor;
+        public Color floorAuraColor;
+        public GameObject skyEffect;
+    }
 
     void Start()
     {
@@ -73,44 +94,29 @@ public class LevelBuilder : MonoBehaviour
 
         floorRenderer = floor.GetComponent<SpriteRenderer>();
 
-        //Set Environment Type
-        switch (environmentType)
+
+        foreach (LevelComponents level in allLevels)
         {
-            case "Mountains":
-                RenderSettings.skybox.SetTexture("_FrontTex", skyboxTextures[0]);
-                skyEffects[0].SetActive(true);
+            if(level.name == environmentType)
+            {
+                RenderSettings.skybox.SetTexture("_FrontTex", level.skyboxGradient);
+                RenderSettings.skybox.SetFloat("_Blend", 0f);
+                Instantiate(level.skyEffect, level.skyEffect.transform.localPosition + backgroundScenery.transform.position, level.skyEffect.transform.localRotation, backgroundScenery.transform);
 
-                backgroundScenery.GetComponent<SpriteRenderer>().sprite = backgroundSprites[0];
-                midgroundScenery.GetComponent<SpriteRenderer>().sprite = midgroundSprites[0];
-                foregroundScenery.GetComponent<SpriteRenderer>().sprite = foregroundSprites[0];
-                actualgroundScenery.GetComponent<SpriteRenderer>().sprite = actualgroundSprites[0];
+                backgroundScenery.GetComponent<SpriteRenderer>().sprite = level.bgSprite;
+                midgroundScenery.GetComponent<SpriteRenderer>().sprite = level.mgSprite;
+                foregroundScenery.GetComponent<SpriteRenderer>().sprite = level.fgSprite;
+                actualgroundScenery.GetComponent<SpriteRenderer>().sprite = level.agSprite;
 
-                backgroundScenery.GetComponent<SpriteRenderer>().color = backgroundSpritesColors[0];
-                midgroundScenery.GetComponent<SpriteRenderer>().color = midgroundSpritesColors[0];
-                foregroundScenery.GetComponent<SpriteRenderer>().color = foregroundSpritesColors[0];
+                backgroundScenery.GetComponent<SpriteRenderer>().color = level.bgColor;
+                midgroundScenery.GetComponent<SpriteRenderer>().color = level.mgColor;
+                foregroundScenery.GetComponent<SpriteRenderer>().color = level.fgColor;
 
-                gradientTop.GetComponent<SpriteRenderer>().color = gradientColors[0];
-                gradientBottom.GetComponent<SpriteRenderer>().color = gradientColors[0];
+                gradientTop.GetComponent<SpriteRenderer>().color = gradientBottom.GetComponent<SpriteRenderer>().color = level.floorAuraColor;
                 break;
-
-            case "Valleys":
-                RenderSettings.skybox.SetTexture("_FrontTex", skyboxTextures[1]);
-                skyEffects[1].SetActive(true);
-
-                backgroundScenery.GetComponent<SpriteRenderer>().sprite = backgroundSprites[1];
-                midgroundScenery.GetComponent<SpriteRenderer>().sprite = midgroundSprites[1];
-                foregroundScenery.GetComponent<SpriteRenderer>().sprite = foregroundSprites[1];
-                actualgroundScenery.GetComponent<SpriteRenderer>().sprite = actualgroundSprites[1];
-
-                backgroundScenery.GetComponent<SpriteRenderer>().color = backgroundSpritesColors[1];
-                midgroundScenery.GetComponent<SpriteRenderer>().color = midgroundSpritesColors[1];
-                foregroundScenery.GetComponent<SpriteRenderer>().color = foregroundSpritesColors[1];
-
-                gradientTop.GetComponent<SpriteRenderer>().color = gradientColors[1];
-                gradientBottom.GetComponent<SpriteRenderer>().color = gradientColors[1];
-                break;
+            }
         }
-
+  
         Vector3 vectorFloorSize = new Vector3(floorSizeX, floor.transform.localScale.y, floor.transform.localScale.z);
 
         floor.transform.localScale = vectorFloorSize;
@@ -191,6 +197,163 @@ public class LevelBuilder : MonoBehaviour
                 totalSceneryWidth += sceneryRenderer.bounds.size.x;
                 i += 1;
             }
+        }
+
+        //Making these arrays now for the fading system
+        foreach (Transform child in backgroundSceneryParent.transform)
+            allFadeSpritesBG.Add(child.GetComponent<SpriteRenderer>());
+
+        foreach (Transform child in midgroundSceneryParent.transform)
+            allFadeSpritesMG.Add(child.GetComponent<SpriteRenderer>());
+
+        foreach (Transform child in foregroundSceneryParent.transform)
+            allFadeSpritesFG.Add(child.GetComponent<SpriteRenderer>());
+
+        foreach (Transform child in actualgroundSceneryParent.transform)
+            allFadeSpritesAG.Add(child.GetComponent<SpriteRenderer>());
+
+        gradientColor = gradientTop.GetComponent<SpriteRenderer>().color;
+    }
+
+    void Update()
+    {
+        //Temp switch to change levels
+        if (_switch)
+        {
+            LevelSwitch(environmentType);
+            _switch = false;
+        }
+    }
+
+
+
+    public void LevelSwitch(string levelName)
+    {
+        foreach (LevelComponents level in allLevels)
+        {
+            if (level.name == levelName)
+            {
+                RenderSettings.skybox.SetTexture("_FrontTex2", level.skyboxGradient);
+                foreach(Transform childMain in backgroundSceneryParent.transform)
+                {
+                    foreach(Transform child in childMain.transform)
+                    {
+                        child.gameObject.GetComponent<ParticleSystem>().Stop();
+                        child.gameObject.GetComponent<KillAfterTime>().enabled = true;
+                    }
+
+                    Instantiate(level.skyEffect, level.skyEffect.transform.localPosition + childMain.transform.position, level.skyEffect.transform.localRotation, childMain.transform);
+                }
+                
+
+                newColorSet[0] = level.bgColor;
+                newColorSet[1] = level.mgColor;
+                newColorSet[2] = level.fgColor;
+                newColorSet[3] = level.floorAuraColor;
+
+                newSpriteSet[0] = level.bgSprite;
+                newSpriteSet[1] = level.mgSprite;
+                newSpriteSet[2] = level.fgSprite;
+                newSpriteSet[3] = level.agSprite;
+            }
+        }
+
+        colorAlpha = allFadeSpritesBG[0].color.a;
+        newColor[0] = new Color(allFadeSpritesBG[0].color.r, allFadeSpritesBG[0].color.g, allFadeSpritesBG[0].color.b, colorAlpha);
+        newColor[1] = new Color(allFadeSpritesMG[0].color.r, allFadeSpritesMG[0].color.g, allFadeSpritesMG[0].color.b, colorAlpha);
+        newColor[2] = new Color(allFadeSpritesFG[0].color.r, allFadeSpritesFG[0].color.g, allFadeSpritesFG[0].color.b, colorAlpha);
+        newColor[3] = gradientColor;
+
+        StartCoroutine(LevelFaderA());
+    }
+
+    IEnumerator LevelFaderA()
+    {
+        if (colorAlpha > 0.3f)
+        {
+            colorAlpha -= 0.01f;
+            newColor[0] = new Color(allFadeSpritesBG[0].color.r, allFadeSpritesBG[0].color.g, allFadeSpritesBG[0].color.b, colorAlpha);
+            newColor[1] = new Color(allFadeSpritesMG[0].color.r, allFadeSpritesMG[0].color.g, allFadeSpritesMG[0].color.b, colorAlpha);
+            newColor[2] = new Color(allFadeSpritesFG[0].color.r, allFadeSpritesFG[0].color.g, allFadeSpritesFG[0].color.b, colorAlpha);
+            newColor[3] = new Color(gradientColor.r, gradientColor.g, gradientColor.b, colorAlpha);
+
+            foreach (SpriteRenderer rend in allFadeSpritesBG)
+                rend.color = newColor[0];
+
+            foreach (SpriteRenderer rend in allFadeSpritesMG)
+                rend.color = newColor[1];
+
+            foreach (SpriteRenderer rend in allFadeSpritesFG)
+                rend.color = newColor[2];
+
+            foreach (SpriteRenderer rend in allFadeSpritesAG)
+                rend.color = new Color(0, 0, 0, colorAlpha);
+
+            gradientTop.GetComponent<SpriteRenderer>().color = gradientBottom.GetComponent<SpriteRenderer>().color = newColor[3];
+
+            yield return 0;
+            StartCoroutine(LevelFaderA());
+        }
+        else
+        {
+            SpriteSwap();
+            StartCoroutine(LevelFaderB());
+            yield break;
+        }
+    }
+
+    void SpriteSwap()
+    {
+        foreach (SpriteRenderer rend in allFadeSpritesBG)
+            rend.sprite = newSpriteSet[0];
+
+        foreach (SpriteRenderer rend in allFadeSpritesMG)
+            rend.sprite = newSpriteSet[1];
+
+        foreach (SpriteRenderer rend in allFadeSpritesFG)
+            rend.sprite = newSpriteSet[2];
+
+        foreach (SpriteRenderer rend in allFadeSpritesAG)
+            rend.sprite = newSpriteSet[3];
+    }
+
+    IEnumerator LevelFaderB()
+    {
+        if (RenderSettings.skybox.GetFloat("_Blend") < 1f)
+            RenderSettings.skybox.SetFloat("_Blend", RenderSettings.skybox.GetFloat("_Blend") + 0.02f);
+
+        if (colorAlpha < newColorSet[0].a)
+        {
+            colorAlpha += 0.01f;
+            newColor[0] = new Color(newColorSet[0].r, newColorSet[0].g, newColorSet[0].b, colorAlpha);
+            newColor[1] = new Color(newColorSet[1].r, newColorSet[1].g, newColorSet[1].b, colorAlpha);
+            newColor[2] = new Color(newColorSet[2].r, newColorSet[2].g, newColorSet[2].b, colorAlpha);
+            newColor[3] = new Color(newColorSet[3].r, newColorSet[3].g, newColorSet[3].b, colorAlpha);
+
+            foreach (SpriteRenderer rend in allFadeSpritesBG)
+                rend.color = newColor[0];
+
+            foreach (SpriteRenderer rend in allFadeSpritesMG)
+                rend.color = newColor[1];
+
+            foreach (SpriteRenderer rend in allFadeSpritesFG)
+                rend.color = newColor[2];
+
+            foreach (SpriteRenderer rend in allFadeSpritesAG)
+                rend.color = new Color(0, 0, 0, colorAlpha);
+
+            gradientTop.GetComponent<SpriteRenderer>().color = gradientBottom.GetComponent<SpriteRenderer>().color = newColor[3];
+
+            yield return 0;
+            StartCoroutine(LevelFaderB());
+        }
+        else
+        {
+            RenderSettings.skybox.SetTexture("_FrontTex", RenderSettings.skybox.GetTexture("_FrontTex2"));
+            RenderSettings.skybox.SetFloat("_Blend", 0f);
+            gradientColor = gradientTop.GetComponent<SpriteRenderer>().color;
+
+            yield break;
         }
     }
 }
