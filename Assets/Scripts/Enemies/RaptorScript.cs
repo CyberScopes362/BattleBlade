@@ -13,6 +13,7 @@ public class RaptorScript : MonoBehaviour
     DamageModifier damageModifier;
 
     Vector2 heroPosition;
+    Vector2 refVelocity;
 
     public GameObject laserProjectile;
 
@@ -182,8 +183,8 @@ public class RaptorScript : MonoBehaviour
 
     void FixedUpdate()
     {
-        if(goToPlayer && !attacking && !deathTrigger)
-            thisRigidbody.position = Vector2.MoveTowards(transform.position, new Vector2(heroPosition.x + (heroApartDistant * transform.localScale.x), transform.position.y), setSpeed * Time.deltaTime);
+        if (goToPlayer && !attacking && !deathTrigger)
+            thisRigidbody.position = Vector2.SmoothDamp(thisRigidbody.position, new Vector2(heroPosition.x + (heroApartDistant * transform.localScale.x), thisRigidbody.position.y), ref refVelocity, 10f - setSpeed, Mathf.Infinity, Time.deltaTime);
     }
   
     public void InitiateLaserProjectile()

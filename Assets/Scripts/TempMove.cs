@@ -2,6 +2,7 @@
 using UnityStandardAssets.CrossPlatformInput;
 using Xft;
 using System.Collections;
+using System.Collections.Generic;
 
 //Super script for main hero interactions
 
@@ -28,6 +29,10 @@ public class TempMove : MonoBehaviour
     public XWeaponTrail trail;
     XWeaponTrail heroTrail;
     InventoryController inventoryController;
+    ItemSelector itemSelector;
+
+    List<SpriteRenderer> allSpriteRenderers = new List<SpriteRenderer>();
+    List<Vector2> allSpriteOGScale = new List<Vector2>();
 
     //General Speeds and number values
     public float defaultMovementSpeed = 4f;
@@ -75,6 +80,7 @@ public class TempMove : MonoBehaviour
     public bool jumpOverride;
     public bool isReplenishing;
     public bool stunned;
+    bool sprHitReset;
 
     //Timers and Set Times
     [HideInInspector]
@@ -184,6 +190,20 @@ public class TempMove : MonoBehaviour
         currentHealth = maxHealth;
         currentStamina = maxStamina;
         thisAnimator.SetInteger("AttackType", 0);
+
+        //Find all components for sprite renderer
+        itemSelector = GetComponent<ItemSelector>();
+        allSpriteRenderers.Add(itemSelector.weaponRenderer);
+        allSpriteRenderers.Add(itemSelector.maskRenderer);
+        foreach(SpriteRenderer rend in itemSelector.chestplateRenderer)
+            allSpriteRenderers.Add(rend);
+        foreach (SpriteRenderer rend in itemSelector.armsRenderer)
+            allSpriteRenderers.Add(rend);
+        foreach (SpriteRenderer rend in itemSelector.legsRenderer)
+            allSpriteRenderers.Add(rend);
+
+        foreach (SpriteRenderer rend in allSpriteRenderers)
+            allSpriteOGScale.Add(rend.transform.localScale);
     }
 
     void Update()
@@ -350,7 +370,20 @@ public class TempMove : MonoBehaviour
             stunned = false;
             thisAnimator.SetInteger("Jump", isGrounded);
             midNoTimeAttack = false;
-        }   
+        }
+
+        //For hit effects
+        if (sprHitReset)
+        {
+            StartCoroutine("SpriteTimer");
+            int i = 0;
+            foreach (SpriteRenderer sprRend in allSpriteRenderers)
+            {
+                sprRend.transform.localScale = Vector2.Lerp(sprRend.transform.localScale, allSpriteOGScale[i], Time.deltaTime * 15f);
+                sprRend.color = Color.Lerp(sprRend.color, Color.white, Time.deltaTime * 15f);
+                i++;
+            }
+        }
     }
 
     void FixedUpdate()
@@ -608,6 +641,14 @@ public class TempMove : MonoBehaviour
             Instantiate(heroHitParticles, transform.position, transform.rotation);
             thisRigidbody.velocity = new Vector2((-takeKnockback * takeKnockbackDirection) / 1.25f, thisRigidbody.velocity.y);
 
+            StopCoroutine("SpriteTimer");
+            foreach(SpriteRenderer sprRend in allSpriteRenderers)
+            {
+                sprRend.color = Color.red;
+                sprRend.transform.localScale = new Vector2(sprRend.transform.localScale.x + (Mathf.Sqrt(takeDamage) / 40f), sprRend.transform.localScale.y + (Mathf.Sqrt(takeDamage) / 40f));
+                sprHitReset = true;
+            }
+
             if (isGrounded != 0 && takeKnockback > 0)
                 DoStun();
         }
@@ -617,6 +658,12 @@ public class TempMove : MonoBehaviour
 
         if(staminaRemoval != 0)
             currentStamina -= (staminaRemoval + UnityEngine.Random.Range(-3f, 3f));
+    }
+
+    IEnumerator SpriteTimer()
+    {
+        yield return new WaitForSeconds(1f);
+        sprHitReset = false;
     }
 
     //Set Perks

@@ -13,7 +13,7 @@ OcclusionCullingSettings:
 --- !u!104 &2
 RenderSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 7
+  serializedVersion: 8
   m_Fog: 0
   m_FogColor: {r: 0.24137926, g: 0, b: 1, a: 1}
   m_FogMode: 3
@@ -25,6 +25,7 @@ RenderSettings:
   m_AmbientGroundColor: {r: 0.05593, g: 0.051170003, b: 0.04165, a: 1.19}
   m_AmbientIntensity: 1.19
   m_AmbientMode: 0
+  m_SubtractiveShadowColor: {r: 0.42, g: 0.478, b: 0.627, a: 1}
   m_SkyboxMaterial: {fileID: 2100000, guid: 3f04e9518b4d4c44180fc9d7f39dd469, type: 2}
   m_HaloStrength: 0.5
   m_FlareStrength: 1
@@ -41,7 +42,7 @@ RenderSettings:
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 7
+  serializedVersion: 9
   m_GIWorkflowMode: 1
   m_GISettings:
     serializedVersion: 2
@@ -53,7 +54,7 @@ LightmapSettings:
     m_EnableBakedLightmaps: 0
     m_EnableRealtimeLightmaps: 0
   m_LightmapEditorSettings:
-    serializedVersion: 4
+    serializedVersion: 8
     m_Resolution: 2
     m_BakeResolution: 40
     m_TextureWidth: 1024
@@ -66,13 +67,27 @@ LightmapSettings:
     m_LightmapParameters: {fileID: 0}
     m_LightmapsBakeMode: 1
     m_TextureCompression: 1
-    m_DirectLightInLightProbes: 1
     m_FinalGather: 0
     m_FinalGatherFiltering: 1
     m_FinalGatherRayCount: 1024
     m_ReflectionCompression: 2
+    m_MixedBakeMode: 1
+    m_BakeBackend: 0
+    m_PVRSampling: 1
+    m_PVRDirectSampleCount: 32
+    m_PVRSampleCount: 500
+    m_PVRBounces: 2
+    m_PVRFiltering: 0
+    m_PVRFilteringMode: 1
+    m_PVRCulling: 1
+    m_PVRFilteringGaussRadiusDirect: 1
+    m_PVRFilteringGaussRadiusIndirect: 5
+    m_PVRFilteringGaussRadiusAO: 2
+    m_PVRFilteringAtrousColorSigma: 1
+    m_PVRFilteringAtrousNormalSigma: 1
+    m_PVRFilteringAtrousPositionSigma: 1
   m_LightingDataAsset: {fileID: 0}
-  m_RuntimeCPUUsage: 25
+  m_ShadowMaskMode: 2
 --- !u!196 &4
 NavMeshSettings:
   serializedVersion: 2
@@ -89,6 +104,8 @@ NavMeshSettings:
     minRegionArea: 2
     manualCellSize: 0
     cellSize: 0.16666667
+    manualTileSize: 0
+    tileSize: 256
     accuratePlacement: 0
   m_NavMeshData: {fileID: 0}
 --- !u!1001 &37018069
@@ -345,6 +362,30 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 469024, guid: 1f6f56bbdf2df8a4a96eaa6dc61aaa90, type: 2}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 5.5593743
+      objectReference: {fileID: 0}
+    - target: {fileID: 415862, guid: 1f6f56bbdf2df8a4a96eaa6dc61aaa90, type: 2}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 372.4612
+      objectReference: {fileID: 0}
+    - target: {fileID: 11451906, guid: 1f6f56bbdf2df8a4a96eaa6dc61aaa90, type: 2}
+      propertyPath: colorRedHit.a
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11451906, guid: 1f6f56bbdf2df8a4a96eaa6dc61aaa90, type: 2}
+      propertyPath: colorRedHit.r
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 11451906, guid: 1f6f56bbdf2df8a4a96eaa6dc61aaa90, type: 2}
+      propertyPath: colorRedHit.g
+      value: 0.27205884
+      objectReference: {fileID: 0}
+    - target: {fileID: 11451906, guid: 1f6f56bbdf2df8a4a96eaa6dc61aaa90, type: 2}
+      propertyPath: colorRedHit.b
+      value: 0.27205884
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 1f6f56bbdf2df8a4a96eaa6dc61aaa90, type: 2}
   m_IsPrefabParent: 0
@@ -592,6 +633,45 @@ Prefab:
     - target: {fileID: 22428112, guid: b611c280ae2a8e748b4d7f0e6fce00a1, type: 2}
       propertyPath: m_AnchoredPosition.y
       value: 128
+      objectReference: {fileID: 0}
+    - target: {fileID: 11403734, guid: b611c280ae2a8e748b4d7f0e6fce00a1, type: 2}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 22671ba79c6d730479953ecbbbb193ee,
+        type: 3}
+    - target: {fileID: 11487406, guid: b611c280ae2a8e748b4d7f0e6fce00a1, type: 2}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 22671ba79c6d730479953ecbbbb193ee,
+        type: 3}
+    - target: {fileID: 11477162, guid: b611c280ae2a8e748b4d7f0e6fce00a1, type: 2}
+      propertyPath: m_FontData.m_Font
+      value: 
+      objectReference: {fileID: 12800000, guid: 22671ba79c6d730479953ecbbbb193ee,
+        type: 3}
+    - target: {fileID: 22464362, guid: b611c280ae2a8e748b4d7f0e6fce00a1, type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: 41.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 22465294, guid: b611c280ae2a8e748b4d7f0e6fce00a1, type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: 41.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 22415470, guid: b611c280ae2a8e748b4d7f0e6fce00a1, type: 2}
+      propertyPath: m_AnchoredPosition.y
+      value: 41.6
+      objectReference: {fileID: 0}
+    - target: {fileID: 22464362, guid: b611c280ae2a8e748b4d7f0e6fce00a1, type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 22465294, guid: b611c280ae2a8e748b4d7f0e6fce00a1, type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 22415470, guid: b611c280ae2a8e748b4d7f0e6fce00a1, type: 2}
+      propertyPath: m_AnchoredPosition.x
+      value: -1.2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b611c280ae2a8e748b4d7f0e6fce00a1, type: 2}

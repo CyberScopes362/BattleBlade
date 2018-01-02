@@ -16,8 +16,8 @@ public class SlashMarksScript : MonoBehaviour
     void Start()
     {
         thisRenderer = GetComponent<SpriteRenderer>();
-        thisRenderer.color = new Color(thisRenderer.color.r, thisRenderer.color.g, thisRenderer.color.b, 0.96f);
-        setLocalScale = new Vector3(0.75f + Mathf.Abs((Mathf.Pow(takenDamage, 2)) / 2000f), 0.75f + Mathf.Abs((Mathf.Pow(takenDamage, 2)) / 2000f), 1f);
+        thisRenderer.color = new Color(thisRenderer.color.r, thisRenderer.color.g, thisRenderer.color.b, 0.8f);
+        setLocalScale = new Vector3(0.5f + Mathf.Sqrt(takenDamage) / 10f, 0.75f + Mathf.Sqrt(takenDamage) / 10f, 1f);
         transform.localScale = new Vector3(0.25f, 0.25f, 1f);
     }
 

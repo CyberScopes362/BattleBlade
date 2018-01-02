@@ -7,6 +7,8 @@ public class DamageModifier : MonoBehaviour
 {
     public GameObject enemyObject;
     public List<SpriteRenderer> allSpriteRenderers = new List<SpriteRenderer>();
+    public List<Color> allSpriteOGColors = new List<Color>();
+    public List<Vector2> allSpriteOGScale = new List<Vector2>();
 
     GameObject slashMarks;
     TempMove tempMove;
@@ -41,6 +43,7 @@ public class DamageModifier : MonoBehaviour
 
     bool critHit;
     bool knockbackHit;
+    public bool sprReset;
 
     public bool overriderHealthbarPlacement;
 
@@ -50,14 +53,21 @@ public class DamageModifier : MonoBehaviour
     void Start()
     {
         ObjectFinder objectFinder = GameObject.FindGameObjectWithTag("Initializer").GetComponent<ObjectFinder>();
+        sprReset = false;
+
+        foreach(SpriteRenderer sprRend in allSpriteRenderers)
+        {
+            allSpriteOGColors.Add(sprRend.color);
+            allSpriteOGScale.Add(sprRend.transform.localScale);
+        }
 
         slashMarks = objectFinder.slashMarks;
         hero = objectFinder.hero;
 
         currentHealth = maxHealth;
         tempMove = objectFinder.hero.GetComponent<TempMove>();
-        healthBarParent = transform.FindChild("HealthBar").gameObject.GetComponent<SpriteRenderer>();
-        healthBarObject = healthBarParent.transform.FindChild("HealthBarInner").gameObject;
+        healthBarParent = transform.Find("HealthBar").gameObject.GetComponent<SpriteRenderer>();
+        healthBarObject = healthBarParent.transform.Find("HealthBarInner").gameObject;
         healthBar = healthBarObject.GetComponent<SpriteRenderer>();
 
         healthBar.color = Color.green;
@@ -129,9 +139,7 @@ public class DamageModifier : MonoBehaviour
                 knockbackHit = true;
             }
             else
-            {
                 knockback = 0f;
-            }
 
             //Crit Generator
             float critRandom = UnityEngine.Random.Range(0.0f, 1.0f);
@@ -143,6 +151,14 @@ public class DamageModifier : MonoBehaviour
                 critHit = true;
             }
 
+            foreach(SpriteRenderer sprRend in allSpriteRenderers)
+            {
+                sprRend.transform.localScale = new Vector2(sprRend.transform.localScale.x + (Mathf.Sqrt(takenDamage) / 10f), sprRend.transform.localScale.y + (Mathf.Sqrt(takenDamage) / 10f));
+                sprRend.color = Color.red;
+                sprReset = true;
+            }
+
+            StopCoroutine("SpriteTimer");
             currentHealth -= takenDamage;
 
             var createSlash = Instantiate(slashMarks, enemyObject.transform.position, Quaternion.Euler(0, 0, UnityEngine.Random.Range(0, 360))) as GameObject;
@@ -201,7 +217,25 @@ public class DamageModifier : MonoBehaviour
             critHit = false;
         }
 
+        if(sprReset)
+        {
+            StartCoroutine("SpriteTimer");
+            int i = 0;
+            foreach (SpriteRenderer sprRend in allSpriteRenderers)
+            {
+                sprRend.transform.localScale = Vector2.Lerp(sprRend.transform.localScale, allSpriteOGScale[i], Time.deltaTime * 10f);
+                sprRend.color = Color.Lerp(sprRend.color, allSpriteOGColors[i], Time.deltaTime * 10f);
+                i++;
+            }
+        }
+
         healthBarParent.color = Color.Lerp(healthBarParent.color, healthBarParentColor, 4f * Time.deltaTime);
+    }
+
+    IEnumerator SpriteTimer()
+    {
+        yield return new WaitForSeconds(1.5f);
+        sprReset = false;
     }
 
     void FixedUpdate()
