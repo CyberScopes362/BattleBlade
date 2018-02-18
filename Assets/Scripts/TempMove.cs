@@ -294,7 +294,7 @@ public class TempMove : MonoBehaviour
                 }
                 else
                 {
-                    if (isGrounded == 2 )
+                    if (isGrounded == 2)
                     {
                         //Jump Slam Attack
 #if UNITY_STANDALONE || UNITY_EDITOR
