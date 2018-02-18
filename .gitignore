@@ -34,5 +34,4 @@ ehthumbs.db
 Thumbs.db
 *.apk
 *.apk
-Library/CurrentLayout.dwlt
-Library/assetDatabase3
+*.info
